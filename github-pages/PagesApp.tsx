@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { DocsSite } from "../app/components/DocsSite";
-import { documentPathFromHash, pagesDocumentHref } from "../lib/pages/routing";
+import {
+  documentPathFromHash,
+  isDocumentRouteHash,
+  pagesDocumentHref,
+} from "../lib/pages/routing";
 
 export function PagesApp() {
   const [path, setPath] = useState(() =>
@@ -8,7 +12,11 @@ export function PagesApp() {
   );
 
   useEffect(() => {
-    const update = () => setPath(documentPathFromHash(window.location.hash));
+    const update = () => {
+      const { hash } = window.location;
+      if (!isDocumentRouteHash(hash)) return;
+      setPath(documentPathFromHash(hash));
+    };
     window.addEventListener("hashchange", update);
     return () => window.removeEventListener("hashchange", update);
   }, []);

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   documentPathFromHash,
+  isDocumentRouteHash,
   normalizeBasePath,
   pagesDocumentHref,
   withBasePath,
@@ -26,4 +27,23 @@ test("formats and parses static document hashes", () => {
     "产品概要.md",
   );
   assert.equal(documentPathFromHash("#/"), "README.md");
+});
+
+test("parses cross-document hashes without anchors or query strings", () => {
+  assert.equal(
+    documentPathFromHash("#/docs/%E4%BA%A7%E5%93%81%E6%A6%82%E8%A6%81.md#背景"),
+    "产品概要.md",
+  );
+  assert.equal(
+    documentPathFromHash("#/docs/%E4%BA%A7%E5%93%81%E6%A6%82%E8%A6%81.md?view=raw"),
+    "产品概要.md",
+  );
+});
+
+test("only document routes respond to hash changes", () => {
+  assert.equal(isDocumentRouteHash("#/"), true);
+  assert.equal(isDocumentRouteHash("#/docs/README.md#章节"), true);
+  assert.equal(isDocumentRouteHash("#/docs/README.md?view=raw"), true);
+  assert.equal(isDocumentRouteHash("#section"), false);
+  assert.equal(isDocumentRouteHash("#settings"), false);
 });

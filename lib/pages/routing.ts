@@ -17,8 +17,20 @@ export function pagesDocumentHref(path: string): string {
   return `#/docs/${safe.split("/").map(encodeURIComponent).join("/")}`;
 }
 
-export function documentPathFromHash(hash: string): string {
+function routePathFromHash(hash: string): string {
   const route = hash.replace(/^#/, "") || "/";
+  // Hashes may include a document anchor or query string after the route.
+  // Strip those suffixes before validating the content path.
+  return route.split(/[?#]/, 1)[0] || "/";
+}
+
+export function isDocumentRouteHash(hash: string): boolean {
+  const route = routePathFromHash(hash);
+  return route === "/" || (route.startsWith("/docs/") && route.length > "/docs/".length);
+}
+
+export function documentPathFromHash(hash: string): string {
+  const route = routePathFromHash(hash);
   if (route === "/") return "README.md";
   if (!route.startsWith("/docs/")) return "README.md";
   return validateContentPath(
