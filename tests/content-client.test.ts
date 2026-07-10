@@ -38,3 +38,25 @@ test("client keeps R2 object URLs for non-snapshot manifests", () => {
     `/api/content/objects/${"f".repeat(64)}`,
   );
 });
+
+test("client resolves bundled static content below a GitHub Pages base path", async () => {
+  const calls: string[] = [];
+  const fetchImpl: typeof fetch = async (input) => {
+    const url = typeof input === "string" ? input : input.toString();
+    calls.push(url);
+    if (url === "/api/content/manifest") {
+      return new Response("Not found", { status: 404 });
+    }
+    return Response.json(snapshotManifest);
+  };
+
+  const manifest = await loadContentManifest(fetchImpl, "/project-radar-docs/");
+  assert.deepEqual(calls, [
+    "/api/content/manifest",
+    "/project-radar-docs/content/manifest.json",
+  ]);
+  assert.equal(
+    contentObjectUrl(manifest, "f".repeat(64), "/project-radar-docs/"),
+    `/project-radar-docs/content/objects/${"f".repeat(64)}`,
+  );
+});
