@@ -127,6 +127,8 @@ async function verifiedCommitsAheadOfOriginMain(execute, siteDir) {
       throw new Error(`Refusing to push unverified snapshot commit ${hash}`);
     }
     const paths = await gitOutput(execute, siteDir, [
+      "-c",
+      "core.quotePath=false",
       "diff-tree",
       "--root",
       "--no-commit-id",
