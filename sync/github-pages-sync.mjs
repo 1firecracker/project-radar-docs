@@ -121,6 +121,7 @@ async function verifiedCommitsAheadOfOriginMain(execute, siteDir) {
       "--name-only",
       "-r",
       "--no-renames",
+      "-m",
       hash,
     ]);
     const changedPaths = paths ? paths.split("\n") : [];

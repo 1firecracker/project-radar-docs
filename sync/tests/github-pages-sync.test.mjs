@@ -88,6 +88,16 @@ async function createSyncFixture(t) {
       await git(siteDir, "add", "--", path);
       await git(siteDir, "commit", "-m", message);
     },
+    async commitMergeSiteWithoutPush() {
+      await git(siteDir, "checkout", "-b", "merge-site-change");
+      await writeFile(join(siteDir, "site.txt"), "merge-only site edit\n");
+      await git(siteDir, "add", "--", "site.txt");
+      await git(siteDir, "commit", "-m", "side site change");
+      await git(siteDir, "push", "origin", "merge-site-change:main");
+      await git(siteDir, "fetch", "origin");
+      await git(siteDir, "checkout", "main");
+      await git(siteDir, "merge", "--no-ff", "merge-site-change", "-m", "docs: refresh Project Radar snapshot");
+    },
   };
   t.after(() => rm(root, { recursive: true, force: true }));
   return fixture;
@@ -188,6 +198,19 @@ test("recovery rejects an ahead commit with an unknown subject and does not push
 test("recovery rejects an ahead commit that changes paths outside public/content", async (t) => {
   const fixture = await createSyncFixture(t);
   await fixture.commitSiteWithoutPush("site.txt", "unverified edit\n", "docs: refresh Project Radar snapshot");
+  await assert.rejects(
+    runGitHubPagesSync(fixture.options),
+    /unverified|outside public\/content|snapshot/i,
+  );
+  assert.equal(
+    fixture.commands.some((entry) => entry.command === "git" && entry.args[0] === "push"),
+    false,
+  );
+});
+
+test("recovery rejects a merge commit whose exact subject hides an outside path", async (t) => {
+  const fixture = await createSyncFixture(t);
+  await fixture.commitMergeSiteWithoutPush();
   await assert.rejects(
     runGitHubPagesSync(fixture.options),
     /unverified|outside public\/content|snapshot/i,
