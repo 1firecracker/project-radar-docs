@@ -1,3 +1,5 @@
+import { dirname } from "node:path";
+
 export const GITHUB_PAGES_LAUNCH_AGENT_LABEL =
   "com.baowenzhuo.project-radar-github-pages-sync";
 export const LABEL = GITHUB_PAGES_LAUNCH_AGENT_LABEL;
@@ -22,6 +24,9 @@ export function renderGitHubPagesLaunchAgent({
   stdoutPath,
   stderrPath,
 }) {
+  const path = [dirname(nodePath), "/opt/homebrew/bin", "/usr/local/bin", "/usr/bin", "/bin"]
+    .filter((value, index, values) => values.indexOf(value) === index)
+    .join(":");
   return `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -39,6 +44,11 @@ export function renderGitHubPagesLaunchAgent({
   <true/>
   <key>StartInterval</key>
   <integer>1800</integer>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>${escapeXml(path)}</string>
+  </dict>
   <key>StandardOutPath</key>
   <string>${escapeXml(stdoutPath)}</string>
   <key>StandardErrorPath</key>

@@ -136,6 +136,34 @@ test("an already verified local commit is pushed after a previous network failur
   assert.equal(fixture.commands.some((entry) => entry.command === "git" && entry.args[0] === "push"), true);
 });
 
+test("retries an unchanged snapshot when the previous run left generated files dirty", async (t) => {
+  const fixture = await createSyncFixture(t);
+  await fixture.writeSource("README.md", "# changed after failed verification\n");
+  const originalExecute = fixture.options.execute;
+  let failVerification = true;
+  fixture.options.execute = async (command, args, commandOptions = {}) => {
+    if (failVerification && command === "npm") {
+      failVerification = false;
+      throw new Error("simulated verification failure");
+    }
+    return originalExecute(command, args, commandOptions);
+  };
+
+  await assert.rejects(runGitHubPagesSync(fixture.options), /simulated verification failure/);
+  assert.match(
+    await outputGit(fixture.siteDir, "status", "--porcelain=v1", "--untracked-files=all", "--", "public/content"),
+    /public\/content/,
+  );
+
+  const result = await runGitHubPagesSync(fixture.options);
+  assert.equal(result.status, "pushed");
+  const files = await fixture.lastCommitFiles();
+  assert.equal(files.length, 3);
+  assert.ok(files.includes("public/content/manifest.json"));
+  assert.ok(files.includes("public/content/raw/README.md"));
+  assert.ok(files.every((path) => path.startsWith("public/content/")));
+});
+
 test("source git status changes abort the site commit", async (t) => {
   const fixture = await createSyncFixture(t);
   fixture.options.generateSnapshot = async (input) => {

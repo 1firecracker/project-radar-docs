@@ -31,6 +31,19 @@ test("renders a fixed 30-minute GitHub Pages LaunchAgent", () => {
       `<key>ProgramArguments<\\/key>[\\s\\S]*<string>${paths.nodePath}<\\/string>[\\s\\S]*<string>${paths.scriptPath}<\\/string>`,
     ),
   );
+  assert.match(
+    plist,
+    new RegExp(
+      `<key>EnvironmentVariables<\\/key>[\\s\\S]*<key>PATH<\\/key>[\\s\\S]*<string>${[
+        "/opt/homebrew/bin",
+        "/usr/local/bin",
+        "/usr/bin",
+        "/bin",
+      ]
+        .map((segment) => segment.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&"))
+        .join("[\\s\\S]*")}<\\/string>`,
+    ),
+  );
   assert.doesNotMatch(plist, /KeepAlive|DOCS_SYNC_TOKEN|GITHUB_TOKEN|Agent|Codex/i);
 });
 

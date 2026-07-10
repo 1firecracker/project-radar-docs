@@ -79,6 +79,15 @@ async function sourceStatus(execute, sourceDir) {
   return result.stdout;
 }
 
+async function generatedSnapshotDirty(execute, siteDir) {
+  const result = await execute(
+    "git",
+    ["status", "--porcelain=v1", "--untracked-files=all", "--", "public/content"],
+    { cwd: siteDir },
+  );
+  return result.stdout.trim().length > 0;
+}
+
 async function verifySite(execute, siteDir) {
   await execute("npm", ["run", "test:unit"], { cwd: siteDir });
   await execute("npm", ["run", "test:sync"], { cwd: siteDir });
@@ -157,7 +166,9 @@ export async function runGitHubPagesSync(options = {}) {
       throw new Error("AgentV3 changed during synchronization");
     }
 
-    if (snapshot.changed) {
+    const shouldCommitSnapshot =
+      snapshot.changed || (await generatedSnapshotDirty(execute, siteDir));
+    if (shouldCommitSnapshot) {
       await verifySite(execute, siteDir);
       await stageGeneratedSnapshot(execute, siteDir, cachedBefore);
       await git(execute, siteDir, ["commit", "-m", "docs: refresh Project Radar snapshot"]);
@@ -166,7 +177,7 @@ export async function runGitHubPagesSync(options = {}) {
     const ahead = await verifiedCommitsAheadOfOriginMain(execute, siteDir);
     if (ahead > 0) await pushOriginMain(execute, siteDir);
     return {
-      status: snapshot.changed ? "pushed" : ahead > 0 ? "recovered-push" : "unchanged",
+      status: shouldCommitSnapshot ? "pushed" : ahead > 0 ? "recovered-push" : "unchanged",
       revision: snapshot.manifest.revision,
     };
   }, { execute });
