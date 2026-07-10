@@ -16,7 +16,9 @@ test("configures the Sites R2 binding and sync dependencies", async () => {
     readFile(join(root, ".env.example"), "utf8"),
   ]);
 
-  assert.deepEqual(hosting, { d1: null, r2: "DOCS" });
+  assert.equal(hosting.d1, null);
+  assert.equal(hosting.r2, "DOCS");
+  assert.match(hosting.project_id, /^appgprj_[a-z0-9]+$/);
   assert.equal(pkg.dependencies["react-markdown"], "^10.1.0");
   assert.equal(pkg.dependencies["remark-gfm"], "^4.0.1");
   assert.equal(pkg.dependencies["rehype-sanitize"], "^6.0.0");
