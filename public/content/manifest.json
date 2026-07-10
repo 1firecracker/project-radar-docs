@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-7082371cdeb182b54be9d84986011095cc5fd5de115a1968c2a960eea6c85525",
-  "generatedAt": "2026-07-10T08:16:23.538Z",
+  "revision": "snapshot-06600d86e23088ba4d6745b7031ad76aacc9c6f1f653d1d293d25eac6930f61b",
+  "generatedAt": "2026-07-10T10:28:47.776Z",
   "files": [
     {
       "path": "README.md",
-      "sha256": "d0033ee0d8c218b3b98986170bc5e76df39cb644fa5c0461cc20c608da57b09e",
-      "bytes": 4483,
+      "sha256": "84eddd19a6d169809431d0ae226e82506614cea39256846153c12a728a7775ae",
+      "bytes": 5097,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -26,57 +26,64 @@
     },
     {
       "path": "产品概要.md",
-      "sha256": "05834d661a873e3c3e95c8bb454a98a996b48189c9685828199e54fde1cc16d0",
-      "bytes": 5230,
+      "sha256": "7f02f85dfac5214576919a1d408c7c4f132113c0925c0d602225455df3fe8d5d",
+      "bytes": 7034,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "决策记录/跨会话理解并定向执行.md",
-      "sha256": "90d833f20018817148fc1abf4c2710a1bd40e794e6c76c2a3a5606061fe5c7f8",
-      "bytes": 2272,
+      "sha256": "512b6451a2333295b87d053f8ff39eca5d7da0943cc8f76edb6fc75340db926a",
+      "bytes": 2670,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "决策记录/采用任务边界触发.md",
-      "sha256": "9daed0d68916a91c0a3c33b77218bb98ca9209f8ed6c171c04c6c4d3c46535c1",
-      "bytes": 2187,
+      "sha256": "bbdddc403927c71c6f673f05ff22ab74013bfb30858547e518472adccca5abd0",
+      "bytes": 2507,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "决策记录/采用嵌入式辅助代理.md",
-      "sha256": "fa34c26681d57df9ceb2eae87d3d8ed5413531182dd75454908ce5ce50bd8fb0",
-      "bytes": 1828,
+      "sha256": "378c84b65402b8d17f27c83b7ed868ffe31ff6fe2b70edaa8466f9be982bf304",
+      "bytes": 2090,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "决策记录/采用项目事项事件三级模型.md",
+      "sha256": "6769007b9cf4f64d98de764380ba0a2bd767ffcf2e4ecf0d79a4b747ce91c90a",
+      "bytes": 2632,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "实施计划.md",
-      "sha256": "a8a516345a6f452e446e47e790a02ceadacde7a3e5a6fcf772323cca04d7fe7d",
-      "bytes": 12741,
+      "sha256": "c283012b1febedbc0eeee1f22ff3ddf453a7a568640503ff1f8efbd0fa11a305",
+      "bytes": 10768,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "技术设计.md",
-      "sha256": "2ed4851ab7eef891906f6d942d2085d64def4fb770a975b133af94f0ba44acb6",
-      "bytes": 16816,
+      "sha256": "99f5fe5b54fd85986466933207c473b0e65b4ecb4c5da399c8ac0331d8ecf3eb",
+      "bytes": 19460,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "测试与演示.md",
-      "sha256": "48834325fc91fc4a6fe379a340bc447f4d0a404e8daf340db1061e1d5c3f6a45",
-      "bytes": 7391,
+      "sha256": "501accd49a66fefb943bdcda680d1766d041629a051e461ee2d58e2dd700961e",
+      "bytes": 7682,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "零版产品需求.md",
-      "sha256": "1e4a2d0b915d48fe5d246cd052d6f30af0428c6d77b0a701a61e72d2c1d2e284",
-      "bytes": 7193,
+      "sha256": "13c92dabae1eed94e522ec2f66e4039f6249448d50d55d5431b7610918a13d62",
+      "bytes": 8775,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }
