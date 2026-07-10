@@ -27,6 +27,10 @@ test("server-renders the finished Project Radar shell", async () => {
   assert.match(html, /<title>Project Radar 文档<\/title>/i);
   assert.match(html, /Project Radar/);
   assert.match(html, /正在载入文档/);
+  assert.match(
+    html,
+    /<meta(?=[^>]*property="og:image")(?=[^>]*content="http:\/\/localhost\/og\.png")[^>]*>/i,
+  );
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
 });
 
@@ -40,4 +44,5 @@ test("removes every disposable starter marker", async () => {
   assert.doesNotMatch(layout, /Starter Project|codex-preview|_sites-preview/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   await assert.rejects(access(new URL("../app/_sites-preview", root)));
+  await access(new URL("public/og.png", root));
 });
