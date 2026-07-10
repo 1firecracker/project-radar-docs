@@ -1,6 +1,6 @@
 # Project Radar 文档实时同步站设计说明
 
-> 状态：已确认
+> 状态：已被 `2026-07-10-project-radar-github-pages-sync-design.md` 替代
 >
 > 日期：2026-07-10
 >
