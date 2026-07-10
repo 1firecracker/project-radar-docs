@@ -25,7 +25,11 @@ test("configures the Sites project for secure R2 content sync", async () => {
   const hosting = JSON.parse(hostingSource);
   const pkg = JSON.parse(packageSource);
 
-  assert.deepEqual(hosting, { d1: null, r2: "DOCS" });
+  assert.equal(hosting.d1, null);
+  assert.equal(hosting.r2, "DOCS");
+  assert.equal(typeof hosting.project_id, "string");
+  assert.ok(hosting.project_id.length > 0);
+  assert.deepEqual(Object.keys(hosting).sort(), ["d1", "project_id", "r2"]);
   assert.equal(pkg.dependencies["react-markdown"], "10.1.0");
   assert.equal(pkg.dependencies["remark-gfm"], "4.0.1");
   assert.equal(pkg.dependencies["rehype-sanitize"], "6.0.0");
