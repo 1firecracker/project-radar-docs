@@ -14,7 +14,7 @@ function escapeXml(value) {
 }
 
 /**
- * Render the fixed 30-minute user LaunchAgent used by GitHub Pages sync.
+ * Render the fixed 10-minute user LaunchAgent used by GitHub Pages sync.
  * Paths are supplied by the installer and are escaped as XML text nodes.
  */
 export function renderGitHubPagesLaunchAgent({
@@ -43,7 +43,7 @@ export function renderGitHubPagesLaunchAgent({
   <key>RunAtLoad</key>
   <true/>
   <key>StartInterval</key>
-  <integer>1800</integer>
+  <integer>600</integer>
   <key>EnvironmentVariables</key>
   <dict>
     <key>PATH</key>

@@ -13,7 +13,7 @@
 - Treat `/Users/baowenzhuo/project/xhxagentv3` as read-only input; never write, stage, commit, switch branches, or generate files there.
 - Keep all source, snapshots, tests, logs, locks, commits, and configuration in `/Users/baowenzhuo/Documents/Codex/2026-07-10/sites-plugin-sites-openai-bundled-2` or the user's LaunchAgents/Application Support directories.
 - Use the public repository `1firecracker/project-radar-docs` with default branch `main`.
-- Run the fixed job every 1,800 seconds and once at load; do not use Codex Automation, an Agent, Sites management APIs, `/api/sync`, or the old realtime watcher.
+- Run the fixed job every 600 seconds and once at load; do not use Codex Automation, an Agent, Sites management APIs, `/api/sync`, or the old realtime watcher.
 - Do not commit credentials. Scheduled pushes must use the existing non-interactive SSH identity for `git@github.com`.
 - Content identity, not check time, determines whether to commit and deploy. The site labels the manifest timestamp as `内容更新时间`.
 - Preserve the current Sites deployment until the GitHub Pages production URL passes final verification.
@@ -547,7 +547,7 @@ Assert the rendered plist contains:
 ```xml
 <key>Label</key><string>com.baowenzhuo.project-radar-github-pages-sync</string>
 <key>RunAtLoad</key><true/>
-<key>StartInterval</key><integer>1800</integer>
+<key>StartInterval</key><integer>600</integer>
 ```
 
 Also assert it contains absolute `node`, script, working-directory, stdout, and stderr paths; contains no `KeepAlive`, token, source content, or Agent/Codex command.
@@ -787,7 +787,7 @@ npm run sync:install
 launchctl print gui/$(id -u)/com.baowenzhuo.project-radar-github-pages-sync
 ```
 
-Expected: the job is loaded, its interval is 1,800 seconds, its program is Node.js plus `scripts/run-github-pages-sync.mjs`, and its last exit status is 0 after kickstart.
+Expected: the job is loaded, its interval is 600 seconds, its program is Node.js plus `scripts/run-github-pages-sync.mjs`, and its last exit status is 0 after kickstart.
 
 - [ ] **Step 3: Verify source isolation after the scheduled entry point runs**
 

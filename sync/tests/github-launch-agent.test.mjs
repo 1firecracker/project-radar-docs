@@ -13,7 +13,7 @@ const paths = {
     "/Users/tester/Library/Logs/ProjectRadarGitHubPagesSync/stderr.log",
 };
 
-test("renders a fixed 30-minute GitHub Pages LaunchAgent", () => {
+test("renders a fixed 10-minute GitHub Pages LaunchAgent", () => {
   const plist = renderGitHubPagesLaunchAgent(paths);
 
   assert.match(
@@ -21,7 +21,7 @@ test("renders a fixed 30-minute GitHub Pages LaunchAgent", () => {
     /<key>Label<\/key>\s*<string>com\.baowenzhuo\.project-radar-github-pages-sync<\/string>/,
   );
   assert.match(plist, /<key>RunAtLoad<\/key>\s*<true\/>/);
-  assert.match(plist, /<key>StartInterval<\/key>\s*<integer>1800<\/integer>/);
+  assert.match(plist, /<key>StartInterval<\/key>\s*<integer>600<\/integer>/);
   for (const value of Object.values(paths)) {
     assert.match(plist, new RegExp(`<string>${value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}<\\/string>`));
   }

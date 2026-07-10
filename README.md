@@ -26,7 +26,7 @@ npm run sync:github-pages
 
 该命令在检测到来源变化后生成快照、运行验证、提交 `public/content/` 并推送 `origin/main`。需要本机 Git SSH 身份已获授权。
 
-可选的 macOS 用户级 LaunchAgent 每 30 分钟运行一次，并在登录时运行一次：
+可选的 macOS 用户级 LaunchAgent 每 10 分钟运行一次，并在登录时运行一次：
 
 - Label：`com.baowenzhuo.project-radar-github-pages-sync`
 - 日志：`~/Library/Logs/ProjectRadarGitHubPagesSync/`
