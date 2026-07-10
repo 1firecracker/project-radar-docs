@@ -40,6 +40,16 @@
 - Git 托管和 CI 发布链路。
 - 每次内容变化重新部署 Sites。
 
+### 2.3 仓库隔离约束
+
+站点项目与 AgentV3 源码仓库必须完全隔离：
+
+- 站点设计文档、源码、测试、Sites 配置、同步器源码和相关 Git 提交只存在于 `/Users/baowenzhuo/Documents/Codex/2026-07-10/sites-plugin-sites-openai-bundled-2` 的独立 Git 仓库。
+- `/Users/baowenzhuo/project/xhxagentv3` 仅作为只读内容来源；实现过程不得在其中创建站点文件、生成物、配置、分支或提交。
+- 不修改 AgentV3 仓库的 `.gitignore`、索引、工作树或既有未提交改动。
+- 本机监听器只读取 `/Users/baowenzhuo/project/xhxagentv3/docs/bwz` 中的内容，不在该目录写入状态文件、缓存、日志或锁文件，也不执行任何 Git 命令。
+- 监听器运行文件、密钥配置和日志位于独立的 Application Support 目录；它们不进入 AgentV3 仓库。
+
 ## 3. 总体架构
 
 ```text
