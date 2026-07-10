@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-06600d86e23088ba4d6745b7031ad76aacc9c6f1f653d1d293d25eac6930f61b",
-  "generatedAt": "2026-07-10T10:28:47.776Z",
+  "revision": "snapshot-1ebad7214106ea2148c03e8fc29c50639ef820483c87853e15486d39a2b3fb4e",
+  "generatedAt": "2026-07-10T14:09:14.279Z",
   "files": [
     {
       "path": "README.md",
@@ -23,6 +23,13 @@
       "bytes": 1239246,
       "mediaType": "image/png",
       "kind": "asset"
+    },
+    {
+      "path": "project-radar-architecture.html",
+      "sha256": "3868e6dc4b54524d353edd6f6d6eee8378f6a3794e8bb8150bf670bf7a12bdd8",
+      "bytes": 18050,
+      "mediaType": "text/html; charset=utf-8",
+      "kind": "html"
     },
     {
       "path": "产品概要.md",
