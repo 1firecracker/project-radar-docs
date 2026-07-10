@@ -13,6 +13,8 @@ interface MarkdownDocumentProps {
   manifest: ContentManifest;
   path: string;
   source: string;
+  basePath?: string;
+  documentHrefFor?: (path: string) => string;
 }
 
 function isExternal(value: string): boolean {
@@ -28,6 +30,8 @@ function resolveUrl(
   value: string | undefined,
   path: string,
   manifest: ContentManifest,
+  basePath: string,
+  documentHrefFor: (path: string) => string,
 ): string | undefined {
   if (!value || value.startsWith("#") || isExternal(value)) return value;
   const [target, suffix] = splitSuffix(value);
@@ -36,9 +40,9 @@ function resolveUrl(
     const file = findManifestFile(manifest, resolved);
     if (!file) return value;
     if (file.kind === "markdown" || file.kind === "html") {
-      return `${documentHref(file.path)}${suffix}`;
+      return `${documentHrefFor(file.path)}${suffix}`;
     }
-    return `${contentObjectUrl(manifest, file.sha256)}${suffix}`;
+    return `${contentObjectUrl(manifest, file.sha256, basePath)}${suffix}`;
   } catch {
     return value;
   }
@@ -48,10 +52,18 @@ export function MarkdownDocument({
   manifest,
   path,
   source,
+  basePath = "",
+  documentHrefFor = documentHref,
 }: MarkdownDocumentProps) {
   const components: Components = {
     a({ href, children, ...props }) {
-      const resolved = resolveUrl(href, path, manifest);
+      const resolved = resolveUrl(
+        href,
+        path,
+        manifest,
+        basePath,
+        documentHrefFor,
+      );
       const external = Boolean(resolved && isExternal(resolved));
       return (
         <a
@@ -66,7 +78,9 @@ export function MarkdownDocument({
     },
     img({ src, alt, ...props }) {
       const resolvedSrc =
-        typeof src === "string" ? resolveUrl(src, path, manifest) : src;
+        typeof src === "string"
+          ? resolveUrl(src, path, manifest, basePath, documentHrefFor)
+          : src;
       return (
         // eslint-disable-next-line @next/next/no-img-element
         <img {...props} src={resolvedSrc} alt={alt ?? ""} />

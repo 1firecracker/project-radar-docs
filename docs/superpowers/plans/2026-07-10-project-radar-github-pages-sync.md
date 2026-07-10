@@ -26,9 +26,9 @@
 ### New files
 
 - `lib/pages/routing.ts` — GitHub Pages base-path and Hash-route parsing/formatting.
-- `pages/index.html` — static Vite HTML entry.
-- `pages/main.tsx` — static React bootstrap.
-- `pages/PagesApp.tsx` — Hash-route state and `DocsSite` integration.
+- `github-pages/index.html` — static Vite HTML entry kept outside vinext's reserved `pages/` directory.
+- `github-pages/main.tsx` — static React bootstrap.
+- `github-pages/PagesApp.tsx` — Hash-route state and `DocsSite` integration.
 - `vite.pages.config.ts` — static Pages build configuration and `/project-radar-docs/` base.
 - `sync/github-pages-sync.mjs` — deterministic synchronization orchestration with lock and recovery.
 - `scripts/run-github-pages-sync.mjs` — production command-line entry point.
@@ -228,9 +228,9 @@ git commit -m "feat: add GitHub Pages route helpers"
 ### Task 3: Build the Pure Static GitHub Pages Application
 
 **Files:**
-- Create: `pages/index.html`
-- Create: `pages/main.tsx`
-- Create: `pages/PagesApp.tsx`
+- Create: `github-pages/index.html`
+- Create: `github-pages/main.tsx`
+- Create: `github-pages/PagesApp.tsx`
 - Create: `vite.pages.config.ts`
 - Create: `tests/pages-ui.test.tsx`
 - Create: `tests/pages-build.test.mjs`
@@ -284,7 +284,7 @@ Default `documentHrefFor` to the existing `documentHref`, so the current Sites b
 
 - [ ] **Step 4: Create the static application entry**
 
-Create `pages/PagesApp.tsx` with Hash-route state:
+Create `github-pages/PagesApp.tsx` with Hash-route state:
 
 ```tsx
 import { useEffect, useState } from "react";
@@ -309,7 +309,7 @@ export function PagesApp() {
 }
 ```
 
-`pages/main.tsx` must import React, `createRoot`, `PagesApp`, and `../app/globals.css`, then render into `#root`. `pages/index.html` must contain the Chinese metadata, `og.png`, `#root`, and a module script for `/main.tsx`.
+`github-pages/main.tsx` must import React, `createRoot`, `PagesApp`, and `../app/globals.css`, then render into `#root`. `github-pages/index.html` must contain the Chinese metadata, `og.png`, `#root`, and a module script for `/main.tsx`.
 
 - [ ] **Step 5: Add the static Vite configuration and scripts**
 
@@ -320,7 +320,7 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  root: "pages",
+  root: "github-pages",
   base: "/project-radar-docs/",
   publicDir: "../public",
   plugins: [react()],

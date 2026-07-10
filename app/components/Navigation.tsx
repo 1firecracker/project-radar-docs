@@ -8,6 +8,7 @@ import type { ContentManifest, ManifestFile } from "../../lib/content/types";
 interface NavigationProps {
   manifest: ContentManifest;
   activePath: string;
+  documentHrefFor?: (path: string) => string;
 }
 
 function titleFor(file: ManifestFile): string {
@@ -16,7 +17,11 @@ function titleFor(file: ManifestFile): string {
   return filename.replace(/\.(?:md|html?)$/i, "");
 }
 
-export function Navigation({ manifest, activePath }: NavigationProps) {
+export function Navigation({
+  manifest,
+  activePath,
+  documentHrefFor = documentHref,
+}: NavigationProps) {
   const [open, setOpen] = useState(false);
   const documents = orderedDocuments(manifest);
   const core = documents.filter((file) => !file.path.includes("/"));
@@ -33,7 +38,7 @@ export function Navigation({ manifest, activePath }: NavigationProps) {
           {files.map((file) => (
             <li key={file.path}>
               <a
-                href={documentHref(file.path)}
+                href={documentHrefFor(file.path)}
                 aria-current={file.path === activePath ? "page" : undefined}
                 onClick={() => setOpen(false)}
               >
@@ -66,7 +71,11 @@ export function Navigation({ manifest, activePath }: NavigationProps) {
       ) : null}
       <aside className={`docs-sidebar${open ? " is-open" : ""}`}>
         <div className="brand-block">
-          <a className="brand" href="/" aria-label="Project Radar 文档首页">
+          <a
+            className="brand"
+            href={documentHrefFor("README.md")}
+            aria-label="Project Radar 文档首页"
+          >
             <span className="radar-mark" aria-hidden="true" />
             <span>
               <strong>Project Radar</strong>
@@ -88,7 +97,7 @@ export function Navigation({ manifest, activePath }: NavigationProps) {
           {group("其他文档", other)}
         </nav>
         <p className="sync-time">
-          最近同步
+          内容更新时间
           <time dateTime={manifest.generatedAt}>
             {new Date(manifest.generatedAt).toLocaleString("zh-CN", {
               dateStyle: "medium",

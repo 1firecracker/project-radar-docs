@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { contentObjectUrl, isStaticSnapshot, loadContentManifest } from "../../lib/content/client";
 import { findManifestFile } from "../../lib/content/manifest";
+import { documentHref } from "../../lib/content/paths";
 import type { ContentManifest, ManifestFile } from "../../lib/content/types";
 import { HtmlDocument } from "./HtmlDocument";
 import { MarkdownDocument } from "./MarkdownDocument";
@@ -10,6 +11,8 @@ import { Navigation } from "./Navigation";
 
 interface DocsSiteProps {
   initialPath: string;
+  basePath?: string;
+  documentHrefFor?: (path: string) => string;
 }
 
 type SiteState =
@@ -27,7 +30,11 @@ function documentTitle(file: ManifestFile): string {
   return (file.path.split("/").at(-1) ?? file.path).replace(/\.(?:md|html?)$/i, "");
 }
 
-export function DocsSite({ initialPath }: DocsSiteProps) {
+export function DocsSite({
+  initialPath,
+  basePath = "",
+  documentHrefFor = documentHref,
+}: DocsSiteProps) {
   const [state, setState] = useState<SiteState>({ status: "loading" });
 
   useEffect(() => {
@@ -35,8 +42,9 @@ export function DocsSite({ initialPath }: DocsSiteProps) {
     async function load() {
       setState({ status: "loading" });
       try {
-        const manifest = await loadContentManifest((input, init) =>
-          fetch(input, { ...init, signal: controller.signal }),
+        const manifest = await loadContentManifest(
+          (input, init) => fetch(input, { ...init, signal: controller.signal }),
+          basePath,
         );
         const file = findManifestFile(manifest, initialPath);
         if (!file || (file.kind !== "markdown" && file.kind !== "html")) {
@@ -45,7 +53,7 @@ export function DocsSite({ initialPath }: DocsSiteProps) {
         let source = "";
         if (file.kind === "markdown") {
           const contentResponse = await fetch(
-            contentObjectUrl(manifest, file.sha256),
+            contentObjectUrl(manifest, file.sha256, basePath),
             { signal: controller.signal },
           );
           if (!contentResponse.ok) throw new Error("文档内容暂时不可用。");
@@ -62,7 +70,7 @@ export function DocsSite({ initialPath }: DocsSiteProps) {
     }
     void load();
     return () => controller.abort();
-  }, [initialPath]);
+  }, [basePath, initialPath]);
 
   if (state.status === "loading") {
     return (
@@ -88,7 +96,11 @@ export function DocsSite({ initialPath }: DocsSiteProps) {
 
   return (
     <div className="docs-layout">
-      <Navigation manifest={state.manifest} activePath={state.file.path} />
+      <Navigation
+        manifest={state.manifest}
+        activePath={state.file.path}
+        documentHrefFor={documentHrefFor}
+      />
       <main className="docs-main">
         <header className="document-header">
           <p>Project Radar · 文档</p>
@@ -99,12 +111,15 @@ export function DocsSite({ initialPath }: DocsSiteProps) {
             path={state.file.path}
             title={documentTitle(state.file)}
             staticSnapshot={isStaticSnapshot(state.manifest)}
+            basePath={basePath}
           />
         ) : (
           <MarkdownDocument
             manifest={state.manifest}
             path={state.file.path}
             source={state.source}
+            basePath={basePath}
+            documentHrefFor={documentHrefFor}
           />
         )}
       </main>
