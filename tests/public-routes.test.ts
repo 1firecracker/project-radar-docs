@@ -43,7 +43,12 @@ test("public routes serve only current manifest content with safe caching", asyn
   });
   await bucket.put(`objects/${staleHash}`, "stale");
   await bucket.put("manifests/current.json", JSON.stringify(manifest));
-  const env = { DOCS: bucket as unknown as R2Bucket };
+  const env = {
+    DOCS: bucket as unknown as R2Bucket,
+    ASSETS: {
+      fetch: async () => new Response("Not found", { status: 404 }),
+    } as unknown as Fetcher,
+  };
 
   async function get(path: string, headers: HeadersInit = {}) {
     const response = await handlePublicRoute(
@@ -86,4 +91,56 @@ test("public routes serve only current manifest content with safe caching", asyn
 
   assert.equal((await get("/raw/%2E%2E%2Fsecret.md")).status, 400);
   assert.equal((await get("/raw/deleted.md")).status, 404);
+});
+
+test("public routes fall back to the bundled static snapshot when R2 is empty", async () => {
+  const bucket = new MemoryR2();
+  const assets = {
+    async fetch(request: Request) {
+      const path = new URL(request.url).pathname;
+      if (path === "/content/manifest.json") {
+        return Response.json(manifest);
+      }
+      if (path === `/content/objects/${markdownHash}`) {
+        return new Response(markdownBytes, {
+          headers: { "content-type": "text/markdown; charset=utf-8" },
+        });
+      }
+      if (path === `/content/objects/${htmlHash}`) {
+        return new Response(htmlBytes, {
+          headers: { "content-type": "text/html; charset=utf-8" },
+        });
+      }
+      return new Response("Not found", { status: 404 });
+    },
+  };
+  const env = {
+    DOCS: bucket as unknown as R2Bucket,
+    ASSETS: assets as unknown as Fetcher,
+  };
+
+  const manifestResponse = await handlePublicRoute(
+    new Request("https://docs.example/api/content/manifest"),
+    env,
+  );
+  assert.ok(manifestResponse);
+  assert.equal(manifestResponse.status, 200);
+  assert.deepEqual(await manifestResponse.json(), manifest);
+
+  const objectResponse = await handlePublicRoute(
+    new Request(`https://docs.example/api/content/objects/${markdownHash}`),
+    env,
+  );
+  assert.ok(objectResponse);
+  assert.equal(objectResponse.status, 200);
+  assert.equal(await objectResponse.text(), "# Project Radar\n");
+
+  const htmlResponse = await handlePublicRoute(
+    new Request("https://docs.example/raw/demo/page.html"),
+    env,
+  );
+  assert.ok(htmlResponse);
+  assert.equal(htmlResponse.status, 200);
+  assert.equal(htmlResponse.headers.get("content-security-policy"),
+    "default-src 'self' data:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'");
 });

@@ -1,4 +1,4 @@
-import { findManifestFile } from "../lib/content/manifest";
+import { findManifestFile, validateManifest } from "../lib/content/manifest";
 import { validateContentPath } from "../lib/content/paths";
 import { getCurrentManifest } from "../lib/content/r2-store";
 import type { SiteEnv } from "./env";
@@ -29,7 +29,7 @@ function jsonError(error: string, status: number): Response {
 
 export async function handlePublicRoute(
   request: Request,
-  env: Pick<SiteEnv, "DOCS">,
+  env: Pick<SiteEnv, "DOCS" | "ASSETS">,
 ): Promise<Response | null> {
   if (request.method !== "GET" && request.method !== "HEAD") return null;
   const url = new URL(request.url);
@@ -40,7 +40,20 @@ export async function handlePublicRoute(
   const isRaw = url.pathname.startsWith("/raw/");
   if (!isManifest && !objectMatch && !isRaw) return null;
 
-  const manifest = await getCurrentManifest(env.DOCS);
+  const r2Manifest = await getCurrentManifest(env.DOCS);
+  let manifest = r2Manifest;
+  if (!manifest) {
+    const staticManifest = await env.ASSETS.fetch(
+      new Request(new URL("/content/manifest.json", request.url)),
+    );
+    if (staticManifest.ok) {
+      try {
+        manifest = validateManifest(await staticManifest.json());
+      } catch {
+        return jsonError("Static content manifest is invalid", 503);
+      }
+    }
+  }
   if (!manifest) return jsonError("Content has not been synchronized", 404);
 
   if (isManifest) {
@@ -63,12 +76,21 @@ export async function handlePublicRoute(
         headers: { etag: `"${hash}"` },
       });
     }
-    const object = await env.DOCS.get(`objects/${hash}`);
-    if (!object) return jsonError("Content object unavailable", 503);
+    const object = r2Manifest
+      ? await env.DOCS.get(`objects/${hash}`)
+      : null;
     const headers = contentHeaders("public, max-age=31536000, immutable");
     headers.set("etag", `"${hash}"`);
-    object.writeHttpMetadata(headers);
-    return new Response(request.method === "HEAD" ? null : object.body, { headers });
+    if (object) {
+      object.writeHttpMetadata(headers);
+      return new Response(request.method === "HEAD" ? null : object.body, { headers });
+    }
+    const staticObject = await env.ASSETS.fetch(
+      new Request(new URL(`/content/objects/${hash}`, request.url)),
+    );
+    if (!staticObject.ok) return jsonError("Content object unavailable", 503);
+    headers.set("content-type", staticObject.headers.get("content-type") ?? "application/octet-stream");
+    return new Response(request.method === "HEAD" ? null : staticObject.body, { headers });
   }
 
   let path: string;
@@ -79,11 +101,19 @@ export async function handlePublicRoute(
   }
   const file = findManifestFile(manifest, path);
   if (!file) return jsonError("Not found", 404);
-  const object = await env.DOCS.get(`objects/${file.sha256}`);
-  if (!object) return jsonError("Content object unavailable", 503);
+  const object = r2Manifest
+    ? await env.DOCS.get(`objects/${file.sha256}`)
+    : null;
 
   const headers = contentHeaders("public, max-age=5, must-revalidate");
   headers.set("content-type", file.mediaType);
   if (file.kind === "html") headers.set("content-security-policy", HTML_CSP);
-  return new Response(request.method === "HEAD" ? null : object.body, { headers });
+  if (object) {
+    return new Response(request.method === "HEAD" ? null : object.body, { headers });
+  }
+  const staticObject = await env.ASSETS.fetch(
+    new Request(new URL(`/content/objects/${file.sha256}`, request.url)),
+  );
+  if (!staticObject.ok) return jsonError("Content object unavailable", 503);
+  return new Response(request.method === "HEAD" ? null : staticObject.body, { headers });
 }
