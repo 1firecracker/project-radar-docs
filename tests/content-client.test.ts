@@ -1,0 +1,40 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import {
+  contentObjectUrl,
+  loadContentManifest,
+} from "../lib/content/client";
+
+const snapshotManifest = {
+  schemaVersion: 1 as const,
+  revision: `snapshot-${"a".repeat(64)}`,
+  generatedAt: "2026-07-10T12:00:00.000Z",
+  files: [],
+};
+
+test("client falls back to the bundled static manifest", async () => {
+  const calls: string[] = [];
+  const fetchImpl: typeof fetch = async (input) => {
+    const url = typeof input === "string" ? input : input.toString();
+    calls.push(url);
+    if (url === "/api/content/manifest") {
+      return new Response("Not found", { status: 404 });
+    }
+    return Response.json(snapshotManifest);
+  };
+
+  const manifest = await loadContentManifest(fetchImpl);
+  assert.deepEqual(calls, ["/api/content/manifest", "/content/manifest.json"]);
+  assert.deepEqual(manifest, snapshotManifest);
+  assert.equal(
+    contentObjectUrl(manifest, "f".repeat(64)),
+    `/content/objects/${"f".repeat(64)}`,
+  );
+});
+
+test("client keeps R2 object URLs for non-snapshot manifests", () => {
+  assert.equal(
+    contentObjectUrl({ ...snapshotManifest, revision: "r2-live" }, "f".repeat(64)),
+    `/api/content/objects/${"f".repeat(64)}`,
+  );
+});

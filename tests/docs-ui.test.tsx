@@ -74,3 +74,21 @@ test("docs ui isolates standalone HTML", () => {
   assert.match(html, /src="\/raw\/demo\/page.html"/);
   assert.doesNotMatch(html, /allow-scripts|allow-same-origin/);
 });
+
+test("docs ui uses bundled object and raw URLs for snapshot manifests", () => {
+  const snapshot = { ...manifest, revision: `snapshot-${"a".repeat(64)}` };
+  const markdown = renderToStaticMarkup(
+    <MarkdownDocument
+      manifest={snapshot}
+      path="README.md"
+      source="![界面](./images/project-radar.png)"
+    />,
+  );
+  assert.match(markdown, new RegExp(`/content/objects/${HASH}`));
+
+  const html = renderToStaticMarkup(
+    <HtmlDocument path="demo/page.html" title="演示页面" staticSnapshot />,
+  );
+  assert.match(html, /src="\/content\/raw\/demo\/page.html"/);
+  assert.match(html, /sandbox=""/);
+});

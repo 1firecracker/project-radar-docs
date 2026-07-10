@@ -29,7 +29,7 @@ function jsonError(error: string, status: number): Response {
 
 export async function handlePublicRoute(
   request: Request,
-  env: Pick<SiteEnv, "DOCS" | "ASSETS">,
+  env: Pick<SiteEnv, "DOCS"> & Partial<Pick<SiteEnv, "ASSETS">>,
 ): Promise<Response | null> {
   if (request.method !== "GET" && request.method !== "HEAD") return null;
   const url = new URL(request.url);
@@ -42,7 +42,7 @@ export async function handlePublicRoute(
 
   const r2Manifest = await getCurrentManifest(env.DOCS);
   let manifest = r2Manifest;
-  if (!manifest) {
+  if (!manifest && env.ASSETS) {
     const staticManifest = await env.ASSETS.fetch(
       new Request(new URL("/content/manifest.json", request.url)),
     );
@@ -85,6 +85,7 @@ export async function handlePublicRoute(
       object.writeHttpMetadata(headers);
       return new Response(request.method === "HEAD" ? null : object.body, { headers });
     }
+    if (!env.ASSETS) return jsonError("Content object unavailable", 503);
     const staticObject = await env.ASSETS.fetch(
       new Request(new URL(`/content/objects/${hash}`, request.url)),
     );
@@ -111,6 +112,7 @@ export async function handlePublicRoute(
   if (object) {
     return new Response(request.method === "HEAD" ? null : object.body, { headers });
   }
+  if (!env.ASSETS) return jsonError("Content object unavailable", 503);
   const staticObject = await env.ASSETS.fetch(
     new Request(new URL(`/content/objects/${file.sha256}`, request.url)),
   );

@@ -28,6 +28,14 @@ test("static snapshot is deterministic and changes only with source content", as
     "# Project Radar\n",
   );
   assert.equal((await stat(join(outputDir, "manifest.json"))).isFile(), true);
+  assert.equal(
+    await readFile(join(outputDir, "raw", "README.md"), "utf8"),
+    "# Project Radar\n",
+  );
+  assert.deepEqual(
+    await readFile(join(outputDir, "raw", "images", "radar.png")),
+    Buffer.from([1, 2, 3]),
+  );
 
   const second = await generateStaticSnapshot({
     sourceDir,

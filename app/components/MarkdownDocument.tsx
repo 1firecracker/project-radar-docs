@@ -2,6 +2,7 @@ import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
 import { findManifestFile } from "../../lib/content/manifest";
+import { contentObjectUrl } from "../../lib/content/client";
 import {
   documentHref,
   resolveContentPath,
@@ -37,7 +38,7 @@ function resolveUrl(
     if (file.kind === "markdown" || file.kind === "html") {
       return `${documentHref(file.path)}${suffix}`;
     }
-    return `/api/content/objects/${file.sha256}${suffix}`;
+    return `${contentObjectUrl(manifest, file.sha256)}${suffix}`;
   } catch {
     return value;
   }

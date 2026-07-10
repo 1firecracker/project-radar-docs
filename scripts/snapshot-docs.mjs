@@ -43,17 +43,19 @@ export async function generateStaticSnapshot({ sourceDir, outputDir, now = new D
   const { identity, revision } = snapshotRevision(files);
   const existing = await readExistingManifest(outputDir);
   const objectsDir = join(outputDir, "objects");
+  const rawDir = join(outputDir, "raw");
   const expectedHashes = new Set(identity.map((file) => file.sha256));
-  let objectsComplete = true;
-  for (const hash of expectedHashes) {
+  let snapshotComplete = true;
+  for (const file of identity) {
     try {
-      await access(join(objectsDir, hash));
+      await access(join(objectsDir, file.sha256));
+      await access(join(rawDir, file.path));
     } catch {
-      objectsComplete = false;
+      snapshotComplete = false;
       break;
     }
   }
-  if (existing?.revision === revision && objectsComplete) {
+  if (existing?.revision === revision && snapshotComplete) {
     return { changed: false, manifest: existing };
   }
 
@@ -64,8 +66,12 @@ export async function generateStaticSnapshot({ sourceDir, outputDir, now = new D
     files: identity,
   };
   await mkdir(objectsDir, { recursive: true });
+  await rm(rawDir, { recursive: true, force: true });
   for (const file of files) {
     await writeFile(join(objectsDir, file.sha256), file.content);
+    const rawPath = join(rawDir, file.path);
+    await mkdir(dirname(rawPath), { recursive: true });
+    await writeFile(rawPath, file.content);
   }
   for (const filename of await readdir(objectsDir)) {
     if (!expectedHashes.has(filename)) {

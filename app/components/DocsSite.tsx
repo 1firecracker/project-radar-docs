@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { contentObjectUrl, isStaticSnapshot, loadContentManifest } from "../../lib/content/client";
 import { findManifestFile } from "../../lib/content/manifest";
 import type { ContentManifest, ManifestFile } from "../../lib/content/types";
 import { HtmlDocument } from "./HtmlDocument";
@@ -34,18 +35,9 @@ export function DocsSite({ initialPath }: DocsSiteProps) {
     async function load() {
       setState({ status: "loading" });
       try {
-        const manifestResponse = await fetch("/api/content/manifest", {
-          signal: controller.signal,
-          cache: "no-store",
-        });
-        if (!manifestResponse.ok) {
-          throw new Error(
-            manifestResponse.status === 404
-              ? "内容尚未完成首次同步。"
-              : "无法读取文档清单。",
-          );
-        }
-        const manifest = (await manifestResponse.json()) as ContentManifest;
+        const manifest = await loadContentManifest((input, init) =>
+          fetch(input, { ...init, signal: controller.signal }),
+        );
         const file = findManifestFile(manifest, initialPath);
         if (!file || (file.kind !== "markdown" && file.kind !== "html")) {
           throw new Error("没有找到这篇文档。");
@@ -53,7 +45,7 @@ export function DocsSite({ initialPath }: DocsSiteProps) {
         let source = "";
         if (file.kind === "markdown") {
           const contentResponse = await fetch(
-            `/api/content/objects/${file.sha256}`,
+            contentObjectUrl(manifest, file.sha256),
             { signal: controller.signal },
           );
           if (!contentResponse.ok) throw new Error("文档内容暂时不可用。");
@@ -103,7 +95,11 @@ export function DocsSite({ initialPath }: DocsSiteProps) {
           <h1>{documentTitle(state.file)}</h1>
         </header>
         {state.file.kind === "html" ? (
-          <HtmlDocument path={state.file.path} title={documentTitle(state.file)} />
+          <HtmlDocument
+            path={state.file.path}
+            title={documentTitle(state.file)}
+            staticSnapshot={isStaticSnapshot(state.manifest)}
+          />
         ) : (
           <MarkdownDocument
             manifest={state.manifest}
