@@ -2,6 +2,7 @@
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
 import { handleSyncRoute } from "./sync-routes";
+import { handlePublicRoute } from "./public-routes";
 import type { SiteEnv, SiteExecutionContext } from "./env";
 
 // Image security config. SVG sources with .svg extension auto-skip the
@@ -16,6 +17,9 @@ const worker = {
 
     const syncResponse = await handleSyncRoute(request, env, ctx);
     if (syncResponse) return syncResponse;
+
+    const publicResponse = await handlePublicRoute(request, env);
+    if (publicResponse) return publicResponse;
 
     if (url.pathname === "/_vinext/image") {
       const allowedWidths = [...DEFAULT_DEVICE_SIZES, ...DEFAULT_IMAGE_SIZES];
