@@ -92,7 +92,10 @@ async function verifySite(execute, siteDir) {
   await execute("npm", ["run", "test:unit"], { cwd: siteDir });
   await execute("npm", ["run", "test:sync"], { cwd: siteDir });
   await execute("npm", ["run", "test:pages"], { cwd: siteDir });
-  await git(execute, siteDir, ["diff", "--check"]);
+  // Generated source snapshots preserve Markdown whitespace verbatim (including
+  // intentional trailing spaces used for hard line breaks), so lint only the
+  // non-generated working tree here.
+  await git(execute, siteDir, ["diff", "--check", "--", ".", ":(exclude)public/content"]);
 }
 
 async function cachedPaths(execute, siteDir) {
