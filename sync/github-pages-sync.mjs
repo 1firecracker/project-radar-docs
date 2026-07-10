@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
-import { mkdir, rm, writeFile } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 
 import { generateStaticSnapshot } from "../scripts/snapshot-docs.mjs";
@@ -41,17 +42,26 @@ export async function withDirectoryLock(lockDir, callback, options = {}) {
     if (error?.code === "EEXIST") throw new Error("GitHub Pages synchronization already running");
     throw error;
   }
+  const ownerToken = randomUUID();
   try {
     const diagnostic = {
       pid: process.pid,
       startedAt: new Date().toISOString(),
+      ownerToken,
     };
     await writeFile(join(lockDir, "state.json"), `${JSON.stringify(diagnostic)}\n`);
     // Keep the seam available for callers that want to record lock ownership.
     void execute;
     return await callback();
   } finally {
-    await rm(lockDir, { recursive: true, force: true });
+    try {
+      const state = JSON.parse(await readFile(join(lockDir, "state.json"), "utf8"));
+      if (state.ownerToken === ownerToken) {
+        await rm(lockDir, { recursive: true, force: true });
+      }
+    } catch (error) {
+      if (error?.code !== "ENOENT" && !(error instanceof SyntaxError)) throw error;
+    }
   }
 }
 
@@ -76,18 +86,49 @@ async function verifySite(execute, siteDir) {
   await git(execute, siteDir, ["diff", "--check"]);
 }
 
-async function stageGeneratedSnapshot(execute, siteDir) {
-  await git(execute, siteDir, ["add", "--", "public/content"]);
+async function cachedPaths(execute, siteDir) {
   const staged = await gitOutput(execute, siteDir, ["diff", "--cached", "--name-only"]);
-  const paths = staged ? staged.split("\n") : [];
+  return staged ? staged.split("\n") : [];
+}
+
+async function stageGeneratedSnapshot(execute, siteDir, cachedBeforeAdd = []) {
+  if (cachedBeforeAdd.length > 0) {
+    throw new Error("Refusing to run with pre-existing staged changes");
+  }
+  const currentCached = await cachedPaths(execute, siteDir);
+  if (currentCached.length > 0) {
+    throw new Error("Refusing to run with pre-existing staged changes");
+  }
+  await git(execute, siteDir, ["add", "--", "public/content"]);
+  const paths = await cachedPaths(execute, siteDir);
   if (paths.some((path) => !path.startsWith("public/content/"))) {
     throw new Error("Refusing to commit paths outside public/content/");
   }
 }
 
-async function commitsAheadOfOriginMain(execute, siteDir) {
-  const count = await gitOutput(execute, siteDir, ["rev-list", "--count", "origin/main..HEAD"]);
-  return Number.parseInt(count || "0", 10);
+async function verifiedCommitsAheadOfOriginMain(execute, siteDir) {
+  const commits = await gitOutput(execute, siteDir, ["rev-list", "--reverse", "origin/main..HEAD"]);
+  const hashes = commits ? commits.split("\n") : [];
+  for (const hash of hashes) {
+    const subject = await gitOutput(execute, siteDir, ["show", "-s", "--format=%s", hash]);
+    if (subject !== "docs: refresh Project Radar snapshot") {
+      throw new Error(`Refusing to push unverified snapshot commit ${hash}`);
+    }
+    const paths = await gitOutput(execute, siteDir, [
+      "diff-tree",
+      "--root",
+      "--no-commit-id",
+      "--name-only",
+      "-r",
+      "--no-renames",
+      hash,
+    ]);
+    const changedPaths = paths ? paths.split("\n") : [];
+    if (changedPaths.some((path) => !path.startsWith("public/content/"))) {
+      throw new Error(`Refusing to push unverified snapshot commit ${hash}`);
+    }
+  }
+  return hashes.length;
 }
 
 async function pushOriginMain(execute, siteDir) {
@@ -103,6 +144,11 @@ export async function runGitHubPagesSync(options = {}) {
   const generateSnapshot = options.generateSnapshot ?? generateStaticSnapshot;
 
   return withDirectoryLock(lockDir, async () => {
+    const cachedBefore = await cachedPaths(execute, siteDir);
+    if (cachedBefore.length > 0) {
+      throw new Error("Refusing to run with pre-existing staged changes");
+    }
+    await verifiedCommitsAheadOfOriginMain(execute, siteDir);
     const sourceBefore = await sourceStatus(execute, sourceDir);
     const snapshot = await generateSnapshot({ sourceDir, outputDir });
     const sourceAfter = await sourceStatus(execute, sourceDir);
@@ -112,11 +158,11 @@ export async function runGitHubPagesSync(options = {}) {
 
     if (snapshot.changed) {
       await verifySite(execute, siteDir);
-      await stageGeneratedSnapshot(execute, siteDir);
+      await stageGeneratedSnapshot(execute, siteDir, cachedBefore);
       await git(execute, siteDir, ["commit", "-m", "docs: refresh Project Radar snapshot"]);
     }
 
-    const ahead = await commitsAheadOfOriginMain(execute, siteDir);
+    const ahead = await verifiedCommitsAheadOfOriginMain(execute, siteDir);
     if (ahead > 0) await pushOriginMain(execute, siteDir);
     return {
       status: snapshot.changed ? "pushed" : ahead > 0 ? "recovered-push" : "unchanged",
