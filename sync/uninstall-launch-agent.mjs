@@ -2,7 +2,11 @@ import { execFile as execFileCallback } from "node:child_process";
 import { rm } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import { promisify } from "node:util";
-import { LABEL, launchAgentPaths } from "./install-launch-agent.mjs";
+import {
+  LABEL,
+  isLaunchAgentNotLoadedError,
+  launchAgentPaths,
+} from "./install-launch-agent.mjs";
 
 const execFile = promisify(execFileCallback);
 
@@ -15,10 +19,7 @@ export async function uninstallLaunchAgent() {
       paths.plistPath,
     ]);
   } catch (error) {
-    const detail = `${error?.stderr ?? ""} ${error?.message ?? ""}`;
-    if (!/could not find|no such process|service cannot load|code 5/i.test(detail)) {
-      throw error;
-    }
+    if (!isLaunchAgentNotLoadedError(error)) throw error;
   }
   await rm(paths.plistPath, { force: true });
   await rm(paths.supportDir, { recursive: true, force: true });

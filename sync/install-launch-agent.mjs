@@ -74,10 +74,18 @@ export function buildLaunchAgentPlist({
 `;
 }
 
-async function readToken() {
-  const chunks = [];
-  for await (const chunk of process.stdin) chunks.push(chunk);
-  const token = Buffer.concat(chunks).toString("utf8").trim();
+export async function readTokenFromStream(stream) {
+  let input = "";
+  for await (const chunk of stream) {
+    input += Buffer.from(chunk).toString("utf8");
+    const newline = input.indexOf("\n");
+    if (newline >= 0) {
+      input = input.slice(0, newline);
+      break;
+    }
+    if (input.length > 1_024) throw new Error("Sync token input is too long");
+  }
+  const token = input.trim();
   if (token.length < 32) throw new Error("Sync token from standard input is invalid");
   return token;
 }
@@ -87,14 +95,21 @@ function argument(name) {
   return index >= 0 ? process.argv[index + 1] : undefined;
 }
 
+export function isLaunchAgentNotLoadedError(error) {
+  const detail = `${error?.stderr ?? ""} ${error?.message ?? ""}`;
+  return (
+    Number(error?.code) === 5 ||
+    /could not find|no such process|service cannot load|boot-out failed:\s*5|code 5/i.test(
+      detail,
+    )
+  );
+}
+
 async function bootoutIfLoaded(uid, plistPath) {
   try {
     await execFile("/bin/launchctl", ["bootout", `gui/${uid}`, plistPath]);
   } catch (error) {
-    const detail = `${error?.stderr ?? ""} ${error?.message ?? ""}`;
-    if (!/could not find|no such process|service cannot load|code 5/i.test(detail)) {
-      throw error;
-    }
+    if (!isLaunchAgentNotLoadedError(error)) throw error;
   }
 }
 
@@ -138,7 +153,11 @@ async function main() {
   if (!endpoint) throw new Error("Missing --endpoint");
   const sourceDir =
     argument("--source") ?? "/Users/baowenzhuo/project/xhxagentv3/docs/bwz";
-  const paths = await installLaunchAgent({ sourceDir, endpoint, token: await readToken() });
+  const paths = await installLaunchAgent({
+    sourceDir,
+    endpoint,
+    token: await readTokenFromStream(process.stdin),
+  });
   process.stdout.write(
     `${JSON.stringify({ status: "installed", plistPath: paths.plistPath, logsDir: paths.logsDir })}\n`,
   );
