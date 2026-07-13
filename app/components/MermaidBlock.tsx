@@ -47,6 +47,7 @@ export function MermaidBlock({
 
     setSvg(undefined);
     setFailed(false);
+    setIsFullscreen(false);
     void renderMermaidSvg(source, diagramId, loadMermaid).then(
       (renderedSvg) => {
         if (current) setSvg(renderedSvg);

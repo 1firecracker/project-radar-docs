@@ -221,3 +221,82 @@ test("unmounting MermaidBlock while fullscreen restores body overflow", async ()
 
   assert.equal(document.body.style.overflow, previousOverflow);
 });
+
+test("changing source exits fullscreen while the new diagram is pending", async () => {
+  const previousOverflow = "scroll";
+  const firstSource = "flowchart LR\nA --> B";
+  const pendingSource = "flowchart LR\nB --> C";
+  const sourceAwareLoader: MermaidLoader = async () => ({
+    default: {
+      initialize() {},
+      render(_id, source) {
+        if (source === pendingSource) return new Promise(() => {});
+        return Promise.resolve({ svg: '<svg data-test="diagram"></svg>' });
+      },
+    },
+  });
+
+  document.body.style.overflow = previousOverflow;
+  container = document.createElement("div");
+  document.body.append(container);
+  root = createRoot(container);
+  await act(async () => {
+    root?.render(
+      createElement(MermaidBlock, {
+        source: firstSource,
+        loadMermaid: sourceAwareLoader,
+      }),
+    );
+  });
+  await act(async () => container?.querySelector("button")?.click());
+  assert.equal(document.body.style.overflow, "hidden");
+
+  await act(async () => {
+    root?.render(
+      createElement(MermaidBlock, {
+        source: pendingSource,
+        loadMermaid: sourceAwareLoader,
+      }),
+    );
+  });
+
+  assert.equal(container.querySelector(".is-fullscreen"), null);
+  assert.equal(container.querySelector("button"), null);
+  assert.equal(document.body.style.overflow, previousOverflow);
+});
+
+test("changing to a rejecting loader exits fullscreen", async () => {
+  const previousOverflow = "clip";
+  const source = "flowchart LR\nA --> B";
+  const rejectingLoader: MermaidLoader = async () => {
+    throw new Error("loader unavailable");
+  };
+
+  document.body.style.overflow = previousOverflow;
+  container = document.createElement("div");
+  document.body.append(container);
+  root = createRoot(container);
+  await act(async () => {
+    root?.render(
+      createElement(MermaidBlock, {
+        source,
+        loadMermaid: resolvingLoader,
+      }),
+    );
+  });
+  await act(async () => container?.querySelector("button")?.click());
+  assert.equal(document.body.style.overflow, "hidden");
+
+  await act(async () => {
+    root?.render(
+      createElement(MermaidBlock, {
+        source,
+        loadMermaid: rejectingLoader,
+      }),
+    );
+  });
+
+  assert.equal(container.querySelector(".is-fullscreen"), null);
+  assert.equal(container.querySelector("button"), null);
+  assert.equal(document.body.style.overflow, previousOverflow);
+});
