@@ -22,6 +22,7 @@ test("configures the Sites R2 binding and sync dependencies", async () => {
   assert.equal(pkg.dependencies["react-markdown"], "^10.1.0");
   assert.equal(pkg.dependencies["remark-gfm"], "^4.0.1");
   assert.equal(pkg.dependencies["rehype-sanitize"], "^6.0.0");
+  assert.equal(typeof pkg.dependencies.mermaid, "string");
   assert.equal(pkg.devDependencies.tsx, "^4.23.0");
   assert.match(
     envExample,
