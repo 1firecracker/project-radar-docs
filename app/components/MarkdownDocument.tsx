@@ -2,6 +2,7 @@ import { Children, isValidElement, type ReactNode } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
+import { FullscreenImage } from "./FullscreenImage";
 import { MermaidBlock } from "./MermaidBlock";
 import { findManifestFile } from "../../lib/content/manifest";
 import { contentObjectUrl } from "../../lib/content/client";
@@ -58,7 +59,7 @@ export function MarkdownDocument({
   documentHrefFor = documentHref,
 }: MarkdownDocumentProps) {
   const components: Components = {
-    a({ href, children, ...props }) {
+    a({ href, children, node, ...props }) {
       const resolved = resolveUrl(
         href,
         path,
@@ -67,25 +68,53 @@ export function MarkdownDocument({
         documentHrefFor,
       );
       const external = Boolean(resolved && isExternal(resolved));
+      const linkProps = {
+        ...props,
+        href: resolved,
+        rel: external ? "noreferrer" : undefined,
+        target: external ? "_blank" : undefined,
+      };
+      const imageNode = node?.children.length === 1 ? node.children[0] : undefined;
+
+      if (
+        imageNode?.type === "element" &&
+        imageNode.tagName === "img"
+      ) {
+        const imageSrc = imageNode.properties.src;
+        const imageAlt = imageNode.properties.alt;
+        const imageTitle = imageNode.properties.title;
+        return (
+          <FullscreenImage
+            src={
+              typeof imageSrc === "string"
+                ? resolveUrl(
+                    imageSrc,
+                    path,
+                    manifest,
+                    basePath,
+                    documentHrefFor,
+                  )
+                : undefined
+            }
+            alt={typeof imageAlt === "string" ? imageAlt : ""}
+            title={typeof imageTitle === "string" ? imageTitle : undefined}
+            linkProps={linkProps}
+          />
+        );
+      }
+
       return (
-        <a
-          {...props}
-          href={resolved}
-          rel={external ? "noreferrer" : undefined}
-          target={external ? "_blank" : undefined}
-        >
-          {children}
-        </a>
+        <a {...linkProps}>{children}</a>
       );
     },
-    img({ src, alt, ...props }) {
+    img({ src, alt, node, ...props }) {
+      void node;
       const resolvedSrc =
         typeof src === "string"
           ? resolveUrl(src, path, manifest, basePath, documentHrefFor)
           : src;
       return (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img {...props} src={resolvedSrc} alt={alt ?? ""} />
+        <FullscreenImage {...props} src={resolvedSrc} alt={alt ?? ""} />
       );
     },
     pre({ children, node, ...props }) {

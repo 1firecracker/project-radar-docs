@@ -63,6 +63,8 @@ test("docs ui rewrites relative links and sanitizes Markdown", () => {
     /href="\/docs\/%E4%BA%A7%E5%93%81%E6%A6%82%E8%A6%81.md"/,
   );
   assert.match(html, new RegExp(`/api/content/objects/${HASH}`));
+  assert.match(html, /class="document-image"/);
+  assert.match(html, /<button[^>]*>全屏<\/button>/);
   assert.doesNotMatch(html, /<script|onerror=/i);
 });
 

@@ -112,10 +112,19 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(92, 91, 214, .28
 .markdown-document .mermaid-block svg { display: block; max-width: 100%; height: auto; margin-inline: auto; }
 .markdown-document .mermaid-block p { margin: 0; color: var(--muted); font-size: 14px; }
 .markdown-document .mermaid-block pre { margin: 14px 0 0; }
+.markdown-document .document-image { position: relative; display: block; max-width: 100%; margin: 28px auto; }
+.markdown-document .document-image-toolbar { display: flex; justify-content: flex-end; margin-bottom: 10px; }
+.markdown-document .document-image-toolbar button { border: 1px solid var(--line); border-radius: 7px; background: var(--canvas); color: var(--ink); padding: 5px 10px; font: inherit; font-size: 13px; line-height: 1.4; cursor: pointer; }
+.markdown-document .document-image-toolbar button:hover { border-color: #c7c9c8; background: var(--sidebar); }
+.markdown-document .document-image-canvas { display: block; max-width: 100%; overflow: auto; }
+.markdown-document .document-image.is-fullscreen { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; margin: 0; background: var(--paper); padding: clamp(14px, 2vw, 24px); }
+.markdown-document .document-image.is-fullscreen .document-image-toolbar { flex: none; }
+.markdown-document .document-image.is-fullscreen .document-image-canvas { flex: 1; min-height: 0; display: grid; place-items: center; }
+.markdown-document .document-image img { display: block; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); box-shadow: 0 14px 38px rgba(32,34,37,.08); }
+.markdown-document .document-image.is-fullscreen img { max-height: 100%; border-radius: 8px; box-shadow: none; }
 .markdown-document table { display: block; width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 14px; }
 .markdown-document th, .markdown-document td { border: 1px solid #dddfe2; padding: 9px 12px; text-align: left; }
 .markdown-document th { background: #f1f2f4; font-weight: 650; }
-.markdown-document img { display: block; max-width: 100%; height: auto; margin: 28px auto; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); box-shadow: 0 14px 38px rgba(32,34,37,.08); }
 .markdown-document hr { margin: 38px 0; border: 0; border-top: 1px solid var(--line); }
 .html-document-frame { display: block; min-height: 70vh; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
 
