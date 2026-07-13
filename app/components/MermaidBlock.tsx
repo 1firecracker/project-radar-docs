@@ -40,6 +40,7 @@ export function MermaidBlock({
   const diagramId = `mermaid-${reactId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const [svg, setSvg] = useState<string>();
   const [failed, setFailed] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     let current = true;
@@ -60,9 +61,26 @@ export function MermaidBlock({
     };
   }, [diagramId, loadMermaid, source]);
 
+  useEffect(() => {
+    if (!isFullscreen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsFullscreen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isFullscreen]);
+
   if (failed) {
     return (
-      <div>
+      <div className="mermaid-block" role="group" aria-label={source}>
         <p>Mermaid 渲染失败</p>
         <pre>
           <code>{source}</code>
@@ -71,7 +89,33 @@ export function MermaidBlock({
     );
   }
 
-  if (svg === undefined) return <p>Mermaid 加载中</p>;
+  if (svg === undefined) {
+    return (
+      <div className="mermaid-block" role="group" aria-label={source}>
+        <p>Mermaid 加载中</p>
+      </div>
+    );
+  }
 
-  return <div dangerouslySetInnerHTML={{ __html: svg }} />;
+  return (
+    <div
+      className={`mermaid-block${isFullscreen ? " is-fullscreen" : ""}`}
+      role="group"
+      aria-label={source}
+    >
+      <div className="mermaid-toolbar">
+        <button
+          type="button"
+          aria-pressed={isFullscreen}
+          onClick={() => setIsFullscreen((value) => !value)}
+        >
+          {isFullscreen ? "退出全屏" : "全屏"}
+        </button>
+      </div>
+      <div
+        className="mermaid-canvas"
+        dangerouslySetInnerHTML={{ __html: svg }}
+      />
+    </div>
+  );
 }

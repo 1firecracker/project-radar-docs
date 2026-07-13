@@ -102,11 +102,7 @@ export function MarkdownDocument({
         typeof children.props.children === "string"
       ) {
         const source = children.props.children.replace(/\n$/, "");
-        return (
-          <div className="mermaid-block" role="group" aria-label={source}>
-            <MermaidBlock source={source} />
-          </div>
-        );
+        return <MermaidBlock source={source} />;
       }
 
       return <pre {...props}>{children}</pre>;
