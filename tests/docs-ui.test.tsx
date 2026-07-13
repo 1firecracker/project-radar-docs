@@ -86,7 +86,8 @@ test("docs ui renders Mermaid fences without changing ordinary code blocks", () 
 
   assert.match(html, /class="mermaid-block"/);
   assert.equal(html.match(/class="mermaid-block"/g)?.length, 1);
-  assert.match(html, /flowchart LR\n  A --&gt; B/);
+  assert.match(html, /aria-label="Mermaid 图表"/);
+  assert.doesNotMatch(html, /aria-label="flowchart LR/);
   assert.match(html, /<pre><code class="language-js">/);
 });
 

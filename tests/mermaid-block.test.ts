@@ -169,6 +169,47 @@ test("mounted MermaidBlock toggles fullscreen and restores body overflow", async
   assert.equal(document.body.style.overflow, previousOverflow);
 });
 
+test("multiple fullscreen Mermaid blocks keep body locked until the last exit", async () => {
+  const previousOverflow = "scroll";
+  document.body.style.overflow = previousOverflow;
+  container = document.createElement("div");
+  document.body.append(container);
+  root = createRoot(container);
+  await act(async () => {
+    root?.render(
+      createElement(
+        "div",
+        null,
+        createElement(MermaidBlock, {
+          source: "flowchart LR\nA --> B",
+          loadMermaid: resolvingLoader,
+        }),
+        createElement(MermaidBlock, {
+          source: "flowchart LR\nC --> D",
+          loadMermaid: resolvingLoader,
+        }),
+      ),
+    );
+  });
+
+  const buttons = container.querySelectorAll("button");
+  assert.equal(buttons.length, 2);
+
+  await act(async () => buttons[0]?.click());
+  await act(async () => buttons[1]?.click());
+  assert.equal(document.body.style.overflow, "hidden");
+
+  await act(async () => buttons[0]?.click());
+  assert.equal(
+    document.body.style.overflow,
+    "hidden",
+    "one remaining fullscreen diagram must retain the shared scroll lock",
+  );
+
+  await act(async () => buttons[1]?.click());
+  assert.equal(document.body.style.overflow, previousOverflow);
+});
+
 test("mounted MermaidBlock exits fullscreen on Escape", async () => {
   const previousOverflow = "clip";
   document.body.style.overflow = previousOverflow;
@@ -196,6 +237,54 @@ test("mounted MermaidBlock exits fullscreen on Escape", async () => {
     false,
   );
   assert.equal(document.body.style.overflow, previousOverflow);
+});
+
+test("fullscreen Mermaid exposes modal semantics and traps keyboard focus", async (t) => {
+  const outsideButton = document.createElement("button");
+  outsideButton.textContent = "outside";
+  document.body.append(outsideButton);
+  t.after(() => outsideButton.remove());
+
+  container = document.createElement("div");
+  document.body.append(container);
+  root = createRoot(container);
+  await act(async () => {
+    root?.render(
+      createElement(MermaidBlock, {
+        source: "flowchart LR\nA --> B",
+        loadMermaid: resolvingLoader,
+      }),
+    );
+  });
+
+  const button = container.querySelector("button");
+  button?.focus();
+  await act(async () => button?.click());
+
+  const block = container.querySelector(".mermaid-block");
+  assert.equal(block?.getAttribute("role"), "dialog");
+  assert.equal(block?.getAttribute("aria-modal"), "true");
+  assert.equal(block?.getAttribute("aria-label"), "Mermaid 图表全屏");
+
+  outsideButton.focus();
+  const tabEvent = new KeyboardEvent("keydown", {
+    key: "Tab",
+    cancelable: true,
+  });
+  await act(async () => {
+    document.dispatchEvent(tabEvent);
+  });
+
+  assert.equal(tabEvent.defaultPrevented, true);
+  assert.equal(document.activeElement, button);
+
+  await act(async () => {
+    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+  });
+
+  assert.equal(block?.getAttribute("role"), "group");
+  assert.equal(block?.getAttribute("aria-modal"), null);
+  assert.equal(document.activeElement, button);
 });
 
 test("unmounting MermaidBlock while fullscreen restores body overflow", async () => {

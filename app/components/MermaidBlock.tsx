@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 type MermaidApi = {
   initialize(config: {
@@ -14,6 +14,28 @@ type MermaidApi = {
 export type MermaidLoader = () => Promise<{ default: MermaidApi }>;
 
 const loadBundledMermaid: MermaidLoader = () => import("mermaid");
+
+let activeBodyScrollLocks = 0;
+let bodyOverflowBeforeLock: string | undefined;
+
+function acquireBodyScrollLock(): () => void {
+  if (activeBodyScrollLocks === 0) {
+    bodyOverflowBeforeLock = document.body.style.overflow;
+  }
+  activeBodyScrollLocks += 1;
+  document.body.style.overflow = "hidden";
+
+  let released = false;
+  return () => {
+    if (released) return;
+    released = true;
+    activeBodyScrollLocks -= 1;
+    if (activeBodyScrollLocks === 0) {
+      document.body.style.overflow = bodyOverflowBeforeLock ?? "";
+      bodyOverflowBeforeLock = undefined;
+    }
+  };
+}
 
 export async function renderMermaidSvg(
   source: string,
@@ -41,6 +63,7 @@ export function MermaidBlock({
   const [svg, setSvg] = useState<string>();
   const [failed, setFailed] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const fullscreenButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     let current = true;
@@ -65,23 +88,30 @@ export function MermaidBlock({
   useEffect(() => {
     if (!isFullscreen) return;
 
-    const previousOverflow = document.body.style.overflow;
+    const releaseBodyScrollLock = acquireBodyScrollLock();
+    const previousFocus = document.activeElement as HTMLElement | null;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsFullscreen(false);
+      if (event.key === "Escape") {
+        setIsFullscreen(false);
+      } else if (event.key === "Tab") {
+        event.preventDefault();
+        fullscreenButtonRef.current?.focus();
+      }
     };
 
-    document.body.style.overflow = "hidden";
     document.addEventListener("keydown", handleKeyDown);
+    fullscreenButtonRef.current?.focus();
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      releaseBodyScrollLock();
       document.removeEventListener("keydown", handleKeyDown);
+      if (previousFocus?.isConnected) previousFocus.focus();
     };
   }, [isFullscreen]);
 
   if (failed) {
     return (
-      <div className="mermaid-block" role="group" aria-label={source}>
+      <div className="mermaid-block" role="group" aria-label="Mermaid 图表">
         <p>Mermaid 渲染失败</p>
         <pre>
           <code>{source}</code>
@@ -92,7 +122,7 @@ export function MermaidBlock({
 
   if (svg === undefined) {
     return (
-      <div className="mermaid-block" role="group" aria-label={source}>
+      <div className="mermaid-block" role="group" aria-label="Mermaid 图表">
         <p>Mermaid 加载中</p>
       </div>
     );
@@ -101,11 +131,13 @@ export function MermaidBlock({
   return (
     <div
       className={`mermaid-block${isFullscreen ? " is-fullscreen" : ""}`}
-      role="group"
-      aria-label={source}
+      role={isFullscreen ? "dialog" : "group"}
+      aria-modal={isFullscreen ? true : undefined}
+      aria-label={isFullscreen ? "Mermaid 图表全屏" : "Mermaid 图表"}
     >
       <div className="mermaid-toolbar">
         <button
+          ref={fullscreenButtonRef}
           type="button"
           aria-pressed={isFullscreen}
           onClick={() => setIsFullscreen((value) => !value)}
