@@ -85,7 +85,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(92, 91, 214, .28
 .sync-time time { display: block; color: #6f7379; }
 
 .docs-main { margin-left: 292px; min-height: 100vh; padding: 68px clamp(36px, 7vw, 108px) 110px; }
-.document-header, .markdown-document, .html-document-frame { width: min(100%, 860px); margin-inline: auto; }
+.document-header, .markdown-document, .html-document { width: min(100%, 860px); margin-inline: auto; }
 .document-header { margin-bottom: 34px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
 .document-header p { margin: 0 0 8px; color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .document-header h1 { margin: 0; color: #1d1f22; font-size: clamp(28px, 4vw, 44px); line-height: 1.18; letter-spacing: -.035em; }
@@ -126,7 +126,14 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(92, 91, 214, .28
 .markdown-document th, .markdown-document td { border: 1px solid #dddfe2; padding: 9px 12px; text-align: left; }
 .markdown-document th { background: #f1f2f4; font-weight: 650; }
 .markdown-document hr { margin: 38px 0; border: 0; border-top: 1px solid var(--line); }
-.html-document-frame { display: block; min-height: 70vh; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+.html-document { position: relative; }
+.html-document-toolbar { display: flex; justify-content: flex-end; margin-bottom: 10px; }
+.html-document-toolbar button { border: 1px solid var(--line); border-radius: 7px; background: var(--canvas); color: var(--ink); padding: 5px 10px; font: inherit; font-size: 13px; line-height: 1.4; cursor: pointer; }
+.html-document-toolbar button:hover { border-color: #c7c9c8; background: var(--sidebar); }
+.html-document-frame { display: block; width: 100%; min-height: 70vh; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+.html-document.is-fullscreen { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; width: 100%; margin: 0; background: var(--paper); padding: clamp(14px, 2vw, 24px); }
+.html-document.is-fullscreen .html-document-toolbar { flex: none; }
+.html-document.is-fullscreen .html-document-frame { flex: 1; min-height: 0; border-radius: 8px; }
 
 .site-state { min-height: 100vh; display: grid; place-content: center; justify-items: center; gap: 12px; padding: 30px; text-align: center; }
 .site-state .state-radar { width: 46px; height: 46px; }
