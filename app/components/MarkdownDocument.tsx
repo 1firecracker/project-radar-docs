@@ -1,6 +1,8 @@
+import { Children, isValidElement, type ReactNode } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
+import { MermaidBlock } from "./MermaidBlock";
 import { findManifestFile } from "../../lib/content/manifest";
 import { contentObjectUrl } from "../../lib/content/client";
 import {
@@ -85,6 +87,29 @@ export function MarkdownDocument({
         // eslint-disable-next-line @next/next/no-img-element
         <img {...props} src={resolvedSrc} alt={alt ?? ""} />
       );
+    },
+    pre({ children, node, ...props }) {
+      void node;
+      if (
+        Children.count(children) === 1 &&
+        isValidElement<{
+          className?: string;
+          children?: ReactNode;
+        }>(children) &&
+        children.props.className
+          ?.split(/\s+/)
+          .includes("language-mermaid") &&
+        typeof children.props.children === "string"
+      ) {
+        const source = children.props.children.replace(/\n$/, "");
+        return (
+          <div className="mermaid-block" role="group" aria-label={source}>
+            <MermaidBlock source={source} />
+          </div>
+        );
+      }
+
+      return <pre {...props}>{children}</pre>;
     },
   };
 

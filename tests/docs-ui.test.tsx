@@ -66,6 +66,29 @@ test("docs ui rewrites relative links and sanitizes Markdown", () => {
   assert.doesNotMatch(html, /<script|onerror=/i);
 });
 
+test("docs ui renders Mermaid fences without changing ordinary code blocks", () => {
+  const html = renderToStaticMarkup(
+    <MarkdownDocument
+      manifest={manifest}
+      path="README.md"
+      source={[
+        "```mermaid",
+        "flowchart LR",
+        "  A --> B",
+        "```",
+        "",
+        "```js",
+        'console.log("ordinary")',
+        "```",
+      ].join("\n")}
+    />,
+  );
+
+  assert.match(html, /class="mermaid-block"/);
+  assert.match(html, /flowchart LR\n  A --&gt; B/);
+  assert.match(html, /<pre><code class="language-js">/);
+});
+
 test("docs ui isolates standalone HTML", () => {
   const html = renderToStaticMarkup(
     <HtmlDocument path="demo/page.html" title="演示页面" />,
