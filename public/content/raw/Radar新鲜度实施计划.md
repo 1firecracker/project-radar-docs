@@ -115,5 +115,5 @@ return {}. Renaming the action does not make it novel.
 - [x] 添加前端状态测试：传入 `superseded` 行时不进入 Action Bar；现有查询仍只请求 `pending`。
 - [x] 更新 Radar 状态图与含义，明确 `superseded` 由系统产生，不计作用户忽略。
 - [x] 运行后端 Radar 数据库、Service、Post-run、API 回归。
-- [ ] 运行前端 Radar 测试和生产构建。
+- [x] 运行前端 Radar 测试和生产构建。
 - [ ] 使用本次预算 Case 复测：第一轮旧 Radar 在第二轮开始后不可展示；第二轮因主 Agent 已指出超预算而应保持安静。

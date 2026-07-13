@@ -294,5 +294,5 @@ npm --prefix frontend run build
 - [x] Analyzer 前和持久化前分别校验来源 Event 是否仍对应 Session 最新真实用户消息；过期候选返回 `stale` 且不落库。
 - [x] Radar Analyzer 接收最新 QA 的用户文本与最终 Assistant 文本；主回答已经揭示同一缺口时保持安静。
 - [x] 前端只选择 `pending` Radar，即使旧响应混入 `superseded` 记录也不会展示。
-- [x] Radar 数据库、Service、Post-run、执行和 API 组合回归 190 项全部通过；前端状态测试 9 项通过。
+- [x] Radar 数据库、Service、Post-run、执行和 API 组合回归 191 项全部通过；前端 Radar 相关测试 24 项通过，生产构建成功。
 - [ ] 重启本地服务后使用预算 Case 完成真实模型复测：第一轮旧建议不晚到，第二轮主 Agent 已指出超预算时 Radar 保持安静。
