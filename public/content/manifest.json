@@ -1,14 +1,539 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-1ebad7214106ea2148c03e8fc29c50639ef820483c87853e15486d39a2b3fb4e",
-  "generatedAt": "2026-07-10T14:09:14.279Z",
+  "revision": "snapshot-ed26a3946f31ddbae10b9f77c295719c4594cc9f908f7cff1d0bc1abd9e2315a",
+  "generatedAt": "2026-07-13T04:10:58.056Z",
   "files": [
     {
-      "path": "README.md",
-      "sha256": "84eddd19a6d169809431d0ae226e82506614cea39256846153c12a728a7775ae",
-      "bytes": 5097,
+      "path": "Case1跨会话项目实测.md",
+      "sha256": "96ba496c0dfb559099f219804fd583d044f0255ad1b01cbd1ec9517fb31438cf",
+      "bytes": 12322,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
+    },
+    {
+      "path": "Case2独立事项实测.md",
+      "sha256": "37b4eb479786753700fcf510ecaf61e16476fca4cbdeeb184d639f4dc81e23f1",
+      "bytes": 7154,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "Case3非项目问答实测.md",
+      "sha256": "db000d33753a79e6250bac15e7992744303a259446ecd4b8ab7cb97f9e71f689",
+      "bytes": 3988,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "Case4归属纠正实测.md",
+      "sha256": "9ebb95ae131234b1abd42dab48de2aa4c4637485e9311512594ad999869c4abb",
+      "bytes": 7682,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "Case5完成重开与Radar执行实测.md",
+      "sha256": "cf470d7277e395cb58bd1f1ec6b286d3ccddd8d3725e4cc0ee49f5b611c6890b",
+      "bytes": 7594,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "README.md",
+      "sha256": "df0990b3a70f7b1d7533b39fd0d7c6f6add94b3b0bdce1d76f3aabec6d52e5bc",
+      "bytes": 6481,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "audit/03-desktop-fixed.jpg",
+      "sha256": "519ac086c18b0575af871b80e8664bd1e0ca7663a6c3489a4c6b79b3dfa65b3c",
+      "bytes": 158368,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "audit/03-sidebar-todolist.png",
+      "sha256": "48a001da0da060b81b5e0f76d55b16bd580f67cdf515fb54cd81f952f2729f92",
+      "bytes": 35628,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "audit/04-sidebar-radar-empty.png",
+      "sha256": "cd5821137d03ba811dd4d60c5689fb91f6f5a3e59b4da0c21eae2c6e1050556e",
+      "bytes": 33896,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "audit/05-desktop-spacing-final-view.jpg",
+      "sha256": "57827758a70f2febde391340ee8178458605b6a110a827c7a799a308727421fe",
+      "bytes": 282239,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "audit/05-sidebar-project-modal.png",
+      "sha256": "2018cdd2088eaf70a85ec0824cd41888c48f5875ed7ab765896dc521ebfbd6b9",
+      "bytes": 38635,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "audit/06-sidebar-narrow.png",
+      "sha256": "6f20f09e7bce313f1d8c164f25e8367301613c9808d88b2f5c351c5952e51296",
+      "bytes": 28586,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/00-清理后的空白状态.jpg",
+      "sha256": "bee0437427ea0f6136e71e9599467b1df787fa450f9944dab898d491599e150a",
+      "bytes": 18567,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/01-新建SessionA.jpg",
+      "sha256": "425b151bfde9fed71d2e26e2ac18b6ba62f9e8a5824c53a8554749f300459a03",
+      "bytes": 33849,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/02-SessionA输入长期目标.jpg",
+      "sha256": "679e6853042cb6447649c890bca8974a506ea971d99b69cb82f784880c019b09",
+      "bytes": 47813,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/03-SessionA第一轮回答完成.jpg",
+      "sha256": "41caa7dde17378c5a0b50132df5a3c825b04a5f9e4ac0821fb3fc4ac8a01f93e",
+      "bytes": 102962,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/04-第一轮PostRun无Radar建议.jpg",
+      "sha256": "286dece99cabeb7121d6549afe1eb5d1bd0470674bc87fd15a97154a9fc6e806",
+      "bytes": 101379,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/05-第一轮Project总览.jpg",
+      "sha256": "10972f0497d5b74093566214ddd0fd4f4fe1c2a7ab46c0608088346a462b2a68",
+      "bytes": 67112,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/06-SessionA输入API范围决策.jpg",
+      "sha256": "fd368e3218ec2a94e364c1ce2a2cf261e2486a3a08c3a098e2c544db65bdfa5e",
+      "bytes": 108716,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/07-SessionA第二轮回答与Radar建议.jpg",
+      "sha256": "fbf8bfd2eeb3508404c86c442fd6ffb8e543282386ea7cd9230676d2f98e687e",
+      "bytes": 140301,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/08-第二轮Project总览.jpg",
+      "sha256": "31ebe045deeeb0c434fd7fd510dd665c4a4e127c3e59c7bd9916641267d47183",
+      "bytes": 74447,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/09-API事项与两条Event时间线.jpg",
+      "sha256": "58550b5c25bea04a9909fb2b20314a526134b0d1aafe880e6f1ef2b2107ef33a",
+      "bytes": 86535,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/10-新建SessionB.jpg",
+      "sha256": "7736bfa52d6c891a728d9a48b05f47ad3874416f25c5ee549c2abe5f3507c544",
+      "bytes": 35951,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/11-SessionB输入项目进展.jpg",
+      "sha256": "acdf1e4eeb9d9ea03b18260a432f7f7f69da87a8f7c8e118d5f3555c9055195a",
+      "bytes": 35546,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/12-SessionB回答与当前Radar状态.jpg",
+      "sha256": "7e47ddc990516ce7ecb0c9532fb2ade9889da52d7e1c0b812329817ed4f3fb8d",
+      "bytes": 76224,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/13-跨Session后的Project总览.jpg",
+      "sha256": "8ad798cfe9ffa94ba0d402edeb529d45d5d40a42bbc3dcc89504e3831d41daaa",
+      "bytes": 68748,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/14-SessionB事项与来源Event.jpg",
+      "sha256": "ba6d17ce1b51fec1ede8e64c1cf983cbdf47be4c87cad6006d51edbbd1eacc77",
+      "bytes": 67695,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/15-跨Session更新后SessionA的Radar状态.jpg",
+      "sha256": "5bad5dea6603c8966d020198953fa39b29b6ce30b84209920c1fe7eaea7758e2",
+      "bytes": 155048,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1实测/16-SessionB最终Radar建议.jpg",
+      "sha256": "6c50d4572a047faec2ff266e28c8a88c95bddcb7135715f6825b896f083acfc7",
+      "bytes": 128996,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case2实测/00-清理后的空白状态.jpg",
+      "sha256": "bc40f6c45175f5d931e5b8377635d99210fe50edf15cc05ec90926f6c71edec5",
+      "bytes": 19272,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case2实测/01-新建护照换发对话.jpg",
+      "sha256": "00b890b94f12fd48551b9967f5162a6c8fe4e2d1767b0a7c276f960a36448a2d",
+      "bytes": 35750,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case2实测/02-输入独立护照换发事项.jpg",
+      "sha256": "4497178e7179f5759a9a8b631207271e934308be671b6a6b9cd769f1a05eb440",
+      "bytes": 46869,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case2实测/03-第一轮回答完成.jpg",
+      "sha256": "08cb396b12af5c7ed149b0e59061bab71507e06985c1158477c949a66f213313",
+      "bytes": 80837,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case2实测/04-第一轮Radar状态.jpg",
+      "sha256": "89a225534b76b212e79b8f47d37f1120286b8d126b42bace7f6f78e201faf787",
+      "bytes": 79191,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case2实测/05-第一轮StandaloneItem总览.jpg",
+      "sha256": "4d0e7c95f2a0203702dd773566a9ccfe9eb2148c33957e84ba8f3123d8bc01e6",
+      "bytes": 52225,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case2实测/06-输入护照换发部分进展.jpg",
+      "sha256": "89a225534b76b212e79b8f47d37f1120286b8d126b42bace7f6f78e201faf787",
+      "bytes": 79191,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case2实测/07-第二轮回答与Radar建议.jpg",
+      "sha256": "b681c22a673b76a7419f19a456f9fb754efd1be84debf925b8d9be1cb3f07299",
+      "bytes": 128927,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case2实测/08-最终StandaloneItem与两条Event.jpg",
+      "sha256": "f35f32afadb5bab4714d0108b0c13b3b3b18d025f3ceba851541ae838d044021",
+      "bytes": 63147,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case3实测/00-清理后的空白状态.jpg",
+      "sha256": "bc40f6c45175f5d931e5b8377635d99210fe50edf15cc05ec90926f6c71edec5",
+      "bytes": 19272,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case3实测/01-新建一次性问答对话.jpg",
+      "sha256": "00b890b94f12fd48551b9967f5162a6c8fe4e2d1767b0a7c276f960a36448a2d",
+      "bytes": 35750,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case3实测/02-输入一次性TLS问答.jpg",
+      "sha256": "35d19c324974c5214425dcd3195a4cb8bd7e06c7d691c2d882fa3a0267fb9eca",
+      "bytes": 40603,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case3实测/03-TLS回答完成.jpg",
+      "sha256": "3f39c60d7369460d4c21d45abe398ca2cc56e3fd602eb367a196e942582c6124",
+      "bytes": 87805,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case3实测/04-输入一次性蓝莓问答.jpg",
+      "sha256": "2935b5c861de3b2806bbaf434973e22fba5767be708994b3d0d1a679539a3219",
+      "bytes": 92297,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case3实测/05-蓝莓回答完成.jpg",
+      "sha256": "3d84fc31fd51c2f55ba5c24f47d9dd8f3c3767746f59554eb8bb4c599b077840",
+      "bytes": 110932,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case3实测/06-两轮后Radar保持安静.jpg",
+      "sha256": "856660876aaf8262cb38dc710aff568879c4c4b9e0e534c1b81b2e80aae7182b",
+      "bytes": 109400,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case3实测/07-NonProject两条Event总览.jpg",
+      "sha256": "7c0c970a631a501d1990aad4c5f0a6a9878dc561ec904c31cbf89060a91332cb",
+      "bytes": 60209,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/00-清理后的空白状态.jpg",
+      "sha256": "bc40f6c45175f5d931e5b8377635d99210fe50edf15cc05ec90926f6c71edec5",
+      "bytes": 19272,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/01-新建官网文案SessionA.jpg",
+      "sha256": "00b890b94f12fd48551b9967f5162a6c8fe4e2d1767b0a7c276f960a36448a2d",
+      "bytes": 35750,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/02-输入官网英文文案事项.jpg",
+      "sha256": "694cddd1392a73e31f4a8a653d63fbbf6a3b637df5ee7f006bd6c89e5755f0d9",
+      "bytes": 44182,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/03-SessionA官网事项创建完成.jpg",
+      "sha256": "4715ed201678003fd3c8b58f1e4f929f5203d5bd7c20dbb160cb680bfcb120a4",
+      "bytes": 70499,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/04-新建帮助中心SessionB.jpg",
+      "sha256": "a7039c284dcbd2896611ea6a5208241ca44049fd1b36fd8e530566a064c9d5a6",
+      "bytes": 36786,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/05-输入帮助中心英文文档事项.jpg",
+      "sha256": "6ea0163fb4b1c272402fd74ffbf8f2875c9a123dc9b828d9d661cc104330f1b0",
+      "bytes": 45673,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/06-SessionB帮助中心事项创建完成.jpg",
+      "sha256": "2158fbf5bb5455e131459c8a46a0ea7ea0efb5a06294bdae635f3b4cad70cb85",
+      "bytes": 66538,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/07-新建模糊进展SessionC.jpg",
+      "sha256": "59ac07572809215983c1113fecb332890aec565da018cddaaf5511d8a25903c1",
+      "bytes": 38135,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/08-输入模糊英文进展.jpg",
+      "sha256": "59ac07572809215983c1113fecb332890aec565da018cddaaf5511d8a25903c1",
+      "bytes": 38135,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/09-SessionC模糊进展回答完成.jpg",
+      "sha256": "f9129e8e25b5d775923fb2213aa2e05b9999f5bf5d542e96f8e2733c4a8ac905",
+      "bytes": 70003,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/10-模型正确归入帮助中心事项.jpg",
+      "sha256": "f325e42f33e1c8e47d43788baa417d3b657b9aa4b56773004046885fb3b44f14",
+      "bytes": 62155,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/11-人工移错后帮助中心事项回退.jpg",
+      "sha256": "88b5742daf869e8c4b1d082af80c7a8d6c412aef6a71d575c123efd46c818022",
+      "bytes": 67385,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/12-错误Event进入官网文案事项.jpg",
+      "sha256": "21905cd7e7f48d94414a2e5222253d1153e044d27e14ccd3e2a1db5a867c7197",
+      "bytes": 75357,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/13-纠正后官网事项恢复.jpg",
+      "sha256": "8dd5d2638821f2b9e5a209ac91e6e9e58fc1885362e17dbd4a5e0a412a999786",
+      "bytes": 67925,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/14-纠正后帮助中心事项恢复.jpg",
+      "sha256": "2f43c3756189546b1eed48c81a131e3fb6237ffb913dabc27384df79bf01b2a1",
+      "bytes": 76286,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/15-刷新后纠正结果仍然保留.jpg",
+      "sha256": "b2e908512ffe38e68307802a5b2b2a52aca4de263c75f12cd113071816d513dd",
+      "bytes": 62989,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4实测/16-刷新后帮助中心Event归属正确.jpg",
+      "sha256": "76181f62fdc2d21ab661d7315b39dc1a1f672b62daad11fd72c6a1f671477c5b",
+      "bytes": 61462,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case5实测/00-彻底清理后的空白状态.jpg",
+      "sha256": "bc40f6c45175f5d931e5b8377635d99210fe50edf15cc05ec90926f6c71edec5",
+      "bytes": 19272,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case5实测/01-新建反馈表单SessionA.jpg",
+      "sha256": "00b890b94f12fd48551b9967f5162a6c8fe4e2d1767b0a7c276f960a36448a2d",
+      "bytes": 35750,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case5实测/02-输入反馈表单完成标准.jpg",
+      "sha256": "83350bc2b9efb5b7f6cc8cc891458437dd3bd752b61874a9d1f002be0ea08b38",
+      "bytes": 46157,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case5实测/03-反馈表单事项创建完成.jpg",
+      "sha256": "fc4b8083cb9e4355c4058632b60ec0f7c71b9a6d7633c88c26d1522eab0c839d",
+      "bytes": 92466,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case5实测/04-输入明确完成确认.jpg",
+      "sha256": "c824fd7cea25f3590cebb5fb57c2e2995d61d4f085e84eb8b5d765c17a7cf1e5",
+      "bytes": 99005,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case5实测/05-完成确认回答结束.jpg",
+      "sha256": "fc4b8083cb9e4355c4058632b60ec0f7c71b9a6d7633c88c26d1522eab0c839d",
+      "bytes": 92466,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case5实测/06-事项完成状态与两条Event.jpg",
+      "sha256": "2af921e9db9987e5ec1ef7403ed7df12357b5fbe52556abb4bc9c3c45c5cb99b",
+      "bytes": 60955,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case5实测/07-新建反例SessionB.jpg",
+      "sha256": "ed57d22fe8bfb83180c09b9c33bdd7b1199adf09f12eb2c0df28503872341cac",
+      "bytes": 35585,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case5实测/08-输入移动端反例.jpg",
+      "sha256": "ec77c037b5d51bd0c9d26fb2441a78bf7a8ea5d83147bb794ad6cadd46e494da",
+      "bytes": 45324,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case5实测/09-反例回答与事项重新打开.jpg",
+      "sha256": "3adff48964ebefc8614647b0eeba80a5a6778ac83b10e46bf1553e306215269f",
+      "bytes": 83624,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case5实测/10-事项从完成重新打开.jpg",
+      "sha256": "df39b196dbc8eacab23e1c7163b4553186f9028ca8d6950e5f697d58b42b7feb",
+      "bytes": 75435,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case5实测/11-Radar执行结果与无递归建议.jpg",
+      "sha256": "e936cd46e079d11d82340c7b51c583d3e2cbb671e46da413b71f52b03c5087b4",
+      "bytes": 93326,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case5实测/12-执行结果回流与四条Event.jpg",
+      "sha256": "439319f445e8a602df43c6c6f6b77ad40cfc246c9cad335ced184cfae3f73e5f",
+      "bytes": 83690,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
     },
     {
       "path": "images/project-radar-main-page-minimal-v1.png",
@@ -26,15 +551,29 @@
     },
     {
       "path": "project-radar-architecture.html",
-      "sha256": "3868e6dc4b54524d353edd6f6d6eee8378f6a3794e8bb8150bf670bf7a12bdd8",
-      "bytes": 18050,
+      "sha256": "00a48b75ffde938a66bebacf359b4e8e8c5e889767fb88201c93569a5c912c79",
+      "bytes": 18619,
       "mediaType": "text/html; charset=utf-8",
       "kind": "html"
     },
     {
+      "path": "test_project_radar_architecture.py",
+      "sha256": "1bd4f4dbd4f3ef63a6ffe2998f0ec2abc01fba3330a3b78141406fd4001e1eb3",
+      "bytes": 3134,
+      "mediaType": "application/octet-stream",
+      "kind": "asset"
+    },
+    {
       "path": "产品概要.md",
-      "sha256": "7f02f85dfac5214576919a1d408c7c4f132113c0925c0d602225455df3fe8d5d",
-      "bytes": 7034,
+      "sha256": "7568293a3b9fb24eab03289db438d699b8a0be77a89a94938124f178ff7f4f0f",
+      "bytes": 7150,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "侧栏实施计划.md",
+      "sha256": "7d8c52dde3b2a1c5d6fe7e765e3a9c8bca471363eaf31731a71d65f9d1008c73",
+      "bytes": 6783,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -54,8 +593,8 @@
     },
     {
       "path": "决策记录/采用嵌入式辅助代理.md",
-      "sha256": "378c84b65402b8d17f27c83b7ed868ffe31ff6fe2b70edaa8466f9be982bf304",
-      "bytes": 2090,
+      "sha256": "d2dc4d774d98ba7f24877cd1051eac568f6d2d5df786e460237898b074a95bfc",
+      "bytes": 2254,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -68,29 +607,36 @@
     },
     {
       "path": "实施计划.md",
-      "sha256": "c283012b1febedbc0eeee1f22ff3ddf453a7a568640503ff1f8efbd0fa11a305",
-      "bytes": 10768,
+      "sha256": "9ae5992517ca9c47e92c1b08c5148ed60003a0defb55ce2cdfc780fb7318282a",
+      "bytes": 11782,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "技术设计.md",
-      "sha256": "99f5fe5b54fd85986466933207c473b0e65b4ecb4c5da399c8ac0331d8ecf3eb",
-      "bytes": 19460,
+      "sha256": "5350c60dccb77ff84319caefc3713ba30f39c71143a5e828551733cba4315443",
+      "bytes": 20885,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "测试与演示.md",
-      "sha256": "501accd49a66fefb943bdcda680d1766d041629a051e461ee2d58e2dd700961e",
-      "bytes": 7682,
+      "sha256": "4de9144d63d92b6f662148723580c222a53da3ff5c0250eac7a3f1ba05d50283",
+      "bytes": 9125,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "演示案例.md",
+      "sha256": "7579ab09596bc395321accc212eeac4d5898e8cd02306cffe32529f10e25c9b7",
+      "bytes": 16227,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "零版产品需求.md",
-      "sha256": "13c92dabae1eed94e522ec2f66e4039f6249448d50d55d5431b7610918a13d62",
-      "bytes": 8775,
+      "sha256": "0c2e83b2368dc132a06fa47b0625bb5b3c9a8488d72a58eece894b887c3996b0",
+      "bytes": 9249,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }
