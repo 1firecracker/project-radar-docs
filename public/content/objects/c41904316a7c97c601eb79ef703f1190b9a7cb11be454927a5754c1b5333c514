@@ -250,129 +250,35 @@ npm --prefix frontend run build
 
 ### 7.1 持久化 QA 身份
 
-- [ ] 新建 `tests/test_conversation_state_v3_post_run.py`，先添加失败测试：空状态的 `pending_post_run_qa` 为 `None`；设置后经过 `extract_persistable_state` 仍保留；清除后恢复 `None`。
-- [ ] 运行：
-
-```bash
-uv run python -m pytest tests/test_conversation_state_v3_post_run.py -q
-```
-
-预期：新增测试因缺少 pending QA helper 或默认字段失败。
-
-- [ ] 在 `src/conversation_state_v3.py` 增加：
-
-```python
-def set_pending_post_run_qa(
-    state: Dict[str, Any],
-    *,
-    user_message_id: str,
-    source_run_id: str,
-    started_at: Optional[str] = None,
-) -> Dict[str, str]:
-    user_id = str(user_message_id or "").strip()
-    run_id = str(source_run_id or "").strip()
-    if not user_id or not run_id:
-        raise ValueError("pending Post-run QA requires user and run ids")
-    value = {
-        "user_message_id": user_id,
-        "source_run_id": run_id,
-        "started_at": str(started_at or _iso_now()),
-    }
-    state.setdefault("runtime_control", {})["pending_post_run_qa"] = value
-    touch_updated_at(state)
-    return _deepcopy_jsonable(value)
-
-def get_pending_post_run_qa(state: Dict[str, Any]) -> Optional[Dict[str, str]]:
-    value = (state.get("runtime_control") or {}).get("pending_post_run_qa")
-    return _deepcopy_jsonable(value) if isinstance(value, dict) else None
-
-def clear_pending_post_run_qa(state: Dict[str, Any]) -> None:
-    state.setdefault("runtime_control", {})["pending_post_run_qa"] = None
-    touch_updated_at(state)
-```
-
-- [ ] helper 只接受非空 `user_message_id` 与 `source_run_id`；返回 JSON 可持久化副本；默认字段加入 `empty_conversation_state().runtime_control`。
-- [ ] 重跑 `tests/test_conversation_state_v3_post_run.py`，确认通过。
+- [x] 新增 `pending_post_run_qa` 默认字段及设置、读取、清除函数。
+- [x] 校验 `user_message_id`、`source_run_id` 非空，并支持 Conversation State 持久化。
+- [x] 新增 5 项状态单元测试并通过。
 
 ### 7.2 真实输入创建、Resume 恢复
 
-- [ ] 在 `agents/agentv3/tests/test_context_pipeline.py` 先添加失败测试：正常真实输入把当前 `runtime_session_id` 和新建用户 Record id 写入 `pending_post_run_qa`。
-- [ ] 添加失败测试：`suppress_user_query_message=True` 的 Todolist/ask_user Resume 不创建新 QA 身份，而是从持久状态返回原始 `post_run_user_message_id` 和 `post_run_source_run_id`。
-- [ ] 运行：
-
-```bash
-uv run python -m pytest agents/agentv3/tests/test_context_pipeline.py -q
-```
-
-预期：Resume 当前返回 `post_run_user_message_id=None`，新增测试失败。
-
-- [ ] 在 `agents/agentv3/core/context_pipeline.py` 中，真实用户 Record 创建后调用 `set_pending_post_run_qa`；Resume 从 `get_pending_post_run_qa` 恢复身份。
-- [ ] `prepare_runtime_state` 返回：
-
-```python
-{
-    "post_run_user_message_id": pending_qa["user_message_id"],
-    "post_run_source_run_id": pending_qa["source_run_id"],
-}
-```
-
-- [ ] replay、re-entry、没有 pending QA 的内部 Run 仍返回 `None`，不猜测历史用户消息。
-- [ ] 重跑 context pipeline 测试，确认通过。
+- [x] 真实输入创建稳定 QA 身份；Todolist/ask_user Resume 恢复原始身份，不把合成反馈当成新 QA。
+- [x] `prepare_runtime_state` 返回原始 `post_run_user_message_id` 和稳定 `post_run_source_run_id`。
+- [x] 没有 pending QA 的内部 Run 仍返回 `None`，不猜测历史消息。
+- [x] 新增 3 项定向测试并通过；该测试文件原有 6 项无关基线失败保持不变。
 
 ### 7.3 最终回答消费同一 QA
 
-- [ ] 在 `agents/agentv3/tests/test_postprocess_regressions.py` 先添加失败测试：进入 `waiting_user_input` 时保留 `pending_post_run_qa` 且 `post_run_qa=None`。
-- [ ] 添加失败测试：Resume 最终进入 `idle` 后，`post_run_qa` 包含原始 `user_message_id`、最终 `assistant_message_id`、稳定 `source_run_id`，持久状态中的 pending QA 已清除。
-- [ ] 运行：
-
-```bash
-uv run python -m pytest agents/agentv3/tests/test_postprocess_regressions.py -q
-```
-
-预期：Resume 因当前 run 没有真实用户 id 而无法产生 `post_run_qa`。
-
-- [ ] 修改 `agents/agentv3/core/postprocess.py`：最终回答使用恢复后的原始 user id；`post_run_qa` 增加 `source_run_id`；成功构造元数据后清除 pending QA；等待态不清除。
-- [ ] QA chunk 保存继续忽略合成 `todolist_feedback`，但该规则不得影响 Project Radar 的 Post-run 元数据。
-- [ ] 重跑 postprocess 测试，确认通过。
+- [x] `waiting_user_input` 时保留 pending QA，且不产生半成品 `post_run_qa`。
+- [x] 最终 Resume 使用原始 User Record、最终 Assistant Record 和稳定 source run id，并清除 pending QA。
+- [x] QA chunk 仍忽略合成 `todolist_feedback`，但不再阻断 Project Radar Post-run。
 
 ### 7.4 Server 调度与幂等
 
-- [ ] 在 `backend/test_radar_post_run.py` 把 Resume 场景改为：有完整 `post_run_qa` 且最终为 `idle` 时 eligible；waiting、replay、re-entry、终止和异常仍不 eligible。
-- [ ] 添加失败测试：服务端构造 payload 时使用 `post_run_qa.source_run_id`，不能使用 Resume 本次新生成的 `case.session_id`。
-- [ ] 添加数据库级幂等测试：同一 `source_run_id` 重复调度只产生一条 Activity Event。
-- [ ] 运行：
-
-```bash
-uv run python -m pytest backend/test_radar_post_run.py -q
-```
-
-预期：当前 Resume eligibility 为 false，且服务端仍使用 Resume run id，新增测试失败。
-
-- [ ] 修改 `backend/radar_post_run.py`：允许 `control_path in {"normal", "resume"}`，真正是否调度仍要求 `post_run_qa` 完整且最终不是 waiting。
-- [ ] 修改 `backend/server.py`：优先使用 `post_run_qa["source_run_id"]`；显式终止时清除 pending QA；不改变 `end_stream` 先于异步 Post-run 的顺序。
-- [ ] 重跑 `backend/test_radar_post_run.py`，确认通过。
+- [x] Resume 最终完成时允许进入 Post-run；waiting、replay、re-entry、终止和异常仍被排除。
+- [x] Server 优先使用原始 `post_run_qa.source_run_id`，不使用 Resume 的新 run id。
+- [x] 显式终止清理 pending QA；`end_stream` 仍先于异步 Post-run。
+- [x] 现有数据库并发与重复调度测试确认同一 `source_run_id` 只产生一条 Activity Event。
 
 ### 7.5 完整验证
 
-- [ ] 运行定向回归：
-
-```bash
-uv run python -m pytest \
-  tests/test_conversation_state_v3_post_run.py \
-  agents/agentv3/tests/test_context_pipeline.py \
-  agents/agentv3/tests/test_postprocess_regressions.py \
-  backend/test_radar_post_run.py -q
-```
-
-- [ ] 运行 Project Radar 后端回归：
-
-```bash
-uv run python -m pytest \
-  backend/test_radar_database.py \
-  backend/test_radar_service.py \
-  backend/test_radar_api.py -q
-```
-
+- [x] 修复定向回归 63 项全部通过。
+- [x] Project Radar 数据库、服务和 API 回归 118 项全部通过。
+- [x] 组合回归共 93 项通过，仍有 6 项修复前已存在的 context pipeline 基线失败，本次没有新增失败。
 - [ ] 使用独立测试账号重新执行 Case 5 前两轮，验证第二轮即使触发 Todolist 自动确认，最终仍生成一条 `completion_confirmed` Event，Item 进入 `completed`。
 - [ ] 检查首次 waiting 阶段没有半成品 Event，最终 Event 的来源仍是原始自然语言消息，而不是 `todolist_feedback`。
-- [ ] 将本节勾选状态、测试结果和实测结论更新为真实结果。
+- [x] 本节已更新为当前真实实现与自动化测试结果。
