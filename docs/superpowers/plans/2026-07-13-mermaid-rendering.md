@@ -196,11 +196,15 @@ feat: render Mermaid code blocks in Markdown
 - Consumes: existing `npm run sync:github-pages`, `npm run sync:install`, and GitHub Pages workflow.
 - Produces: clean `main`, restored 600-second LaunchAgent, successful Pages deployment, and a production SVG smoke test.
 
-- [ ] **Step 1: Pause the LaunchAgent and recover the pending snapshot**
+- [ ] **Step 1: Pause the LaunchAgent and publish the feature commits**
 
-Run `npm run sync:uninstall` before changing index state. Preserve the generated working tree, unstage only `public/content`, then run `npm run sync:github-pages` so the existing workflow verifies, commits, and pushes the pending snapshot. Do not manually edit generated files.
+Run `npm run sync:uninstall` before changing index state. Preserve the generated `public/content` working tree and push the already-committed Mermaid feature commits to `origin/main`. This order is required because the snapshot runner intentionally refuses to push when non-snapshot commits are ahead of `origin/main`.
 
-- [ ] **Step 2: Run full local verification**
+- [ ] **Step 2: Recover the pending snapshot through the existing runner**
+
+After `origin/main` contains the feature commits, unstage only `public/content` and run `npm run sync:github-pages`. The existing runner must regenerate from the read-only source, verify, commit only `public/content`, and push the snapshot. Do not manually edit generated files.
+
+- [ ] **Step 3: Run full local verification**
 
 Run:
 
@@ -213,11 +217,11 @@ git diff --check
 
 Expected: all tests and both site builds pass, with no whitespace errors outside generated snapshots.
 
-- [ ] **Step 3: Push feature commits and verify GitHub Pages**
+- [ ] **Step 4: Verify GitHub Pages**
 
-Push `main`. Confirm the GitHub Actions Pages workflow succeeds and `https://1firecracker.github.io/project-radar-docs/` returns HTTP 200. Open a source document containing a standard Mermaid block and verify the page contains a rendered `<svg>` inside `.mermaid-block`.
+Confirm the GitHub Actions Pages workflow for the snapshot commit succeeds and `https://1firecracker.github.io/project-radar-docs/` returns HTTP 200. Open a source document containing a standard Mermaid block and verify the page contains a rendered `<svg>` inside `.mermaid-block`.
 
-- [ ] **Step 4: Restore the ten-minute scheduler**
+- [ ] **Step 5: Restore the ten-minute scheduler**
 
 Run `npm run sync:install` and verify:
 
@@ -229,6 +233,6 @@ last exit code: 0
 
 Confirm the independent site repository is clean and the source repository has no new site-generated files or Git changes.
 
-- [ ] **Step 5: Record final state**
+- [ ] **Step 6: Record final state**
 
 Update `docs/文档索引.md` only if paths or status changed, then commit documentation with message `docs: record Mermaid support` when necessary.
