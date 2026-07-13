@@ -14,7 +14,7 @@ Project Radar 文档站当前使用 `react-markdown` 渲染 Markdown，但 `merm
 
 ## 总体设计
 
-`MarkdownDocument` 继续负责 Markdown 解析与链接、图片路径转换；当 ReactMarkdown 的 `code` 组件识别到 `language-mermaid` 时，交给独立的 `MermaidBlock` 组件。
+`MarkdownDocument` 继续负责 Markdown 解析与链接、图片路径转换；ReactMarkdown 的 `pre` renderer 仅在其唯一子元素是 `code.language-mermaid` 时，才把源码交给独立的 `MermaidBlock` 组件。识别发生在块级 `pre` 边界，而不是 `code` renderer，因此内联代码和包含其他子元素的代码容器不会进入 Mermaid 路径。
 
 `MermaidBlock` 在客户端 effect 中调用本地 `mermaid` 包，配置 `startOnLoad: false` 和 `securityLevel: "strict"`，生成唯一 id 的 SVG 并写入容器。客户端 effect 避免 SSR 或静态构建阶段访问浏览器 DOM。GitHub Pages 构建会把 Mermaid 代码和运行时一起打包到站点，不需要额外服务。
 
@@ -24,7 +24,9 @@ Project Radar 文档站当前使用 `react-markdown` 渲染 Markdown，但 `merm
 Markdown source
       │ react-markdown
       ▼
-code.language-mermaid ──► MermaidBlock ──► mermaid.render()
+pre > code.language-mermaid（唯一子元素）
+      │
+      └──────────────────► MermaidBlock ──► mermaid.render()
                                               │
                                               ▼
                                        sanitized SVG output

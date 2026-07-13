@@ -13,10 +13,12 @@ type MermaidApi = {
 
 export type MermaidLoader = () => Promise<{ default: MermaidApi }>;
 
+const loadBundledMermaid: MermaidLoader = () => import("mermaid");
+
 export async function renderMermaidSvg(
   source: string,
   id: string,
-  loadMermaid: MermaidLoader = () => import("mermaid"),
+  loadMermaid: MermaidLoader = loadBundledMermaid,
 ): Promise<string> {
   const { default: mermaid } = await loadMermaid();
   mermaid.initialize({
@@ -27,7 +29,13 @@ export async function renderMermaidSvg(
   return (await mermaid.render(id, source)).svg;
 }
 
-export function MermaidBlock({ source }: { source: string }): JSX.Element {
+export function MermaidBlock({
+  source,
+  loadMermaid = loadBundledMermaid,
+}: {
+  source: string;
+  loadMermaid?: MermaidLoader;
+}): JSX.Element {
   const reactId = useId();
   const diagramId = `mermaid-${reactId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const [svg, setSvg] = useState<string>();
@@ -38,7 +46,7 @@ export function MermaidBlock({ source }: { source: string }): JSX.Element {
 
     setSvg(undefined);
     setFailed(false);
-    void renderMermaidSvg(source, diagramId).then(
+    void renderMermaidSvg(source, diagramId, loadMermaid).then(
       (renderedSvg) => {
         if (current) setSvg(renderedSvg);
       },
@@ -50,7 +58,7 @@ export function MermaidBlock({ source }: { source: string }): JSX.Element {
     return () => {
       current = false;
     };
-  }, [diagramId, source]);
+  }, [diagramId, loadMermaid, source]);
 
   if (failed) {
     return (
