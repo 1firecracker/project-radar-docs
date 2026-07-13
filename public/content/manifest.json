@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-cc203a5e01281840c90d884c6cf3dee2b5a5e99ba37c89dabce7ec5f9cd2c3ed",
-  "generatedAt": "2026-07-13T05:41:04.407Z",
+  "revision": "snapshot-1e880d366001409c52cbb650e56d5578ffb1041aec3e0f29f47739876910025f",
+  "generatedAt": "2026-07-13T06:55:29.147Z",
   "files": [
     {
       "path": "Case1跨会话项目实测.md",
@@ -614,8 +614,8 @@
     },
     {
       "path": "技术设计.md",
-      "sha256": "5350c60dccb77ff84319caefc3713ba30f39c71143a5e828551733cba4315443",
-      "bytes": 20885,
+      "sha256": "ab34b47be897a8ae358a7f77085d045715a07fa1024788e3590117d944a5b714",
+      "bytes": 23830,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
