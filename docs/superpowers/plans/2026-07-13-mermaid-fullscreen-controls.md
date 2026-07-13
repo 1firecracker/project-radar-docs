@@ -42,7 +42,7 @@
 - Consumes: existing `MermaidBlock({ source, loadMermaid? })` and `MermaidLoader`.
 - Produces: `MermaidBlock` root `.mermaid-block`, `.is-fullscreen` state class, `.mermaid-toolbar`, `.mermaid-canvas`, and a button whose visible text is exactly `全屏` or `退出全屏`.
 
-- [ ] **Step 1: Write failing component tests**
+- [x] **Step 1: Write failing component tests**
 
 Use the existing jsdom mount setup and a resolving loader returning `<svg data-test="diagram"></svg>`. Assert:
 
@@ -56,7 +56,7 @@ Click the button inside `act`, then assert the text is `退出全屏`, `.is-full
 
 Add a separate test that enters fullscreen, dispatches `new KeyboardEvent("keydown", { key: "Escape" })`, and asserts fullscreen exits and overflow is restored. Unmount while fullscreen and assert overflow is restored. Extend loading and rejection assertions so neither state contains a button.
 
-- [ ] **Step 2: Run focused tests and verify RED**
+- [x] **Step 2: Run focused tests and verify RED**
 
 Run:
 
@@ -66,7 +66,7 @@ node --import tsx --test tests/mermaid-block.test.ts tests/docs-ui.test.tsx
 
 Expected: FAIL because the current component has no fullscreen button or overlay state.
 
-- [ ] **Step 3: Implement minimal fullscreen behavior**
+- [x] **Step 3: Implement minimal fullscreen behavior**
 
 Move the `.mermaid-block` root and accessibility label into `MermaidBlock`. Add `isFullscreen` state. On successful render output:
 
@@ -83,11 +83,11 @@ Move the `.mermaid-block` root and accessibility label into `MermaidBlock`. Add 
 
 Keep loading and failure inside the same `.mermaid-block` root without a toolbar. Add an effect that, only while fullscreen, stores `document.body.style.overflow`, sets it to `hidden`, listens for `keydown`, exits on `Escape`, and restores overflow/removes the listener in cleanup. `MarkdownDocument` must return `<MermaidBlock source={source} />` without an extra wrapper.
 
-- [ ] **Step 4: Run focused tests and verify GREEN**
+- [x] **Step 4: Run focused tests and verify GREEN**
 
 Run the focused command from Step 2. Expected: all tests pass without React act warnings.
 
-- [ ] **Step 5: Commit component behavior**
+- [x] **Step 5: Commit component behavior**
 
 Commit only these files with message:
 
@@ -106,15 +106,15 @@ feat: add Mermaid fullscreen controls
 - Consumes: Task 1 class names.
 - Produces: responsive toolbar and fixed fullscreen overlay with scrollable canvas.
 
-- [ ] **Step 1: Add a failing style contract test**
+- [x] **Step 1: Add a failing style contract test**
 
 Extend `tests/configuration.test.mjs` to read `app/globals.css` and assert rules exist for `.mermaid-toolbar`, `.mermaid-canvas`, `.mermaid-block.is-fullscreen`, and `.mermaid-block.is-fullscreen .mermaid-canvas`. Run `node --test tests/configuration.test.mjs` and observe RED before editing CSS.
 
-- [ ] **Step 2: Implement the styles**
+- [x] **Step 2: Implement the styles**
 
 Change the container to `position: relative; overflow: hidden`. Add a top-right toolbar, a keyboard-focusable neutral button, and `.mermaid-canvas { overflow: auto; }`. For `.mermaid-block.is-fullscreen`, use `position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; border-radius: 0;` with a paper background. Make its canvas `flex: 1; min-height: 0;` and keep the SVG centered without forcing a fixed width.
 
-- [ ] **Step 3: Run focused and full verification**
+- [x] **Step 3: Run focused and full verification**
 
 Run:
 
@@ -127,7 +127,7 @@ git diff --check
 
 Expected: all tests and builds pass.
 
-- [ ] **Step 4: Commit styles**
+- [x] **Step 4: Commit styles**
 
 Commit the style/test changes with message:
 
@@ -135,10 +135,10 @@ Commit the style/test changes with message:
 style: present Mermaid fullscreen overlay
 ```
 
-- [ ] **Step 5: Publish and verify production**
+- [x] **Step 5: Publish and verify production**
 
 Pause the LaunchAgent before pushing non-snapshot commits. Push `main`, wait for the Pages workflow, and verify the production Mermaid page shows `全屏`; clicking it changes to `退出全屏`, adds the fullscreen overlay, and `Escape` returns to the normal state. Confirm three Mermaid SVGs remain rendered with zero failures.
 
-- [ ] **Step 6: Restore the scheduler and record state**
+- [x] **Step 6: Restore the scheduler and record state**
 
 Run `npm run sync:install`, then verify `run interval = 600 seconds` and `last exit code = 0`. Confirm the independent site repository is clean, `main == origin/main`, and `/Users/baowenzhuo/project/xhxagentv3` has no new changes.
