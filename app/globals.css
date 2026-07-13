@@ -101,7 +101,14 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(92, 91, 214, .28
 .markdown-document code { border: 1px solid #e3e4e8; border-radius: 5px; background: var(--code); padding: .12em .34em; font: .9em/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 .markdown-document pre { overflow-x: auto; border: 1px solid #dedfe3; border-radius: 10px; background: #f0f1f3; padding: 17px 19px; }
 .markdown-document pre code { border: 0; background: transparent; padding: 0; }
-.markdown-document .mermaid-block { max-width: 100%; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); padding: 17px 19px; }
+.markdown-document .mermaid-block { position: relative; max-width: 100%; overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); padding: 17px 19px; }
+.markdown-document .mermaid-toolbar { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+.markdown-document .mermaid-toolbar button { border: 1px solid var(--line); border-radius: 7px; background: var(--canvas); color: var(--ink); padding: 5px 10px; font: inherit; font-size: 13px; line-height: 1.4; cursor: pointer; }
+.markdown-document .mermaid-toolbar button:hover { border-color: #c7c9c8; background: var(--sidebar); }
+.markdown-document .mermaid-canvas { max-width: 100%; overflow: auto; }
+.markdown-document .mermaid-block.is-fullscreen { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; border-radius: 0; background: var(--paper); padding: clamp(14px, 2vw, 24px); }
+.markdown-document .mermaid-block.is-fullscreen .mermaid-toolbar { flex: none; }
+.markdown-document .mermaid-block.is-fullscreen .mermaid-canvas { flex: 1; min-height: 0; }
 .markdown-document .mermaid-block svg { display: block; max-width: 100%; height: auto; margin-inline: auto; }
 .markdown-document .mermaid-block p { margin: 0; color: var(--muted); font-size: 14px; }
 .markdown-document .mermaid-block pre { margin: 14px 0 0; }

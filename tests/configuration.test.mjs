@@ -41,3 +41,18 @@ test("keeps the source repository outside the site implementation surface", asyn
     /\/Users\/baowenzhuo\/project\/xhxagentv3.*(?:writeFile|appendFile|mkdir)/s,
   );
 });
+
+test("styles Mermaid diagrams for toolbar, scrolling, and fullscreen presentation", async () => {
+  const css = await readFile(join(root, "app/globals.css"), "utf8");
+
+  assert.match(css, /\.mermaid-toolbar\s*\{[^}]+\}/s);
+  assert.match(css, /\.mermaid-canvas\s*\{[^}]+overflow:\s*auto;[^}]*\}/s);
+  assert.match(
+    css,
+    /\.mermaid-block\.is-fullscreen\s*\{[^}]+position:\s*fixed;[^}]+inset:\s*0;[^}]+z-index:\s*1000;[^}]+display:\s*flex;[^}]+flex-direction:\s*column;[^}]+border-radius:\s*0;[^}]*\}/s,
+  );
+  assert.match(
+    css,
+    /\.mermaid-block\.is-fullscreen\s+\.mermaid-canvas\s*\{[^}]+flex:\s*1;[^}]+min-height:\s*0;[^}]*\}/s,
+  );
+});
