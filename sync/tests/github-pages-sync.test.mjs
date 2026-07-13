@@ -75,7 +75,16 @@ async function createSyncFixture(t) {
       return Number(await outputGit(siteDir, "rev-list", "--count", "HEAD"));
     },
     async lastCommitFiles() {
-      const files = await outputGit(siteDir, "diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD");
+      const files = await outputGit(
+        siteDir,
+        "-c",
+        "core.quotePath=false",
+        "diff-tree",
+        "--no-commit-id",
+        "--name-only",
+        "-r",
+        "HEAD",
+      );
       return files ? files.split("\n") : [];
     },
     async commitSnapshotWithoutPush() {
@@ -124,6 +133,17 @@ test("changed content verifies, commits only public/content, and pushes", async 
     "public/content/raw/README.md",
   ]);
   assert.equal(fixture.commands.some((entry) => entry.command === "git" && entry.args[0] === "push"), true);
+});
+
+test("changed Chinese content commits with Git's default core.quotePath behavior", async (t) => {
+  const fixture = await createSyncFixture(t);
+  await git(fixture.siteDir, "config", "core.quotePath", "true");
+  await fixture.writeSource("技术设计.md", "# 技术设计\n");
+
+  const result = await runGitHubPagesSync(fixture.options);
+
+  assert.equal(result.status, "pushed");
+  assert.ok((await fixture.lastCommitFiles()).includes("public/content/raw/技术设计.md"));
 });
 
 test("an already verified local commit is pushed after a previous network failure", async (t) => {

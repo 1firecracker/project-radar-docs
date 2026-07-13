@@ -99,7 +99,13 @@ async function verifySite(execute, siteDir) {
 }
 
 async function cachedPaths(execute, siteDir) {
-  const staged = await gitOutput(execute, siteDir, ["diff", "--cached", "--name-only"]);
+  const staged = await gitOutput(execute, siteDir, [
+    "-c",
+    "core.quotePath=false",
+    "diff",
+    "--cached",
+    "--name-only",
+  ]);
   return staged ? staged.split("\n") : [];
 }
 
