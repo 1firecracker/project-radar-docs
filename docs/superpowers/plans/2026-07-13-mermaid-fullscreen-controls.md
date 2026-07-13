@@ -4,7 +4,7 @@
 
 **Goal:** Add reliable “全屏 / 退出全屏” controls to successfully rendered Mermaid diagrams without using the browser Fullscreen API.
 
-**Architecture:** `MermaidBlock` owns fullscreen state, keyboard handling, and scroll locking, and renders the complete `.mermaid-block` container. `MarkdownDocument` delegates Mermaid fences directly to that component. CSS uses a fixed viewport overlay and a separately scrollable canvas.
+**Architecture:** `MermaidBlock` owns fullscreen state, keyboard handling, focus containment, and a shared reference-counted body scroll lock, and renders the complete `.mermaid-block` container. `MarkdownDocument` delegates Mermaid fences directly to that component. CSS uses a fixed viewport overlay and a separately scrollable canvas.
 
 **Tech Stack:** React 19, TypeScript 5.9, jsdom 26, Node test runner, Mermaid 11, Vite 8, GitHub Pages
 
@@ -15,6 +15,8 @@
 - Only show the control after a diagram renders successfully.
 - Clicking “退出全屏” or pressing `Escape` exits fullscreen.
 - Lock background body scrolling only while fullscreen and restore the exact previous inline overflow value on exit or unmount.
+- Keep the body locked until the last fullscreen Mermaid block exits, even if multiple instances overlap.
+- Expose fullscreen as a named modal dialog, keep keyboard focus inside it, and restore focus on exit.
 - Keep the diagram canvas scrollable in both normal and fullscreen states.
 - Preserve Mermaid strict security, failure source fallback, ordinary code blocks, HTML sandboxing, and read-only source isolation.
 - Keep the scheduled synchronization interval at 600 seconds.
@@ -71,7 +73,12 @@ Expected: FAIL because the current component has no fullscreen button or overlay
 Move the `.mermaid-block` root and accessibility label into `MermaidBlock`. Add `isFullscreen` state. On successful render output:
 
 ```tsx
-<div className={`mermaid-block${isFullscreen ? " is-fullscreen" : ""}`} role="group" aria-label={source}>
+<div
+  className={`mermaid-block${isFullscreen ? " is-fullscreen" : ""}`}
+  role={isFullscreen ? "dialog" : "group"}
+  aria-modal={isFullscreen ? true : undefined}
+  aria-label={isFullscreen ? "Mermaid 图表全屏" : "Mermaid 图表"}
+>
   <div className="mermaid-toolbar">
     <button type="button" aria-pressed={isFullscreen} onClick={() => setIsFullscreen((value) => !value)}>
       {isFullscreen ? "退出全屏" : "全屏"}
@@ -81,7 +88,7 @@ Move the `.mermaid-block` root and accessibility label into `MermaidBlock`. Add 
 </div>
 ```
 
-Keep loading and failure inside the same `.mermaid-block` root without a toolbar. Add an effect that, only while fullscreen, stores `document.body.style.overflow`, sets it to `hidden`, listens for `keydown`, exits on `Escape`, and restores overflow/removes the listener in cleanup. `MarkdownDocument` must return `<MermaidBlock source={source} />` without an extra wrapper.
+Keep loading and failure inside the same `.mermaid-block` root without a toolbar. Add an effect that, only while fullscreen, acquires the shared reference-counted body scroll lock, listens for `Escape` and `Tab`, contains focus in the modal overlay, and releases the lock, listener, and focus state in cleanup. `MarkdownDocument` must return `<MermaidBlock source={source} />` without an extra wrapper.
 
 - [x] **Step 4: Run focused tests and verify GREEN**
 
