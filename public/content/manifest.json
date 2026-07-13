@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-d0d977ab832b3fd0dbadc1b4cbcbcb83a9934fedc48752929369a193a5c06040",
-  "generatedAt": "2026-07-13T12:14:33.328Z",
+  "revision": "snapshot-d0358dad88e0d48ced712340a53a2cf995d578500c7ab0b199dbd090262d4f78",
+  "generatedAt": "2026-07-13T12:24:45.345Z",
   "files": [
     {
       "path": "Case1跨会话项目实测.md",
@@ -47,8 +47,8 @@
     },
     {
       "path": "Radar新鲜度实施计划.md",
-      "sha256": "e2343435a139343f5e5dc470d1734aaf8c50e064b4afe97fe900a04c38552dab",
-      "bytes": 5813,
+      "sha256": "2a41eab7504f9c3c033c05bbaf9b10e9a0dca994b03f08715af021691c8cb530",
+      "bytes": 5806,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -614,15 +614,15 @@
     },
     {
       "path": "实施计划.md",
-      "sha256": "c41904316a7c97c601eb79ef703f1190b9a7cb11be454927a5754c1b5333c514",
-      "bytes": 15732,
+      "sha256": "5b74886a0708666aba5bc574f314d2eaa6f9c7274ac231387cff6a3ac2f5eb47",
+      "bytes": 16909,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "技术设计.md",
-      "sha256": "2a930557d7e4d22d138289642abadf259f3cab5602efc253475217f5a23a448b",
-      "bytes": 23831,
+      "sha256": "9a4765888cd81a4e10ec2113c52ab4604595ed5070bff4689d735c205ca566f7",
+      "bytes": 25054,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -642,8 +642,8 @@
     },
     {
       "path": "零版产品需求.md",
-      "sha256": "0c2e83b2368dc132a06fa47b0625bb5b3c9a8488d72a58eece894b887c3996b0",
-      "bytes": 9249,
+      "sha256": "50ed185734a1977d4853b1d85558d43defba20cbe6388053315eddfbd4252680",
+      "bytes": 9901,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }

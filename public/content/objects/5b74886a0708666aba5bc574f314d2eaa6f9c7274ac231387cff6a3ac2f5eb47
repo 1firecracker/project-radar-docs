@@ -282,3 +282,17 @@ npm --prefix frontend run build
 - [ ] 使用独立测试账号重新执行 Case 5 前两轮，验证第二轮即使触发 Todolist 自动确认，最终仍生成一条 `completion_confirmed` Event，Item 进入 `completed`。
 - [ ] 检查首次 waiting 阶段没有半成品 Event，最终 Event 的来源仍是原始自然语言消息，而不是 `todolist_feedback`。
 - [x] 本节已更新为当前真实实现与自动化测试结果。
+
+## 8. Radar 新鲜度与重复提醒抑制
+
+**问题：** Post-run Radar 分析耗时可能跨越下一轮 Query，导致上一轮建议晚到；同时主 Agent 已在最终回答中指出的风险，Radar 可能换个标题再次提醒。
+
+**已实现：**
+
+- [x] 新增系统终态 `superseded`；新真实 Query 在 Conversation claim 的同一事务中淘汰当前 Session 的 `pending/snoozed` Radar。
+- [x] `accepted/running` 不自动中断；Radar Action Run 与 Resume 不触发淘汰。
+- [x] Analyzer 前和持久化前分别校验来源 Event 是否仍对应 Session 最新真实用户消息；过期候选返回 `stale` 且不落库。
+- [x] Radar Analyzer 接收最新 QA 的用户文本与最终 Assistant 文本；主回答已经揭示同一缺口时保持安静。
+- [x] 前端只选择 `pending` Radar，即使旧响应混入 `superseded` 记录也不会展示。
+- [x] Radar 数据库、Service、Post-run、执行和 API 组合回归 190 项全部通过；前端状态测试 9 项通过。
+- [ ] 重启本地服务后使用预算 Case 完成真实模型复测：第一轮旧建议不晚到，第二轮主 Agent 已指出超预算时 Radar 保持安静。
