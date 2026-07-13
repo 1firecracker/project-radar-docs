@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-8f66fd83d6b6cfffb190e32ec62229f4d879fe44694cf26a2e0d80ff578be2fe",
-  "generatedAt": "2026-07-13T07:14:13.629Z",
+  "revision": "snapshot-d0d977ab832b3fd0dbadc1b4cbcbcb83a9934fedc48752929369a193a5c06040",
+  "generatedAt": "2026-07-13T12:14:33.328Z",
   "files": [
     {
       "path": "Case1跨会话项目实测.md",
@@ -42,6 +42,13 @@
       "path": "README.md",
       "sha256": "df0990b3a70f7b1d7533b39fd0d7c6f6add94b3b0bdce1d76f3aabec6d52e5bc",
       "bytes": 6481,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "Radar新鲜度实施计划.md",
+      "sha256": "e2343435a139343f5e5dc470d1734aaf8c50e064b4afe97fe900a04c38552dab",
+      "bytes": 5813,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
