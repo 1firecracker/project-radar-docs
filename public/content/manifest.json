@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-7ee6bcdbf8e42ab0b8ef1916d164a5241ae8350ae617094d71e72b362d5b44b4",
-  "generatedAt": "2026-07-14T10:07:46.219Z",
+  "revision": "snapshot-c9859a6ffc92efe1499f9d63ff4c08c9bdb046e64c0fa6baa13cba488816e607",
+  "generatedAt": "2026-07-14T10:17:58.922Z",
   "files": [
     {
       "path": "Case 实测/Case1跨会话项目实测.md",
@@ -47,8 +47,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "71b402acc75a1529eea81bcb170ddbae1eba3bd0fa4ff3587d81f00efaa9b624",
-      "bytes": 6784,
+      "sha256": "fdae85a488ed4ba331ea0364a387b4b8571a940acd46b9867810cc9f6ef68367",
+      "bytes": 8921,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -726,36 +726,36 @@
     },
     {
       "path": "实施计划.md",
-      "sha256": "8e0d6590a248a46b6ee31d8a4bce8307c5405174336ed0e59726c50115b514a1",
-      "bytes": 16938,
+      "sha256": "f8e4c4c08e23c3fb99b92650ad1034c64c49cb5ae006aea7dea3d7d06882c278",
+      "bytes": 18714,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "技术设计.md",
-      "sha256": "9a4765888cd81a4e10ec2113c52ab4604595ed5070bff4689d735c205ca566f7",
-      "bytes": 25054,
+      "sha256": "b48377aad429ddcac081a1cfc92c9aba6f3bc4cc26d676f3ed9a47033d3de8a7",
+      "bytes": 25901,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "测试与演示.md",
-      "sha256": "4de9144d63d92b6f662148723580c222a53da3ff5c0250eac7a3f1ba05d50283",
-      "bytes": 9125,
+      "sha256": "99b27c6c0200399ae8ecf6e801c95c10de8b05562ef8301c33c901654a082b40",
+      "bytes": 9869,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "演示案例.md",
-      "sha256": "7096d92619e5dd13cb4a403ef9ab0bfebf87d5bb0938b30308307031d8ae1265",
-      "bytes": 16297,
+      "sha256": "bff47eb9c0831e8457caf8597c061b3efa9539ca3baf10b9a669f7c7afbfc209",
+      "bytes": 19185,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "零版产品需求.md",
-      "sha256": "50ed185734a1977d4853b1d85558d43defba20cbe6388053315eddfbd4252680",
-      "bytes": 9901,
+      "sha256": "7920ff0b76f6acd47c43174a5b63e3723c9ecce9edf676da57f51bec62b80b3a",
+      "bytes": 10401,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }

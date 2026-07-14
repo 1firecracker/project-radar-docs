@@ -1,22 +1,22 @@
-# Project Radar 演示案例
+# Progress Agent（持续推进智能体）V0 演示案例
 
 > 文档状态：评审中  
 > 负责人：bwz  
-> 最近更新：2026-07-13  
-> 权威范围：Project Radar V0 人工演示 Case、用户输入、预期整理结果与通过标准
+> 最近更新：2026-07-14  
+> 权威范围：Progress Agent V0 状态整理、Radar 与执行闭环的人工演示 Case、用户输入和通过标准
 
 [返回文档总览](./README.md)
 
 ## 1. 使用说明
 
-本文提供五个可独立执行的真实模型 Case，用于展示 Project Radar 如何把完整 QA 整理为 Event、Item 和 Project，如何区分 Non Project，以及如何生成、执行和反馈 Radar。
+本文提供六个可独立执行的真实模型 Case，用于展示 Progress Agent V0 如何把完整 QA 整理为 Event、Item 和 Project，如何区分 Non Project，以及如何生成、执行和反馈 Radar。
 
-每个 Case 建议使用独立测试用户，或在执行前确认不存在同名 Project、Item 和待处理 Radar。每发送一条用户消息，都要等待主 Agent 完整结束，再等待 Post-run 整理完成后继续下一条。不要一次粘贴整个 Case，否则无法验证逐轮状态变化。
+每个 Case 建议使用独立测试用户，或在执行前确认不存在同名 Project、Item 和待处理 Radar。每发送一条用户消息，都要等待主 Agent 完整结束，再等待 Post-run 触发的 Organizer 完成后继续下一条。不要一次粘贴整个 Case，否则无法验证逐轮状态变化。
 
 每轮观察三个结果：
 
 1. **主 Agent 回答**：只判断当前问题是否得到正常回应。
-2. **Post-run 整理**：在右侧 Radar 的“查看全部项目”中检查 Event、Item、Project、Non Project 或待分类。
+2. **Organizer 整理**：确认 Post-run 触发后，在右侧 Radar 的“查看全部项目”中检查 Event、Item、Project、Non Project 或待分类。
 3. **Radar 行为**：检查系统应该保持安静，还是展示一条具有明确动作的建议。
 
 模型可以调整标题和摘要措辞，但不能改变 Case 中规定的核心归属、状态边界和动作价值。若 token、网络或模型不可用，本轮只能记录为环境失败，不能使用预置数据冒充真实整理成功。
@@ -25,9 +25,9 @@
 
 - 后端和前端均从当前 `codex/bwz` 分支启动。
 - `TOKENHUB_API_KEY` 已在启动后端的同一个终端中生效。
-- 主聊天、Post-run Organizer 和 Radar Analyzer 使用的模型均可访问。
+- 主聊天、Organizer 和 Radar Analyzer 使用的模型均可访问。
 - 演示期间关闭 next questions，避免额外模型调用干扰 Post-run。
-- 每轮主回复结束后等待 3～10 秒，再查看 Project Radar。
+- 每轮主回复结束后等待 3～10 秒，再查看 Progress Agent 的项目状态和 Radar。
 - 执行下一个 Case 前处理已有 pending Radar，或换用新的测试用户。
 
 ## 3. Case 1：跨 Session 创建 Project 并发现发布缺口
@@ -48,7 +48,7 @@
 
 预期主 Agent：识别这是一个长期、多事项的发布目标，给出简洁拆分，不直接生成完整发布清单。
 
-预期 Post-run：
+预期 Organizer：
 
 - 创建一个类似“发布内部 Python SDK v1.0”的 Project。
 - 创建“确定公开 API”“完成核心实现”“准备发布材料”等必要 Item；允许标题不同，但至少包含两个可独立完成的 Item。
@@ -65,7 +65,7 @@
 
 预期主 Agent：检查范围是否自洽，指出明显矛盾即可。
 
-预期 Post-run：
+预期 Organizer：
 
 - 新 Event 归入“确定公开 API”Item。
 - Event 类型接近 `decision` 或 `progress`。
@@ -81,7 +81,7 @@
 
 预期主 Agent：总结已经完成和尚未检查的内容，不在当前回答中直接生成发布清单。
 
-预期 Post-run：
+预期 Organizer：
 
 - Session B 的 Event 归入 Case 1 已有 Project，而不是创建第二个同名 Project。
 - “完成核心实现”Item 更新为 `in_progress` 或 `completion_candidate`。
@@ -116,7 +116,7 @@
 
 预期主 Agent：确认目标、截止时间和完成标准，不扩展成旅行项目。
 
-预期 Post-run：
+预期 Organizer：
 
 - 创建一个类似“完成护照换发”的独立 Item。
 - `project_id` 为空，不创建 Project。
@@ -132,7 +132,7 @@
 
 预期主 Agent：总结现状，不在当前回答中直接生成材料清单。
 
-预期 Post-run：
+预期 Organizer：
 
 - 新 Event 追加到原独立 Item。
 - Item 状态为 `in_progress`。
@@ -167,7 +167,7 @@
 
 预期主 Agent：用三句话完成解释。
 
-预期 Post-run：
+预期 Organizer：
 
 - 创建一条 Non Project Event。
 - 分类接近 `learning`。
@@ -183,7 +183,7 @@
 
 预期主 Agent：给出简短保存建议。
 
-预期 Post-run：
+预期 Organizer：
 
 - 创建第二条 Non Project Event。
 - 分类接近 `life`。
@@ -215,7 +215,7 @@
 
 > 请持续跟踪一个独立事项：“更新产品官网英文文案”。完成标准是首页、定价页和下载页的英文文案都通过品牌审核。当前首页已经完成，定价页和下载页还没开始。
 
-预期 Post-run：创建独立 Item“更新产品官网英文文案”，状态为 `in_progress`。
+预期 Organizer：创建独立 Item“更新产品官网英文文案”，状态为 `in_progress`。
 
 #### 第 2 轮：Session B 创建帮助文档事项
 
@@ -223,7 +223,7 @@
 
 > 请持续跟踪另一个独立事项：“更新产品帮助中心英文文档”。完成标准是安装指南、快速开始和故障排查的英文版全部上线。当前安装指南已经完成，另外两篇还没开始。
 
-预期 Post-run：创建第二个独立 Item，不能与官网文案 Item 合并。
+预期 Organizer：创建第二个独立 Item，不能与官网文案 Item 合并。
 
 #### 第 3 轮：Session C 输入归属模糊的进展
 
@@ -233,7 +233,7 @@
 
 预期主 Agent：总结本轮完成与未完成内容。
 
-预期 Post-run：理想情况应归入“更新产品帮助中心英文文档”，因为“快速开始”和“故障排查”属于帮助中心。若模型误归入官网文案或进入待分类，也属于本 Case 可演示的初始状态。
+预期 Organizer：理想情况应归入“更新产品帮助中心英文文档”，因为“快速开始”和“故障排查”属于帮助中心。若模型误归入官网文案或进入待分类，也属于本 Case 可演示的初始状态。
 
 预期 Radar：纠正前允许保持安静。系统不能基于错误归属立即生成与官网发布相关的高置信建议。
 
@@ -268,7 +268,7 @@
 
 > 请持续跟踪一个独立事项：“上线客户反馈表单”。完成标准有三条：公开链接可以访问、必填字段可以成功提交、提交后显示确认提示。先帮我检查这三个完成标准是否足够明确。
 
-预期 Post-run：创建独立 Item，保存三条完成标准，状态为 `open` 或 `in_progress`。
+预期 Organizer：创建独立 Item，保存三条完成标准，状态为 `open` 或 `in_progress`。
 
 #### 第 2 轮：用户明确确认完成
 
@@ -278,7 +278,7 @@
 
 预期主 Agent：确认用户已经明确声明完成。
 
-预期 Post-run：
+预期 Organizer：
 
 - 创建 `completion_confirmed` 或含义等价的 Event。
 - Item 直接进入 `completed`，不需要停留在 `completion_candidate`。
@@ -294,7 +294,7 @@
 
 预期主 Agent：确认反例会推翻之前的完成结论，记录影响，不直接写代码。
 
-预期 Post-run：
+预期 Organizer：
 
 - 新 Event 归入原 Item。
 - Event 类型接近 `reopened` 或 `blocker`。
@@ -323,7 +323,59 @@
 - Radar 的 `done` 不会自动把 Item 再次标记为完成。
 - Radar Action Run 不递归生成新的同类 Radar。
 
-## 8. 结果记录模板
+## 8. Case 6：阻塞解除后主动推进
+
+> 真实浏览器执行与完整页面截图见：[Case 6 阻塞解除与主动推进实测](./Case%20实测/Case6阻塞解除与主动推进实测.md)。
+
+### 8.1 演示目标
+
+证明用户本轮只处理局部归档工作时，Organizer 可以把“材料齐备”更新为跨 Session 项目状态，Radar 再发现用户尚未提出的前端开工机会。这是当前最能体现主动推进发心的 Case。
+
+### 8.2 前置消息
+
+#### 第 1 轮：Session A 建立阻塞状态
+
+用户发送：
+
+> 星河科技新品发布页的页面结构和交互原型已经确认，合同要求7月18日前交付正式页面。但客户尚未提供最终版Logo、品牌色规范、产品主视觉和正式宣传文案，四项材料缺少任意一项都不能开工，因此前端制作目前必须保持暂停，前端开工任务单也尚未制定。请帮我整理当前项目状态。
+
+预期主 Agent：整理当前状态、材料缺口和合同期限，不在材料缺失时制定开工任务单。
+
+预期 Organizer：
+
+- 创建或更新“星河科技新品发布页”Project。
+- 创建“前端制作”必要 Item，状态为 `waiting`。
+- blocker 包含四项客户材料，进展保留页面结构和原型已确认。
+
+预期 Radar：保持安静。材料未到位时，前端开工尚不可执行。
+
+#### 第 2 轮：Session B 只处理材料归档
+
+新建 Session B，用户发送：
+
+> 客户刚刚确认最终版Logo、品牌色规范、产品主视觉和正式宣传文案已经全部交付，四项材料均验收无误。我要统一归档，请按“星河科技_素材类型_最终版_20260714”的格式列出四个新文件名，方便我复制使用。
+
+预期主 Agent：只输出四个归档文件名，不主动制定前端任务单或排期。
+
+预期 Organizer：
+
+- 新 Event 归入原 Project / Item，而不是创建第二个项目。
+- 记录四项材料已交付验收，清除材料 blocker。
+- Item 从 `waiting` 更新为 `open` 或 `in_progress`。
+
+预期 Radar：生成“制定前端开工任务单并排期”或含义等价的建议；依据包含四项开工条件刚刚满足和 7 月 18 日合同期限，目标 Session 为 Session B。
+
+如果有限轮询期间尚未展示建议，可以刷新并重新进入 Session B；Re-entry 只能恢复已经生成的 Radar，不能重新触发 Analyzer。
+
+### 8.3 通过标准
+
+- 第一轮材料缺失时 Radar 保持安静。
+- 第二轮 Event 跨 Session 更新同一 Project / Item。
+- 材料 blocker 被清除，事项不再保持 `waiting`。
+- 主 Agent 没有在当前回答中覆盖开工任务单。
+- Radar 说明为什么现在值得推进，并提供可由 Agent 直接执行的动作。
+
+## 9. 结果记录模板
 
 每个 Case 执行后记录：
 
@@ -339,4 +391,4 @@
 | 与预期差异 | 缺失、误归属、状态错误、重复建议或不应出现的 Radar |
 | 结论 | 通过、部分通过、失败或环境失败 |
 
-建议执行顺序为 Case 3 → Case 2 → Case 1 → Case 4 → Case 5：先验证安静边界和独立 Item，再逐步增加跨 Session、纠正与执行闭环复杂度。
+建议执行顺序为 Case 3 → Case 2 → Case 1 → Case 4 → Case 5 → Case 6：先验证安静边界和独立 Item，再逐步增加跨 Session、纠正、执行闭环和真正的主动推进。
