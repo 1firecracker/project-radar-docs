@@ -6,7 +6,7 @@
 > 测试分支：`codex/bwz`  
 > 权威范围：Case 4 多事项归属、跨 Session Event、人工纠正与状态重算
 
-[返回文档总览](./README.md) · [返回演示案例](./演示案例.md)
+[返回文档总览](../README.md) · [返回演示案例](../演示案例.md)
 
 ## 1. 这次发生了什么
 
@@ -20,7 +20,7 @@
 
 先清空上一 Case 的会话和 Project Radar 数据，再刷新为空白状态。
 
-![清理后的空白状态](./images/Case4实测/00-清理后的空白状态.jpg)
+![清理后的空白状态](../images/Case4实测/00-清理后的空白状态.jpg)
 
 测试中还发现 `memory://memory.md` 不属于聊天和 Project Radar 数据库，普通清理后仍保留 Case 1 的 SDK 长期记忆。本次额外清空了长期记忆。以后“重置测试账号”必须同时覆盖会话、Project Radar 和长期记忆，否则不是真正的空白环境。
 
@@ -28,61 +28,61 @@
 
 ### 3.1 新建 Session A
 
-![新建官网文案 Session A](./images/Case4实测/01-新建官网文案SessionA.jpg)
+![新建官网文案 Session A](../images/Case4实测/01-新建官网文案SessionA.jpg)
 
 ### 3.2 输入事项
 
 > 请持续跟踪一个独立事项：“更新产品官网英文文案”。完成标准是首页、定价页和下载页的英文文案都通过品牌审核。当前首页已经完成，定价页和下载页还没开始。
 
-![输入官网英文文案事项](./images/Case4实测/02-输入官网英文文案事项.jpg)
+![输入官网英文文案事项](../images/Case4实测/02-输入官网英文文案事项.jpg)
 
 ### 3.3 创建结果
 
 系统创建 Standalone Item“更新产品官网英文文案”，记录首页完成、定价页和下载页未开始。
 
-![Session A 官网事项创建完成](./images/Case4实测/03-SessionA官网事项创建完成.jpg)
+![Session A 官网事项创建完成](../images/Case4实测/03-SessionA官网事项创建完成.jpg)
 
 ## 4. Session B：创建帮助中心英文文档事项
 
 ### 4.1 新建 Session B
 
-![新建帮助中心 Session B](./images/Case4实测/04-新建帮助中心SessionB.jpg)
+![新建帮助中心 Session B](../images/Case4实测/04-新建帮助中心SessionB.jpg)
 
 ### 4.2 输入第二个事项
 
 > 请持续跟踪另一个独立事项：“更新产品帮助中心英文文档”。完成标准是安装指南、快速开始和故障排查的英文版全部上线。当前安装指南已经完成，另外两篇还没开始。
 
-![输入帮助中心英文文档事项](./images/Case4实测/05-输入帮助中心英文文档事项.jpg)
+![输入帮助中心英文文档事项](../images/Case4实测/05-输入帮助中心英文文档事项.jpg)
 
 ### 4.3 创建结果
 
 系统创建第二个 Standalone Item，没有与官网事项合并。它记录安装指南完成、快速开始和故障排查未开始。
 
-![Session B 帮助中心事项创建完成](./images/Case4实测/06-SessionB帮助中心事项创建完成.jpg)
+![Session B 帮助中心事项创建完成](../images/Case4实测/06-SessionB帮助中心事项创建完成.jpg)
 
 ## 5. Session C：输入归属模糊的进展
 
 ### 5.1 新建 Session C
 
-![新建模糊进展 Session C](./images/Case4实测/07-新建模糊进展SessionC.jpg)
+![新建模糊进展 Session C](../images/Case4实测/07-新建模糊进展SessionC.jpg)
 
 ### 5.2 输入进展
 
 > 英文版本今天又完成了一部分：快速开始已经翻译完并通过审核，故障排查还没有处理。请只帮我记录当前进展。
 
-![输入模糊英文进展](./images/Case4实测/08-输入模糊英文进展.jpg)
+![输入模糊英文进展](../images/Case4实测/08-输入模糊英文进展.jpg)
 
 ### 5.3 Agent 回答
 
 Agent 根据跨 Session 记忆补全了安装指南、快速开始和故障排查三篇文档的状态。
 
-![Session C 模糊进展回答完成](./images/Case4实测/09-SessionC模糊进展回答完成.jpg)
+![Session C 模糊进展回答完成](../images/Case4实测/09-SessionC模糊进展回答完成.jpg)
 
 ### 5.4 模型初始归属正确
 
 Organizer 把 Event 正确归入“更新产品帮助中心英文文档”。帮助中心 Item 有 2 条 Event，官网 Item 仍只有自己的 1 条 Event；Session C 来源 id 被保留。
 
-![模型正确归入帮助中心事项](./images/Case4实测/10-模型正确归入帮助中心事项.jpg)
+![模型正确归入帮助中心事项](../images/Case4实测/10-模型正确归入帮助中心事项.jpg)
 
 ## 6. 人工纠正流程
 
@@ -92,11 +92,11 @@ Organizer 把 Event 正确归入“更新产品帮助中心英文文档”。帮
 
 移动后，帮助中心 Item 的 Event 数从 2 变为 1，进展回退到第一轮状态。
 
-![人工移错后帮助中心事项回退](./images/Case4实测/11-人工移错后帮助中心事项回退.jpg)
+![人工移错后帮助中心事项回退](../images/Case4实测/11-人工移错后帮助中心事项回退.jpg)
 
 官网 Item 收到了不属于它的“快速开始/故障排查”Event，时间线变为 2 条。来源 Session 仍然是 Session C，说明移动没有破坏证据来源。
 
-![错误 Event 进入官网文案事项](./images/Case4实测/12-错误Event进入官网文案事项.jpg)
+![错误 Event 进入官网文案事项](../images/Case4实测/12-错误Event进入官网文案事项.jpg)
 
 这一步还暴露了重算行为：官网 Item 的进展被错误 Event 的摘要完全覆盖，原有“首页已完成、定价页和下载页未开始”暂时消失。
 
@@ -104,21 +104,21 @@ Organizer 把 Event 正确归入“更新产品帮助中心英文文档”。帮
 
 移回后，官网 Item 恢复自己的 1 条 Event，原进展也恢复。
 
-![纠正后官网事项恢复](./images/Case4实测/13-纠正后官网事项恢复.jpg)
+![纠正后官网事项恢复](../images/Case4实测/13-纠正后官网事项恢复.jpg)
 
 帮助中心重新拥有 2 条 Event，最新 Event 再次指向正确 Item。
 
-![纠正后帮助中心事项恢复](./images/Case4实测/14-纠正后帮助中心事项恢复.jpg)
+![纠正后帮助中心事项恢复](../images/Case4实测/14-纠正后帮助中心事项恢复.jpg)
 
 ### 6.3 刷新后验证持久化
 
 刷新页面后，官网 Item 仍只有官网 Event，证明错误归属没有重新出现。
 
-![刷新后纠正结果仍然保留](./images/Case4实测/15-刷新后纠正结果仍然保留.jpg)
+![刷新后纠正结果仍然保留](../images/Case4实测/15-刷新后纠正结果仍然保留.jpg)
 
 帮助中心仍保留 Session B 与 Session C 的两条 Event，纠正结果持久化成功。
 
-![刷新后帮助中心 Event 归属正确](./images/Case4实测/16-刷新后帮助中心Event归属正确.jpg)
+![刷新后帮助中心 Event 归属正确](../images/Case4实测/16-刷新后帮助中心Event归属正确.jpg)
 
 ## 7. 最终数据
 

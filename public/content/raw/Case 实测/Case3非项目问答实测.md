@@ -6,7 +6,7 @@
 > 测试分支：`codex/bwz`  
 > 权威范围：Case 3 一次性问答、Non Project 分类与 Radar 安静边界
 
-[返回文档总览](./README.md) · [返回演示案例](./演示案例.md)
+[返回文档总览](../README.md) · [返回演示案例](../演示案例.md)
 
 ## 1. 这次发生了什么
 
@@ -20,25 +20,25 @@
 
 Case 2 的文档和截图保留，只清理运行数据。刷新后没有历史对话，Project、Item、Event 和 Radar 均为 0。
 
-![清理后的空白状态](./images/Case3实测/00-清理后的空白状态.jpg)
+![清理后的空白状态](../images/Case3实测/00-清理后的空白状态.jpg)
 
 ## 3. 第一轮：一次性 TLS 知识问答
 
 ### 3.1 新建对话
 
-![新建一次性问答对话](./images/Case3实测/01-新建一次性问答对话.jpg)
+![新建一次性问答对话](../images/Case3实测/01-新建一次性问答对话.jpg)
 
 ### 3.2 输入问题
 
 > 这是一次性知识问答，不需要后续跟踪。请用三句话解释 TLS 握手主要解决什么问题，并说明证书在其中的作用。
 
-![输入一次性 TLS 问答](./images/Case3实测/02-输入一次性TLS问答.jpg)
+![输入一次性 TLS 问答](../images/Case3实测/02-输入一次性TLS问答.jpg)
 
 ### 3.3 Agent 正常回答
 
 Agent 解释了密钥协商、身份认证、算法协商和证书链的作用，没有把问题扩展成学习计划。
 
-![TLS 回答完成](./images/Case3实测/03-TLS回答完成.jpg)
+![TLS 回答完成](../images/Case3实测/03-TLS回答完成.jpg)
 
 Post-run 将这轮 QA 记录为 Non Project Event，分类为 `learning`。
 
@@ -48,13 +48,13 @@ Post-run 将这轮 QA 记录为 Non Project Event，分类为 `learning`。
 
 > 这也是一次性问题，不需要记录成待办。新鲜蓝莓放在家用冰箱冷藏通常可以保存多久？请给我一个简短答案。
 
-![输入一次性蓝莓问答](./images/Case3实测/04-输入一次性蓝莓问答.jpg)
+![输入一次性蓝莓问答](../images/Case3实测/04-输入一次性蓝莓问答.jpg)
 
 ### 4.2 Agent 给出简短答案
 
 Agent 回答冷藏通常可保存 1～2 周，并补充了吃之前再清洗等简短建议。它没有创建购物、饮食或生活规划。
 
-![蓝莓回答完成](./images/Case3实测/05-蓝莓回答完成.jpg)
+![蓝莓回答完成](../images/Case3实测/05-蓝莓回答完成.jpg)
 
 Post-run 将这轮 QA 记录为第二条 Non Project Event，分类为 `life`。
 
@@ -62,7 +62,7 @@ Post-run 将这轮 QA 记录为第二条 Non Project Event，分类为 `life`。
 
 两轮结束后，右侧 Radar 仍显示“暂无需要推进的建议”，输入框上方也没有 Action Bar。
 
-![两轮后 Radar 保持安静](./images/Case3实测/06-两轮后Radar保持安静.jpg)
+![两轮后 Radar 保持安静](../images/Case3实测/06-两轮后Radar保持安静.jpg)
 
 这证明“每个 QA 都留下 Event”不等于“每个 QA 都要主动推进”。Event 用于保留事实，Radar 只在存在有价值的下一步时出现。
 
@@ -78,7 +78,7 @@ Post-run 将这轮 QA 记录为第二条 Non Project Event，分类为 `life`。
 
 两条 Event 都保留来源 Session，并分别分类为 `learning` 和 `life`。
 
-![Non Project 两条 Event 总览](./images/Case3实测/07-NonProject两条Event总览.jpg)
+![Non Project 两条 Event 总览](../images/Case3实测/07-NonProject两条Event总览.jpg)
 
 ## 7. 实测判定
 
