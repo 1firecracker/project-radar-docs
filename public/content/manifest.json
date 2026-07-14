@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-b29afa2518c84370856888bd7bb68d077f154ecd4bf683795b3e687809f0786c",
-  "generatedAt": "2026-07-14T11:28:14.845Z",
+  "revision": "snapshot-f8b2cc69f730c4086bfad9060d242c74bb74d2c0996319235200d60e09634969",
+  "generatedAt": "2026-07-14T11:38:27.373Z",
   "files": [
     {
       "path": "Case 实测/Case1跨会话项目实测.md",
@@ -47,8 +47,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "9ca8043523c84925ca781d448d116bbd9709ca1dc3829eacae5b7f85098e0d51",
-      "bytes": 8923,
+      "sha256": "0a27bf55b9b01ee7d46493f4a930badec40f34c1c10c1e7f0c01ce3db7a119b5",
+      "bytes": 8908,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -677,8 +677,8 @@
     },
     {
       "path": "产品概要.md",
-      "sha256": "7a9a6400a7ebf13d82a192acf1afdf3da5bac92ddd9db3fc8b82fef94f95fa9d",
-      "bytes": 8624,
+      "sha256": "a1c214005d31711fe80dec6fa2a95f651d52f8a51caa5b5c1c5b9ace3c1b2f67",
+      "bytes": 8646,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -726,22 +726,22 @@
     },
     {
       "path": "实施计划.md",
-      "sha256": "2dcfc6a414b183ecd9950b54c12c59971436a31d4e19e2b96323f627ba0d77fa",
-      "bytes": 3789,
+      "sha256": "5569f0bbedd4f902fef887700c9bb955434a2bd2111dee28d4334d1ad9d90b47",
+      "bytes": 4402,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "技术设计.md",
-      "sha256": "b48377aad429ddcac081a1cfc92c9aba6f3bc4cc26d676f3ed9a47033d3de8a7",
-      "bytes": 25901,
+      "sha256": "2328d76fb1676e9016f2967b52651c90a11886e99901f20f6a426f0eaaad044d",
+      "bytes": 26657,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "测试与演示.md",
-      "sha256": "99b27c6c0200399ae8ecf6e801c95c10de8b05562ef8301c33c901654a082b40",
-      "bytes": 9869,
+      "sha256": "a4d6763aaa16fa6b45ddc795bdfd86f5d411fb4e983ba1c765c7123ba964a088",
+      "bytes": 10147,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },

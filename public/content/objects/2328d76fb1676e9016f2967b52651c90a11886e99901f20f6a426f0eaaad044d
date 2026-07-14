@@ -280,6 +280,10 @@ type ActivityEventV0 = {
 
 Event 的 QA 来源字段不可修改；`item_id`、`category` 与归属原因允许用户纠正。Event 从 Item A 移到 Item B 时，服务端重新计算两个 Item 及其 Project 的受影响状态。
 
+纠正后的 Item 重算读取其全部 `classified` Event，并按 `occurred_at ASC, id DESC` 回放；`progress_summary` 按时间保留全部非空 Event 摘要，`last_event_id` 与公开时间线使用相同的并列时间排序。Item 的目标、完成标准、分类和下一步不是 Event 派生字段，重算时保持不变。
+
+Project 不再直接采用本轮模型给出的单条整体摘要。每次关联 Item 更新、Event 移动或 Item 移动后，服务端读取全部非归档 Item，确定性聚合 `current_stage`、`progress_summary`、`risks`、`status` 和 `completed_at`。进展逐项展示 Item 的必要/可选属性、状态和进展；完成判断仍只依赖必要 Item，可选 Item 的 blocker 只作为风险展示。
+
 ### 3.3 Radar Item
 
 ```ts
