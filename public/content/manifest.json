@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-1c5036074567949ebf70503660b57bfd3ee1833df16a4ccbac9595a3341886c2",
-  "generatedAt": "2026-07-13T12:34:57.343Z",
+  "revision": "snapshot-36ca90f2d79724e994a4bdef8670e43cdb77ad2c4660a8343a97fae44a73aa23",
+  "generatedAt": "2026-07-14T05:55:37.482Z",
   "files": [
     {
       "path": "Case1跨会话项目实测.md",
@@ -553,6 +553,55 @@
       "path": "images/主动代理工作架构.png",
       "sha256": "e1a1e4d8a79ccead52e04b0f70338896d2561bc63a2cec1e8b03063260838635",
       "bytes": 1239246,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/阻塞解除与主动推进实测/00-全新账号空白主页.png",
+      "sha256": "76a33c13281182d1c33a865469231954059ef03401b632557479833baa8208c2",
+      "bytes": 30731,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/阻塞解除与主动推进实测/01-新建阻塞状态会话.png",
+      "sha256": "570ddd3a488aa92a38539dfdfc604590e4315eb6e11411598dbd3e86decb3fef",
+      "bytes": 71402,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/阻塞解除与主动推进实测/02-输入阻塞与交付期限.png",
+      "sha256": "5144a702fd8ef96259dc5b00bc184c381ebfe585cb8e86a1e29ce73a5b110590",
+      "bytes": 96188,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/阻塞解除与主动推进实测/03-SessionA运行中.png",
+      "sha256": "90edabedff03ba55bdbdcea5676232bdbf28391ae80d8914a12b86c0efc96df0",
+      "bytes": 102523,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/阻塞解除与主动推进实测/04-SessionA回答完成.png",
+      "sha256": "5237a2d226a214301f5e5d1de84c3bcf082280032ace7ade480b5175c0bac854",
+      "bytes": 188594,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/阻塞解除与主动推进实测/05-SessionA-Radar保持安静.png",
+      "sha256": "46d9e30e1aac93e25368b34bf4aa64f576d2bd9ed5edbab0547e30739ff8a73b",
+      "bytes": 182268,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/阻塞解除与主动推进实测/06-SessionA项目等待材料.png",
+      "sha256": "26af4aae1ef2b39ad4aa40ca0f0350ae004d1cb700d0e99bf4caf192c5d4de6a",
+      "bytes": 207433,
       "mediaType": "image/png",
       "kind": "asset"
     },
