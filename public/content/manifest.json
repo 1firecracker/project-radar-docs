@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-b61b948b2f3c9d29e2fa7dbc8bd6aa63825f257bd2830c153b6f93eaddb5d75d",
-  "generatedAt": "2026-07-14T12:29:35.511Z",
+  "revision": "snapshot-6152960e03ecf6aaac379ac86398fc258eb03a1158f5e6a2534e41f0d36ec61b",
+  "generatedAt": "2026-07-14T12:39:50.786Z",
   "files": [
     {
       "path": "Case 实测/Case1跨会话项目实测.md",
@@ -47,8 +47,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "0a27bf55b9b01ee7d46493f4a930badec40f34c1c10c1e7f0c01ce3db7a119b5",
-      "bytes": 8908,
+      "sha256": "f36715044ca1b8722f72a18d59c68559771ee6a74c7fd553fb48d601086c875c",
+      "bytes": 9060,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -950,15 +950,15 @@
     },
     {
       "path": "主动判断评测集.md",
-      "sha256": "630fd8e5c353385afd2520450d6fb6391cb19137db6ab4d1d15bcbc44429521e",
-      "bytes": 12341,
+      "sha256": "0274c66d59dd85553bf960e4726e9d8045efa3078197fdea3fe6879e097e17b8",
+      "bytes": 21571,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "产品概要.md",
-      "sha256": "a1c214005d31711fe80dec6fa2a95f651d52f8a51caa5b5c1c5b9ace3c1b2f67",
-      "bytes": 8646,
+      "sha256": "021c4811c475218e0f18dd8c3b7d20d215f05ac57a5d4571d5f3a8077b097854",
+      "bytes": 8702,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1006,8 +1006,8 @@
     },
     {
       "path": "实施计划.md",
-      "sha256": "fa2dbebfa989bc6a37bf477c8d02dac4877d1e0d177183bfffeb77a3aef93f2d",
-      "bytes": 5032,
+      "sha256": "de161c87c3d8f18a505f6c6a7b3e486472e244402203941f58c23e468e5b9b92",
+      "bytes": 5334,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
