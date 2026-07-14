@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-6ed4864e1d5aca74560a3db57a54eb506f5b615562f0d73f959428ef0a295736",
-  "generatedAt": "2026-07-14T12:09:05.003Z",
+  "revision": "snapshot-cddf98bb191586d4cf57dfd5fb840dc9ab12cf4b53b1b215da061b38cc59c8f1",
+  "generatedAt": "2026-07-14T12:19:21.351Z",
   "files": [
     {
       "path": "Case 实测/Case1跨会话项目实测.md",
-      "sha256": "8104455755272b81a94fd6737d5355122e7749500d78c5745a72933fe2cd2ef9",
-      "bytes": 17257,
+      "sha256": "fd79c3fed3baac324f7b7c9d002b8a2a71eb86c9f06f65b4ba87ff4900247107",
+      "bytes": 18521,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -26,8 +26,8 @@
     },
     {
       "path": "Case 实测/Case4归属纠正实测.md",
-      "sha256": "122647ae06e09f356448c012e9500fe9e85dbcab9ad10db1b43b17a32e34b82e",
-      "bytes": 13030,
+      "sha256": "0aeef64821a89e0f8bd77620349d50d5cb8dbf7631dcbc2f7212b74be9563ddb",
+      "bytes": 14099,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -99,6 +99,27 @@
       "sha256": "6f20f09e7bce313f1d8c164f25e8367301613c9808d88b2f5c351c5952e51296",
       "bytes": 28586,
       "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测-重启后/01-补充进展输入.jpg",
+      "sha256": "66ed8734b3425dd9da9fe5dc9a1d8256105797d5cab1d46d76ebe5d4564b26a0",
+      "bytes": 92612,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测-重启后/02-Project全量聚合通过.jpg",
+      "sha256": "a9fabafeaa0c1096e91ea26005da0b081e8a8e219725b6bc31dd68c02eea62ce",
+      "bytes": 97982,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测-重启后/03-刷新后聚合保持.jpg",
+      "sha256": "a9fabafeaa0c1096e91ea26005da0b081e8a8e219725b6bc31dd68c02eea62ce",
+      "bytes": 97982,
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
@@ -441,6 +462,20 @@
       "path": "images/Case3实测/07-NonProject两条Event总览.jpg",
       "sha256": "7c0c970a631a501d1990aad4c5f0a6a9878dc561ec904c31cbf89060a91332cb",
       "bytes": 60209,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4复测-重启后/01-Item全量重算通过.jpg",
+      "sha256": "c6858c0e3a4e44fafe9c653d0a866f7208a754f98585b0af99948a6ec69341ff",
+      "bytes": 85532,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case4复测-重启后/02-刷新后重算保持.jpg",
+      "sha256": "c6858c0e3a4e44fafe9c653d0a866f7208a754f98585b0af99948a6ec69341ff",
+      "bytes": 85532,
       "mediaType": "image/jpeg",
       "kind": "asset"
     },
