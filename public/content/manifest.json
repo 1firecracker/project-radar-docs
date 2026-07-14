@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-36ca90f2d79724e994a4bdef8670e43cdb77ad2c4660a8343a97fae44a73aa23",
-  "generatedAt": "2026-07-14T05:55:37.482Z",
+  "revision": "snapshot-4cc36076a2af89ffd9085f5fd3f9a30791d1c328c467e71204d18a3b3f8102ab",
+  "generatedAt": "2026-07-14T06:05:49.717Z",
   "files": [
     {
       "path": "Case1跨会话项目实测.md",
@@ -40,8 +40,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "df0990b3a70f7b1d7533b39fd0d7c6f6add94b3b0bdce1d76f3aabec6d52e5bc",
-      "bytes": 6481,
+      "sha256": "8f6525c45ff77077ea5d28237b91839809436f2f884ab649820649465457508c",
+      "bytes": 6700,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -606,6 +606,55 @@
       "kind": "asset"
     },
     {
+      "path": "images/阻塞解除与主动推进实测/07-新建材料到位会话.png",
+      "sha256": "ae8ea402d642e6b9a355a659ff062a6bbc3156501abfd78641eefc656dde86c6",
+      "bytes": 73954,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/阻塞解除与主动推进实测/08-输入材料齐备与归档请求.png",
+      "sha256": "c311dbf3d282fba32a2bb79b6aff2166dc92c59b8f126018ec27afe049cf7ff0",
+      "bytes": 92247,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/阻塞解除与主动推进实测/09-SessionB运行中.png",
+      "sha256": "5f84f45b0eb3cda5dc0d2607c33e832aea9c927f9ce4a5597b8bf8b8fc3ffd9c",
+      "bytes": 98956,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/阻塞解除与主动推进实测/10-SessionB回答完成.png",
+      "sha256": "9dd7791b23df380c09dd4366435d7d1c034bc380f73a71353dcba0faa9648cfd",
+      "bytes": 191283,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/阻塞解除与主动推进实测/11-SessionB阻塞解除项目状态.png",
+      "sha256": "cc3321155fcb5381d0eb18f407ecf6929bb05adf7b5e0b26f42e8ba755519d45",
+      "bytes": 206891,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/阻塞解除与主动推进实测/12-重新进入材料归档会话.png",
+      "sha256": "f6bab42340f0b35017ed263073a03b7fdff5452b8ec47532f3df6aa33190619e",
+      "bytes": 196389,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/阻塞解除与主动推进实测/13-Radar生成前端开工任务单.png",
+      "sha256": "a16adaf8d970ebb83091d0ebae401c351a046bd25100774747ae5796d86cd922",
+      "bytes": 255844,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
       "path": "project-radar-architecture.html",
       "sha256": "00a48b75ffde938a66bebacf359b4e8e8c5e889767fb88201c93569a5c912c79",
       "bytes": 18619,
@@ -686,6 +735,13 @@
       "path": "演示案例.md",
       "sha256": "7579ab09596bc395321accc212eeac4d5898e8cd02306cffe32529f10e25c9b7",
       "bytes": 16227,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "阻塞解除与主动推进实测.md",
+      "sha256": "38e2894d5a1b3174cb0c47c5e09108dab0e084d0bfc6dab1810d94c23f413362",
+      "bytes": 7518,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
