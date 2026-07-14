@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-66a7da13daaf409c392f3e0866578d874909931a1c0bfd2a1a87d90ac7402134",
-  "generatedAt": "2026-07-14T06:36:00.707Z",
+  "revision": "snapshot-7ee6bcdbf8e42ab0b8ef1916d164a5241ae8350ae617094d71e72b362d5b44b4",
+  "generatedAt": "2026-07-14T10:07:46.219Z",
   "files": [
     {
       "path": "Case 实测/Case1跨会话项目实测.md",
@@ -677,8 +677,8 @@
     },
     {
       "path": "产品概要.md",
-      "sha256": "7568293a3b9fb24eab03289db438d699b8a0be77a89a94938124f178ff7f4f0f",
-      "bytes": 7150,
+      "sha256": "7a9a6400a7ebf13d82a192acf1afdf3da5bac92ddd9db3fc8b82fef94f95fa9d",
+      "bytes": 8624,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -707,6 +707,13 @@
       "path": "决策记录/采用嵌入式辅助代理.md",
       "sha256": "d2dc4d774d98ba7f24877cd1051eac568f6d2d5df786e460237898b074a95bfc",
       "bytes": 2254,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "决策记录/采用持续推进智能体总模型.md",
+      "sha256": "c10ba657c0ff7d4a5b62cc35f872aaba1f1d12a0482e8ddf4ac2b2cdfa42bf5e",
+      "bytes": 4183,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
