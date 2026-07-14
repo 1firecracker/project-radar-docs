@@ -1,20 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { orderedDocuments } from "../../lib/content/manifest";
+import {
+  buildNavigationTree,
+  documentTitle,
+  type NavigationNode,
+} from "../../lib/content/navigation-tree";
 import { documentHref } from "../../lib/content/paths";
-import type { ContentManifest, ManifestFile } from "../../lib/content/types";
+import type { ContentManifest } from "../../lib/content/types";
 
 interface NavigationProps {
   manifest: ContentManifest;
   activePath: string;
   documentHrefFor?: (path: string) => string;
-}
-
-function titleFor(file: ManifestFile): string {
-  if (file.path === "README.md") return "文档总览";
-  const filename = file.path.split("/").at(-1) ?? file.path;
-  return filename.replace(/\.(?:md|html?)$/i, "");
 }
 
 export function Navigation({
@@ -23,32 +21,32 @@ export function Navigation({
   documentHrefFor = documentHref,
 }: NavigationProps) {
   const [open, setOpen] = useState(false);
-  const documents = orderedDocuments(manifest);
-  const core = documents.filter((file) => !file.path.includes("/"));
-  const decisions = documents.filter((file) => file.path.startsWith("决策记录/"));
-  const other = documents.filter(
-    (file) => file.path.includes("/") && !file.path.startsWith("决策记录/"),
-  );
+  const tree = buildNavigationTree(manifest);
 
-  const group = (label: string, files: ManifestFile[]) =>
-    files.length > 0 ? (
-      <section className="nav-group" aria-labelledby={`nav-${label}`}>
-        <h2 id={`nav-${label}`}>{label}</h2>
-        <ul>
-          {files.map((file) => (
-            <li key={file.path}>
-              <a
-                href={documentHrefFor(file.path)}
-                aria-current={file.path === activePath ? "page" : undefined}
-                onClick={() => setOpen(false)}
-              >
-                {titleFor(file)}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    ) : null;
+  const renderNodes = (nodes: NavigationNode[]) => (
+    <ul>
+      {nodes.map((node) =>
+        node.type === "folder" ? (
+          <li className="nav-folder" key={node.path}>
+            <details open={activePath.startsWith(`${node.path}/`)}>
+              <summary>{node.name}</summary>
+              {renderNodes(node.children)}
+            </details>
+          </li>
+        ) : (
+          <li className="nav-document" key={node.file.path}>
+            <a
+              href={documentHrefFor(node.file.path)}
+              aria-current={node.file.path === activePath ? "page" : undefined}
+              onClick={() => setOpen(false)}
+            >
+              {documentTitle(node.file)}
+            </a>
+          </li>
+        ),
+      )}
+    </ul>
+  );
 
   return (
     <>
@@ -92,9 +90,10 @@ export function Navigation({
           </button>
         </div>
         <nav id="docs-navigation" aria-label="文档导航">
-          {group("核心文档", core)}
-          {group("决策记录", decisions)}
-          {group("其他文档", other)}
+          <section className="nav-tree" aria-labelledby="nav-documents">
+            <h2 id="nav-documents">文档</h2>
+            {renderNodes(tree)}
+          </section>
         </nav>
         <p className="sync-time">
           内容更新时间

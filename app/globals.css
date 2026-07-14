@@ -29,7 +29,7 @@ body {
 
 a { color: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
-button:focus-visible, a:focus-visible { outline: 3px solid rgba(92, 91, 214, .28); outline-offset: 3px; }
+button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid rgba(92, 91, 214, .28); outline-offset: 3px; }
 
 .docs-layout { min-height: 100vh; }
 
@@ -75,12 +75,16 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(92, 91, 214, .28
 }
 
 .docs-sidebar nav { margin-top: 38px; }
-.nav-group + .nav-group { margin-top: 28px; }
-.nav-group h2 { margin: 0 0 8px 12px; color: #8a8d93; font-size: 11px; font-weight: 650; letter-spacing: .12em; }
-.nav-group ul { margin: 0; padding: 0; list-style: none; }
-.nav-group a { display: block; border-radius: 8px; padding: 7px 12px; color: #565a61; font-size: 14px; line-height: 1.45; text-decoration: none; }
-.nav-group a:hover { background: rgba(255,255,255,.7); color: var(--ink); }
-.nav-group a[aria-current="page"] { background: var(--paper); color: var(--accent); box-shadow: 0 1px 0 rgba(21,22,26,.04); font-weight: 620; }
+.nav-tree h2 { margin: 0 0 8px 12px; color: #8a8d93; font-size: 11px; font-weight: 650; letter-spacing: .12em; }
+.nav-tree ul { margin: 0; padding: 0; list-style: none; }
+.nav-tree ul ul { margin-left: 13px; padding-left: 10px; border-left: 1px solid #d9dbda; }
+.nav-folder summary { position: relative; border-radius: 8px; padding: 7px 12px 7px 28px; color: #565a61; font-size: 14px; font-weight: 620; line-height: 1.45; cursor: pointer; list-style: none; }
+.nav-folder summary::-webkit-details-marker { display: none; }
+.nav-folder summary::before { content: "›"; position: absolute; left: 12px; top: 6px; color: #85898f; font-size: 17px; line-height: 1.3; transform: rotate(0deg); transition: transform .16s ease; }
+.nav-folder details[open] > summary::before { transform: rotate(90deg); }
+.nav-folder summary:hover, .nav-document a:hover { background: rgba(255,255,255,.7); color: var(--ink); }
+.nav-document a { display: block; border-radius: 8px; padding: 7px 12px; color: #565a61; font-size: 14px; line-height: 1.45; text-decoration: none; }
+.nav-document a[aria-current="page"] { background: var(--paper); color: var(--accent); box-shadow: 0 1px 0 rgba(21,22,26,.04); font-weight: 620; }
 .sync-time { margin: auto 10px 0; padding-top: 32px; color: #92959a; font-size: 11px; }
 .sync-time time { display: block; color: #6f7379; }
 
@@ -155,4 +159,5 @@ button:focus-visible, a:focus-visible { outline: 3px solid rgba(92, 91, 214, .28
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .docs-sidebar { transition: none; }
+  .nav-folder summary::before { transition: none; }
 }

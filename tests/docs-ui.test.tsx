@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
+import { JSDOM } from "jsdom";
 import { HtmlDocument } from "../app/components/HtmlDocument";
 import { MarkdownDocument } from "../app/components/MarkdownDocument";
 import { Navigation } from "../app/components/Navigation";
@@ -42,6 +43,34 @@ test("docs ui renders Project Radar navigation and active document", () => {
     /href="\/docs\/%E4%BA%A7%E5%93%81%E6%A6%82%E8%A6%81.md"/,
   );
   assert.match(html, /aria-current="page"/);
+});
+
+test("docs navigation mirrors document folders and opens the active branch", () => {
+  const nestedManifest: ContentManifest = {
+    ...manifest,
+    files: [
+      file("README.md"),
+      file("决策记录/采用任务边界触发.md"),
+      file("工作流/阶段/执行.md"),
+      file("工作流/阶段/验收.md"),
+      file("images/工作流.png", "asset"),
+    ],
+  };
+  const html = renderToStaticMarkup(
+    <Navigation manifest={nestedManifest} activePath="工作流/阶段/执行.md" />,
+  );
+  const document = new JSDOM(html).window.document;
+  const folders = [...document.querySelectorAll("details")];
+  const folder = (name: string) =>
+    folders.find((candidate) => candidate.querySelector(":scope > summary")?.textContent === name);
+
+  assert.equal(folder("工作流")?.hasAttribute("open"), true);
+  assert.equal(folder("阶段")?.hasAttribute("open"), true);
+  assert.equal(folder("决策记录")?.hasAttribute("open"), false);
+  assert.equal(document.querySelector('[aria-current="page"]')?.textContent, "执行");
+  assert.equal(document.body.textContent?.includes("工作流.png"), false);
+  assert.equal(document.body.textContent?.includes("核心文档"), false);
+  assert.equal(document.body.textContent?.includes("其他文档"), false);
 });
 
 test("docs ui rewrites relative links and sanitizes Markdown", () => {
