@@ -8,11 +8,11 @@
 
 [返回文档总览](../README.md) · [返回演示案例](../演示案例.md)
 
-### 2.1 2026-07-14 浏览器复测
+## 1. 2026-07-14 浏览器复测
 
 本轮使用全新账号 `case1_fix_0714`，完全通过浏览器界面执行 Session A 两轮消息和 Session B 一轮消息，再检查 Project、Item、Event 与刷新后的持久化结果。所有截图均为完整页面截图。
 
-#### 1.1 复测结论
+### 1.1 复测结论
 
 | 检查项 | 实际结果 | 判定 |
 |---|---|---|
@@ -26,7 +26,7 @@
 
 本轮不能用来判定新代码失败。浏览器连接的后端进程启动于 **2026-07-14 11:16**，Project 聚合代码修改于 **19:30** 左右；运行进程没有加载本次修复。重启后端后，应重点重放 Session B，并检查 Project 的 `current_stage`、`progress_summary` 和 `risks` 是否同时吸收两个 Item。
 
-#### 1.2 空白基线与 Session A 第一轮
+### 1.2 空白基线与 Session A 第一轮
 
 新账号为空白状态。
 
@@ -48,7 +48,7 @@ Organizer 创建一个 SDK Project 和一个公开 API Item。
 
 ![首轮 Project 总览](../images/Case1复测/04-首轮Project总览.jpg)
 
-#### 1.3 Session A 第二轮
+### 1.3 Session A 第二轮
 
 输入正式 API 范围决策。
 
@@ -66,7 +66,7 @@ Project 没有重复创建，公开 API Item 进入 `in_progress`。
 
 ![API 事项与两条 Event](../images/Case1复测/08-API事项与两条Event.jpg)
 
-#### 1.4 Session B 跨会话更新
+### 1.4 Session B 跨会话更新
 
 新建 Session B。
 
