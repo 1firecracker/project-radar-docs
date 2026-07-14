@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-185138556b7e660b08b275baa5eab4874a1516a404f81c61706ffd48edfd9fbf",
-  "generatedAt": "2026-07-14T11:48:38.479Z",
+  "revision": "snapshot-38d216396e03c18adc3963e63d3f04c3851e7bf8ed430f574abe866f72c74c9d",
+  "generatedAt": "2026-07-14T11:58:52.171Z",
   "files": [
     {
       "path": "Case 实测/Case1跨会话项目实测.md",
-      "sha256": "28bb755d8fb94288c18df4752bafd839e8d3a2e255727066ca2bc987efada21c",
-      "bytes": 13641,
+      "sha256": "8883bd05cc8ba413fc07762cc83ca4633771b50d519fa8ad72c0cec214baa5b9",
+      "bytes": 17263,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -26,8 +26,8 @@
     },
     {
       "path": "Case 实测/Case4归属纠正实测.md",
-      "sha256": "769a3da1b0bf631c2e03e196c50036f245c1a8a21d87e3166772d2d6f4bd9a86",
-      "bytes": 9090,
+      "sha256": "122647ae06e09f356448c012e9500fe9e85dbcab9ad10db1b43b17a32e34b82e",
+      "bytes": 13030,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -99,6 +99,111 @@
       "sha256": "6f20f09e7bce313f1d8c164f25e8367301613c9808d88b2f5c351c5952e51296",
       "bytes": 28586,
       "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/00-空白基线.jpg",
+      "sha256": "31e4a6b763b52395a559d88b931036d933b96edf857a4ae7357bad7c3c0a10ae",
+      "bytes": 21901,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/01-新建SessionA.jpg",
+      "sha256": "2159572967173480a723c8715df51277f4d99284b92d6384176a9d0519de144f",
+      "bytes": 38309,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/02-输入长期目标.jpg",
+      "sha256": "9c6606892a569c1a77e9ca114286e790e2bf2eac15f6caf68e0346646be2e536",
+      "bytes": 52264,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/03-首轮回答完成.jpg",
+      "sha256": "1cc8ece6eb85809691ad40c60389c7492b1ace7666529da1b796e82817ac8eab",
+      "bytes": 11801,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/04-首轮Project总览.jpg",
+      "sha256": "8ffc5bfbb9c0dc06187740adcbe66da369088eebcdd88c91416ca86984bde9f8",
+      "bytes": 75469,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/05-输入API范围决策.jpg",
+      "sha256": "7601c87528cda77e61b9b1cb0d3ff726334f3df665258529885e1716e654ecdf",
+      "bytes": 125274,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/06-第二轮回答完成.jpg",
+      "sha256": "1cc8ece6eb85809691ad40c60389c7492b1ace7666529da1b796e82817ac8eab",
+      "bytes": 11801,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/07-第二轮Project总览.jpg",
+      "sha256": "643db4357795aed4044891bd3e8ef60db0bbe20875e02f5066b8df56c88f110f",
+      "bytes": 78976,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/08-API事项与两条Event.jpg",
+      "sha256": "60d55e314de80b647cde12529237c3cb5fbfc3b10590f2e9c1f76e7dfd99fcdb",
+      "bytes": 92069,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/09-新建SessionB.jpg",
+      "sha256": "d3796f953b13257b22e4942986777785f6b86cbcb7eb6494646ae132519f4cff",
+      "bytes": 11903,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/10-输入跨Session进展.jpg",
+      "sha256": "f8bcd3b7404c348923dd3e9a3fe888d047e6963d609501243e87cf8e0008e9e1",
+      "bytes": 52981,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/11-跨Session回答完成.jpg",
+      "sha256": "1cc8ece6eb85809691ad40c60389c7492b1ace7666529da1b796e82817ac8eab",
+      "bytes": 11801,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/12-跨SessionProject总览.jpg",
+      "sha256": "04a38c488097578f3a44617bd33aa8902b7fb8e32dc443474f86e3ca9a44c3a3",
+      "bytes": 80541,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/13-SessionB事项与Event.jpg",
+      "sha256": "0e027b80cb224ef849d3ae54ff35d7e9c2e7086660f82c836821fcc26e93daaf",
+      "bytes": 84235,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "images/Case1复测/14-刷新后Project总览.jpg",
+      "sha256": "1cc8ece6eb85809691ad40c60389c7492b1ace7666529da1b796e82817ac8eab",
+      "bytes": 11801,
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
@@ -340,136 +445,136 @@
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/00-空白基线.png",
+      "path": "images/Case4复测/00-空白基线.jpg",
       "sha256": "e8db985d1260dee0729756e4d39e654bc2dd671abfb1f1f0f84890e060ef9d47",
       "bytes": 11220,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/01-新建SessionA.png",
+      "path": "images/Case4复测/01-新建SessionA.jpg",
       "sha256": "cd4bdd3b6023c2fe34c615209152aa39f6db48a5e910693f4ed000923473571a",
       "bytes": 11411,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/02-输入官网事项.png",
+      "path": "images/Case4复测/02-输入官网事项.jpg",
       "sha256": "f7b8e4ab09caa907537fdd476e92cbec0df965ab4dd693c8d0148871e0297ffa",
       "bytes": 47183,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/03-SessionA完成.png",
+      "path": "images/Case4复测/03-SessionA完成.jpg",
       "sha256": "53884c9f99aa30c978187dd523c02e744dbb6f50e69b732b79d8eb7e2afae95a",
       "bytes": 11518,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/04-官网事项总览.png",
+      "path": "images/Case4复测/04-官网事项总览.jpg",
       "sha256": "53884c9f99aa30c978187dd523c02e744dbb6f50e69b732b79d8eb7e2afae95a",
       "bytes": 11518,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/05-新建SessionB.png",
+      "path": "images/Case4复测/05-新建SessionB.jpg",
       "sha256": "5dbd34baf109b400b19b8b10d170504a875d2fc393802195062c462c2417f0c6",
       "bytes": 11596,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/06-输入帮助中心事项.png",
+      "path": "images/Case4复测/06-输入帮助中心事项.jpg",
       "sha256": "4687dd063fc5f9c230e19c8177679bd3bbe15a95c39cb7f59a5145198724c53c",
       "bytes": 46949,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/07-SessionB完成.png",
+      "path": "images/Case4复测/07-SessionB完成.jpg",
       "sha256": "ca82e055226b8844c4b9d00e1f9e16e36bfb8dc6c625f9d79be63c064c5cb182",
       "bytes": 11663,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/08-双事项总览.png",
+      "path": "images/Case4复测/08-双事项总览.jpg",
       "sha256": "de02c824e4146a88eef63d6b7a60032c0f41889cd7f477a0e97cb548fe467327",
       "bytes": 81040,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/09-新建SessionC.png",
+      "path": "images/Case4复测/09-新建SessionC.jpg",
       "sha256": "06f49958a1214194903f7ddd4b4fe2d00106171983ecc555d3aaec08d24714a9",
       "bytes": 11765,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/10-输入模糊进展.png",
+      "path": "images/Case4复测/10-输入模糊进展.jpg",
       "sha256": "dd8892fc7bcafe2776dc158f67927468a9d80b3a69112665e454319865912d9c",
       "bytes": 44293,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/11-SessionC完成.png",
+      "path": "images/Case4复测/11-SessionC完成.jpg",
       "sha256": "3f0ba4e1d1f080ebc026b34f95baf902a5f71ba07d48f25336ad5980ac54c990",
       "bytes": 93760,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/12-模糊进展正确归属.png",
+      "path": "images/Case4复测/12-模糊进展正确归属.jpg",
       "sha256": "c00e79684726a94c98333086dd4410722fadd85fdcf6ee4d0306b1c5e8a94b7d",
       "bytes": 82314,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/13-移错后帮助中心回退.png",
+      "path": "images/Case4复测/13-移错后帮助中心回退.jpg",
       "sha256": "04a458446e487648b394b40925847874cebb9584aafbf3c3c6ddaf054c11e4ad",
       "bytes": 86986,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/14-错误Event进入官网事项.png",
+      "path": "images/Case4复测/14-错误Event进入官网事项.jpg",
       "sha256": "583b5adebac855b9cb5a9889ee7617d35bd78ab550b8eefc7765cb4af9617a86",
       "bytes": 87128,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/15-纠正后官网恢复.png",
+      "path": "images/Case4复测/15-纠正后官网恢复.jpg",
       "sha256": "ca82e055226b8844c4b9d00e1f9e16e36bfb8dc6c625f9d79be63c064c5cb182",
       "bytes": 11663,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/16-纠正后帮助中心状态.png",
+      "path": "images/Case4复测/16-纠正后帮助中心状态.jpg",
       "sha256": "c189f33877ae310a46f587e7b42b64db39eb21d64216ed7a744200469214e4c1",
       "bytes": 87600,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/17-刷新后最终状态.png",
+      "path": "images/Case4复测/17-刷新后最终状态.jpg",
       "sha256": "ca82e055226b8844c4b9d00e1f9e16e36bfb8dc6c625f9d79be63c064c5cb182",
       "bytes": 11663,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
-      "path": "images/Case4复测/18-刷新后帮助中心状态.png",
+      "path": "images/Case4复测/18-刷新后帮助中心状态.jpg",
       "sha256": "fb052712e582a49e41e9a6ac830444490f62fb5fc949977e0a37763a04f5798e",
       "bytes": 82327,
-      "mediaType": "image/png",
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
