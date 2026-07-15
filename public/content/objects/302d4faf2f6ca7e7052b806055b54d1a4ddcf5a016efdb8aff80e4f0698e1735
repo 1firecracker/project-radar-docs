@@ -25,6 +25,8 @@
 6. **时机正确**：只在最新完整 QA 的 Post-run 后产生；流式回答、等待用户和 Re-entry 时不新生成。
 7. **不过期**：新 Query 淘汰旧的 `pending/snoozed` 建议，但不打断已授权的 `accepted/running` 动作。
 8. **不递归**：Radar Action Run 更新状态并产生 Event，但不再生成 Radar。
+9. **覆盖来源正确**：只有同一动作被直接交付、直接推荐或用户明确要求时才算覆盖；生成产物内部文字和泛化邀约不算。
+10. **约束范围正确**：只检查约束是否命中候选动作，不得把对最终执行的禁止扩大到不同的准备、比较或核对动作。
 
 判定优先级：**先判断是否必须安静，再评价建议内容。** 不该出现却出现的建议，标题再好也算失败。
 
@@ -36,7 +38,7 @@
 
 > 2026-07-15 实测结论：**Item 与 Radar 通过，Project 完成守门失败。** 新 Case 已遵守 V0“一次完整 QA 最多创建或更新一个主要 Item”的边界，不再要求一次建立多个 Item。Session B 后“品牌素材验收”正确完成，主 Agent 也已指出可以进入前端制作，因此 Radar 安静符合去重规则；但官网尚未制作和上线，Project 却错误进入 `completion_candidate`。完整证据见[项目完成守门：单事项复现实测](./案例实测/项目完成守门单事项复现实测.md)。
 
-> 实现进展：同日已完成 `completion_scope`、Organizer `project_patch`、Project 完成守门和统计边界修改，后端完整 Radar 回归 205 项通过；上述文字保留修复前实测结论，当前待按相同输入重跑浏览器。
+> 实现进展：同日已完成 `completion_scope`、Organizer `project_patch`、Project 完成守门和统计边界修改；上述文字保留修复前实测结论，当前待按相同输入重跑浏览器。
 
 **Session A**
 
@@ -71,6 +73,10 @@
 预期主回答：完成内部报价汇总邮件；未主动生成完整选型比较表。
 
 预期 Radar：`type=decision`、`expected_output=summary`，生成“制作平台选型决策比较表”这一明确产物，综合已有功能、集成、安全评分和最新报价并标记需确认项；证据至少包含 Session A 的决策维度已齐但报价阻塞、Session B 的三家最终报价均在预算内；目标为 Session B。笼统的“推进选型”不算命中。
+
+动作级判断要求：Session B 主回答中的报价汇总邮件正文属于 `generated_artifact`。正文内部即使写有“后续可比较”之类内容，也只能记为 `coverage.kind=artifact_text`；回答结尾的条件式继续帮助只能记为 `generic_offer`。这两类都不构成 `main_answer_covered`，只要比较表证据充分且未被用户直接要求，Policy Gate 应生成 `actionable_gap`。如果主 Agent 在邮件正文之外直接建议或已经制作同一比较表，才允许 `main_answer_covered`。
+
+跨 Session 新鲜度要求：Session B 更新平台选型 Item / Project 后，任何依赖 Session A 旧版本的 `pending/snoozed` Radar 应进入 `superseded`；Session B 新 Radar 的 `source_item_version` 和 `source_project_version` 必须等于更新后的当前版本。
 
 失败条件：只复述报价、重复邮件，或不基于既有评估维度直接武断选择供应商。
 
@@ -310,6 +316,18 @@
 
 失败条件：过期建议或完成/归档对象上的建议仍可见、可接受。
 
+### 4.10 跨 Session 状态版本失效
+
+测试层级：数据库事务、服务层集成和浏览器观察。
+
+1. Session A 为某个 Item 创建一条 `pending` Radar，并记录其 `source_item_version` 与 `source_project_version`。
+2. Session B 的新 QA 更新同一 Item，或更新其所属 Project 的语义状态。
+3. Organizer 提交新版本的同一事务中，Session A 的旧 `pending/snoozed` Radar 必须进入 `superseded`；`accepted/running` 保持原状态。
+4. 如果状态恰好在 Analyzer 运行期间变化，Candidate 落库必须返回 `stale`。
+5. 读取或接受遗留旧版本 Radar 时仍须拒绝，不能依赖前端缓存隐藏问题。
+
+失败条件：旧 Radar 在 Session A 继续显示或可接受；Session B 创建结果复用旧版本 Radar；已授权动作被错误中断。
+
 ## 5. 记录模板与通过标准
 
 ### 5.1 覆盖矩阵
@@ -321,11 +339,13 @@
 | 上线风险控制 | 3.3 | `risk / checklist` | 真实浏览器；现场备选 |
 | 接近完成但仍缺确认 | 3.4 | `completion / checklist` | 真实浏览器 |
 | 主 Agent 或用户已覆盖 | 3.5、3.6 | 必须安静 | 真实浏览器 |
+| 生成产物、泛化邀约与动作级约束 | 3.2、3.5—3.7 | 按覆盖来源和候选动作范围判断 | 真实浏览器 + 服务层策略测试 |
 | 阻塞、Non Project、已完成、仅信息价值 | 3.7—3.10 | 必须安静 | 真实浏览器 |
 | 目标与执行 Session 不确定 | 3.11 | 必须安静 | 服务层策略测试 |
 | 完整 QA、最新 QA 与过期淘汰 | 4.1—4.3 | 生命周期守门 | 服务层集成 + UI 观察 |
 | 授权保护、Re-entry、防递归 | 4.4—4.6 | 生命周期守门 | 服务层集成 + UI 观察 |
 | 整理失败、同类去重、对象失效 | 4.7—4.9 | 策略守门 | 服务层测试 |
+| 跨 Session 状态版本失效 | 4.10 | 旧建议 `superseded`、竞态 `stale` | 数据库事务 + 服务层 + UI 观察 |
 
 ### 5.2 统一运行条件
 
@@ -352,7 +372,7 @@
 评测集通过要求：
 
 - 主动判断组：三个正例至少连续两轮命中正确动作；状态守门 Case 与所有有效安静反例连续两轮通过。
-- 机制守门组：4.1—4.9 使用固定夹具分别至少连续两轮通过。
+- 机制守门组：4.1—4.10 使用固定夹具分别至少连续两轮通过。
 - 不允许出现重复主 Agent、阻塞期抢跑、Non Project 误触发、旧建议残留和执行递归。
 - 建议措辞可以变化，但目标、动作类型、证据和目标 Session 必须与 Case 一致。
 - 同时报告有效运行通过率和前置失败率，不用 Organizer 失败掩盖 Radar 失败，也不反向归责。
