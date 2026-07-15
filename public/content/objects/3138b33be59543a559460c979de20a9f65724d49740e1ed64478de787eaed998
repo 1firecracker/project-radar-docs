@@ -1,0 +1,168 @@
+# Project Radar 侧栏实施计划
+
+> **执行方式：** 当前会话内由主 Agent 逐项执行，不调用 subagent。每个行为变更先写失败测试，再写最小实现。  
+> 文档状态：已批准  
+> 负责人：bwz  
+> 最近更新：2026-07-10
+
+[返回文档总览](../README.md)
+
+**目标：** 将当前聊天区内的 Project Radar 胶囊入口改为右侧 `Todolist / Radar` 双 Tab，并让 Radar Tab 承载建议、反馈和项目弹窗入口。
+
+**架构：** 新增 `WorkspaceSidePanel` 作为右侧栏外壳，复用现有 `TodoListPanel`，并用轻量 `RadarPanel` 展示当前单条建议。`RadarActionBar` 继续负责建议接受与反馈，但通过展示模式同时服务输入框上方和侧栏；数据查询、接受、反馈和双栏弹窗接口保持不变。
+
+**技术栈：** React 18、Vite、Node.js 内置测试、现有 CSS Token、FastAPI。
+
+## 1. 全局约束
+
+- 右侧栏只新增一个 Tab，不新增独立页面或第二条侧栏。
+- 输入框上方 Action Bar 只在 `pending` 状态展示；加载和接口错误不打扰主聊天。
+- Radar Tab 可以展示加载、空状态和真实接口错误，并提供重试。
+- 侧栏同一时刻最多展示一条最高价值建议；徽标值为 `0` 或 `1`。
+- “查看全部项目”复用现有 `ProjectRadarModal`。
+- 移除聊天区中的 `ProjectRadarButton`，不改后端 API。
+
+---
+
+## 2. 实施任务
+
+### 2.1 Radar 展示状态
+
+**文件：**
+
+- 新增：`frontend/src/components/radarPresentationState.js`
+- 新增：`frontend/src/components/radarPresentationState.test.js`
+
+**接口：**
+
+```js
+getRadarPanelState({ radar, loading, error })
+// => { kind: 'loading' | 'error' | 'empty' | 'ready', radar, badgeCount }
+
+shouldRenderRadarActionBar(displayState)
+// => boolean，仅 reason === 'pending' 时为 true
+
+normalizeWorkspaceTab(value)
+// => 'todo' | 'radar'
+```
+
+- [x] 先写失败测试，覆盖 ready、empty、loading、error、Action Bar 静默规则和 Tab 回退。
+- [x] 运行：
+
+```bash
+node --test frontend/src/components/radarPresentationState.test.js
+```
+
+预期：因模块不存在而失败。
+
+- [x] 写入最小纯函数实现，再运行同一命令，预期全部通过。
+
+### 2.2 侧栏 Radar 卡片与 Action Bar
+
+**文件：**
+
+- 新增：`frontend/src/components/RadarPanel.jsx`
+- 新增：`frontend/src/components/RadarPanel.css`
+- 修改：`frontend/src/components/RadarActionBar.jsx`
+- 修改：`frontend/src/components/RadarActionBar.css`
+
+**接口：**
+
+```jsx
+<RadarPanel
+  state={panelState}
+  disabled={conversationIsBusy || Boolean(pendingAskUser)}
+  onAction={startAcceptedRadarAction}
+  onRefresh={refreshRadar}
+  onViewProjects={openProjectModal}
+/>
+```
+
+- [x] 让 `RadarActionBar` 使用 `shouldRenderRadarActionBar`，加载、错误、空状态不再渲染聊天区提示。
+- [x] 主动作使用 `radar.action_label || '让 Agent 推进'`，不再固定为“接受”。
+- [x] `RadarPanel` 的 ready 状态展示标题、原因、优先级、推进、稍后、忽略和“查看全部项目”。
+- [x] loading、empty、error 分别显示简短状态；只有 error 提供重试。
+- [x] 使用现有 `--color-*` Token，删除 `--border-color` 和 `--surface-color` 回退样式。
+- [x] 运行 Radar 状态与 API/执行测试，预期全部通过：
+
+```bash
+node --test \
+  frontend/src/components/radarDisplayState.test.js \
+  frontend/src/components/radarPresentationState.test.js \
+  frontend/src/radarApi.test.js
+```
+
+### 2.3 Todolist / Radar 双 Tab
+
+**文件：**
+
+- 新增：`frontend/src/components/WorkspaceSidePanel.jsx`
+- 新增：`frontend/src/components/WorkspaceSidePanel.css`
+- 修改：`frontend/src/components/TodoListPanel.jsx`
+- 修改：`frontend/src/components/TodoListPanel.css`
+
+**接口：**
+
+```jsx
+<WorkspaceSidePanel
+  todoProps={{ todoList, conversationStatus, hasPendingAskUser, isSubmitting, onApplyPatch }}
+  radarState={panelState}
+  radarDisabled={conversationIsBusy || Boolean(pendingAskUser)}
+  onRadarAction={startAcceptedRadarAction}
+  onRadarRefresh={refreshRadar}
+  onViewProjects={openProjectModal}
+/>
+```
+
+- [x] 右侧栏顶部加入 `Todolist` 和 `Radar` 两个可键盘访问的 Tab。
+- [x] Radar 有建议时显示 `1` 的徽标；没有建议时不显示徽标。
+- [x] `TodoListPanel` 增加 `embedded` 模式，只移除外层宽度、边框和背景，不改变编辑行为。
+- [x] 保留现有 `max-width: 1100px` 下侧栏折到聊天区下方的响应式行为。
+- [x] 运行纯函数测试与生产构建：
+
+```bash
+node --test frontend/src/components/radarPresentationState.test.js
+npm --prefix frontend run build
+```
+
+预期：测试通过；Vite 构建成功，仅允许仓库既有的 chunk 体积警告。
+
+### 2.4 App 接入与旧入口移除
+
+**文件：**
+
+- 修改：`frontend/src/App.jsx`
+- 删除：`frontend/src/components/ProjectRadarButton.jsx`
+- 删除：`frontend/src/components/ProjectRadarButton.css`
+
+- [x] 用 `getRadarPanelState({ radar: pendingRadar, loading: radarLoading, error: radarError })` 构造侧栏状态。
+- [x] 用 `WorkspaceSidePanel` 替换 App 中直接渲染的 `TodoListPanel`。
+- [x] 删除聊天区中的 `ProjectRadarButton`，保留 `RadarActionBar` 和 `ProjectRadarModal`。
+- [x] “查看全部项目”设置 `isProjectRadarOpen=true`；登录失效后关闭弹窗并保留安全提示。
+- [x] 运行全部 Project Radar 前端测试和构建：
+
+```bash
+node --test \
+  frontend/src/components/projectRadarState.test.js \
+  frontend/src/components/radarDisplayState.test.js \
+  frontend/src/components/radarPresentationState.test.js \
+  frontend/src/radarApi.test.js \
+  frontend/src/radarExecution.test.js
+npm --prefix frontend run build
+```
+
+### 2.5 服务与视觉验收
+
+- [x] 停止未加载 Radar 路由的旧 `backend/server.py` 进程，并从当前 `codex/bwz` 重新启动 8000 端口后端。
+- [x] 验证 `/api/radar/overview` 未登录时返回 `401`，不再是 `404`。
+- [x] 保持当前 3000 端口 Vite 服务，重新加载页面。
+- [ ] 在同一桌面视口检查：右侧双 Tab、Radar 徽标、空状态、错误状态、建议卡、Action Bar 和双栏弹窗。当前已验证双 Tab、空状态和双栏弹窗；真实建议卡与徽标等待产生 pending Radar 后补验。
+- [x] 保存并查看当前运行截图，确认不存在遮挡、裁切、错误 Token 或旧胶囊入口。
+
+## 3. 完成标准
+
+- 目标效果图中的右侧 `Todolist / Radar` 双 Tab 已落地。
+- Action Bar 与 Radar Tab 使用同一条待处理建议，但只触发一次接受执行。
+- 主聊天区不再显示 Radar 加载或接口错误条。
+- 旧后端造成的 Radar API `404` 已通过重启消除。
+- 前端相关 Node 测试和生产构建通过，实际页面截图完成核对。

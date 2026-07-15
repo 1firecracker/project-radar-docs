@@ -1,0 +1,475 @@
+# Progress Agent（持续推进智能体）技术设计
+
+> 文档状态：维护中  
+> 负责人：bwz  
+> 最近更新：2026-07-14  
+> 权威范围：总能力架构，以及 V0 数据模型、触发、接口、存储、状态流与 Agent 执行上下文
+
+[返回文档总览](../README.md)
+
+## 1. 总体设计
+
+Progress Agent 在现有 AgentV3 主链路之外提供持续推进能力。主 Agent 负责当前 QA；V0 在完整 QA 的 `end_stream` 后触发异步 Sidecar，由 Organizer 把 QA 整理成 Event、更新 Item / Project，再由 Radar 判断是否存在主动推进机会。任何后台失败都不能影响主回复。
+
+### 1.1 四层能力架构
+
+Post-run、Re-entry 和未来的定时扫描回答“什么时候运行”；Organizer、Resume Brief、Radar 和 Action Runner 回答“运行什么”。两者必须分层，并共享同一套 Event / Item / Project 状态。
+
+```mermaid
+flowchart TB
+  subgraph trigger["1. 触发时机"]
+    postrun["完整 QA 结束：Post-run"]
+    reentry["间隔后返回：Re-entry"]
+    future["Session End / 定时 / 外部变化（V1+）"]
+  end
+
+  subgraph capability["2. 核心能力"]
+    organizer["Organizer\n提取与归属"]
+    resume["Resume Brief\n恢复进度（V0.2）"]
+    analyzer["Radar + Policy Gate\n发现推进机会"]
+    runner["Action Runner\n授权后执行"]
+  end
+
+  subgraph state["3. 共享状态底座"]
+    event["Activity Event"] --> item["Tracked Item"] --> project["Project State"]
+    radarstore["Radar Item / Feedback"]
+  end
+
+  subgraph experience["4. 用户界面与执行结果"]
+    overview["项目总览 / 纠正"]
+    resumecard["恢复简报（V0.2）"]
+    radarui["Radar Tab / Action Bar"]
+    output["Agent 产物 / 状态回流"]
+  end
+
+  postrun --> organizer --> event
+  item --> analyzer
+  project --> analyzer
+  analyzer -->|"通过"| radarstore --> radarui
+  analyzer -->|"无高价值缺口"| quiet["保持安静"]
+  reentry --> overview
+  reentry -.-> resume --> resumecard
+  future -.-> organizer
+  future -.-> analyzer
+  item --> overview
+  project --> overview
+  radarui -->|"用户接受"| runner --> output --> event
+```
+
+*图 1：Progress Agent 总能力架构。虚线表示当前 V0 尚未实现的 V0.2/V1 能力。*
+
+![Radar V0 Post-run 实现链路](../05-资源/图片/主动代理工作架构.png)
+
+*图 2：既有 Radar V0 三层实现视图，用于说明 Post-run、跨 Session 状态和执行回流；图 1 是概念层级的权威说明。*
+
+V0 已实现的逻辑组件：
+
+1. **Organizer**：由 Post-run 触发，为每个完整 QA 创建 Event，决定归属，并生成 Item / Project 状态补丁。
+2. **State Store**：持久化 Project、Item、Event 以及版本，提供跨 Session 当前状态。
+3. **Radar Analyzer 与 Policy Gate**：基于整理后的状态生成零条或一条 Radar。
+4. **Overview 与纠正接口**：为居中双栏弹窗提供数据，并允许修正 Event / Item 归属和状态。
+5. **Action Runner / Agent 执行适配层**：接受 Radar 后构造隐藏 Context Bundle，复用现有 AgentV3 执行链路。
+
+Resume Brief 属于 V0.2：它由 Re-entry 触发，只读取 State Store，不运行 Organizer，也不会因为页面访问创建 Event。
+
+### 1.2 核心关系与边界
+
+```mermaid
+flowchart LR
+  project["Project\n可选的长期目标"] -->|"包含 0..N"| item["Tracked Item\n可完成事项"]
+  item -->|"包含 1..N"| event["Activity Event\n完整 QA 记录"]
+  session["Session"] -->|"产生"| event
+  event -->|"最多归属 1 个"| item
+  event -->|"可不归属 Item"| nonproject["Non Project / 待分类"]
+  item --> radar["Radar Item\n主动建议"]
+```
+
+- Project 是可选容器；Item 的 `project_id` 可以为空。
+- 每个正常完成的 QA 只创建一个 Activity Event；`source_run_id` 保证幂等。
+- 一个 Event 最多归属一个 Item，不做多对多。
+- Project State 由 Project 自身字段和关联 Item 聚合得到；Item State 由关联 Event 更新。
+- Non Project Event 在 V0 不触发 Radar。
+- Radar Item 与 Tracked Item 是不同对象：前者是一条建议，后者是被长期追踪的事项。
+
+## 2. QA 完成触发链路
+
+### 2.1 异步主流程
+
+主 Agent 正常写入 `end_stream` 后产生 Post-run 触发，调用 `schedule_post_run()` 安排 Organizer 与可选 Radar 判断：
+
+```mermaid
+sequenceDiagram
+  participant Main as 主 Agent
+  participant Trigger as Post-run Trigger
+  participant Organizer as Organizer
+  participant State as Project / Item Store
+  participant Radar as Radar Store
+  participant UI as 前端
+
+  Main->>UI: end_stream
+  Main-->>Trigger: 完整 QA 元数据
+  Trigger-->>Organizer: 异步调度
+  Organizer->>State: 创建 processing Event
+  Organizer-->>State: Event 归属 + Item Patch + Project Patch
+  State-->>Radar: 状态成功后提交可选 Radar Candidate
+  Radar-->>Radar: Policy Gate 校验
+  UI-->>Radar: 有限轮询 / Re-entry 查询
+  Radar-->>UI: 0 或 1 条待处理 Radar
+```
+
+调度条件：
+
+- Agent 正常结束，最终状态为 `idle`。
+- 本轮不是用户终止、执行异常或 `waiting_user_input`。
+- 当前用户已登录，QA 的消息与 Session 可以定位。
+- 重复任务可以到达服务层，但同一 `source_run_id` 通过唯一约束收敛为一个 Event。
+
+处理顺序：
+
+1. 立即写入 `processing` Event 壳记录，保证 QA 不因模型失败而丢失。
+2. 加载当前 Session 最近关联 Item、用户活跃 Project / Item 和相关候选摘要。
+3. 使用一次严格结构输出完成 Event 摘要、归属决策、必要的新建以及状态补丁。
+4. 在事务中写入 Event 归属、Item / Project 状态和版本。
+5. 状态成功后才把可选 Radar Candidate 交给 Policy Gate。
+6. 整理失败时把 Event 标记为 `classification_failed`，不更新状态，也不生成 Radar。
+
+Radar Action Run 也执行步骤 1 至 4，使 Agent 产出成为新的 Event 并更新状态；`case.is_radar_action_run` 只抑制步骤 5，防止递归生成 Radar。
+
+### 2.2 创建与归属规则
+
+- 优先追加到当前 Session 最近关联且目标一致的 Item。
+- 新的单一可完成目标创建独立 Item。
+- 只有明确包含多个可分事项的长期目标才创建 Project，并创建首批 Item。
+- 一次性问答进入 Non Project 分类。
+- 无法可靠决定时进入待分类，不强行写入 Project / Item。
+- 夜间把独立 Item 重组为 Project、合并和拆分留到 V1。
+
+### 2.3 Radar 生成约束
+
+允许生成 Radar 的条件：
+
+- 关联的 Item / Project 状态已经成功持久化。
+- 存在用户尚未明确提出、当前值得处理的关键缺口。
+- 建议可以在明确的 `target_session_id` 中执行。
+- 建议包含原因、证据和明确动作。
+- 没有未处理的同类建议，且不在冷却期。
+
+每次 Post-run 最多保存一条 Radar。模型返回空结果、结构无效、证据为空、动作不明确或归属仍待分类时保持安静。
+
+### 2.4 Re-entry 与未来触发器
+
+- V0 的 Re-entry 只读取 Project / Item / Event 概览和已有 Radar，不调用 Organizer 或 Radar Analyzer。
+- 前端收到正常 `end_stream` 后立即查询一次；未命中后按 400ms、600ms、1200ms、1200ms、1200ms 退避，合计最多六次。Re-entry 只查询一次。
+- V0.2 的 Resume Brief 由 Re-entry 触发，只读取已有状态并生成恢复视图；不创建 Event，也不修改 Item / Project。具体模型调用策略在 V0.2 需求评审后确定。
+- Session End、时间扫描、停滞检测、夜间重组、Item 自动合并拆分和全局重新归类属于 V1。
+- V0 演示配置关闭 next questions，避免多个后台任务并发使用同一个 LLM；后续可以提供独立 `radar_llm`。
+
+### 2.5 交互续跑仍属于同一轮 QA
+
+Post-run 的产品单位是“一个真实用户输入最终得到一个完整回答”，不是一次底层 Agent Run。`todolist`、`ask_user` 等工具造成的 `waiting_user_input` 只是该 QA 的中间暂停；用户确认、自动确认或补充回答后的 Resume 仍属于原 QA。
+
+V0 必须满足以下规则：
+
+1. 每个正常完成的真实用户 QA 最终且仅生成一条 Activity Event。
+2. 首次 Run 进入 `waiting_user_input` 时不执行 Post-run，因为回答尚不完整。
+3. Resume 最终进入 `idle` 时，使用原始真实用户消息与最终 Assistant 消息执行 Post-run。
+4. `todolist_feedback`、`resume_answer` 等合成输入只负责恢复执行，不能成为 Event 的用户问题。
+5. 同一 QA 的首次 Run 与所有 Resume 共享稳定的 `source_run_id`，数据库唯一约束负责幂等。
+6. 用户终止、执行异常或始终没有最终 Assistant 回答时不生成成功 Event；原始 QA 身份保留到可恢复终态或明确终止。
+
+持久状态在 `runtime_control.pending_post_run_qa` 中保存：
+
+```ts
+type PendingPostRunQA = {
+  user_message_id: string; // 原始真实用户输入的 Message Record id。
+  source_run_id: string; // 整条 QA 交互链共用的幂等 id，Resume 不重新生成。
+  started_at: string; // 真实用户 QA 开始时间，用于排查与超时治理。
+};
+```
+
+真实用户输入开始时创建该状态；进入等待时随 Conversation State 持久化；最终回答形成并成功构造 Post-run 元数据后清除。新建的正常 QA 不得继承上一轮已经终止或已经提交的 pending 状态。
+
+```mermaid
+sequenceDiagram
+  participant User as 用户
+  participant Agent as 主 Agent
+  participant State as Conversation State
+  participant PostRun as Post-run Sidecar
+
+  User->>Agent: 原始用户输入
+  Agent->>State: 保存 pending_post_run_qa
+  Agent->>Agent: 调用 todolist / ask_user
+  Agent->>State: waiting_user_input，暂不整理
+  User->>Agent: 确认或补充信息
+  Agent->>Agent: Resume 并形成最终回答
+  Agent->>PostRun: 原始用户消息 + 最终 Assistant 消息 + 稳定 source_run_id
+  PostRun->>State: 创建或幂等复用一条 Event
+  Agent->>State: 清除 pending_post_run_qa
+```
+
+该规则同时覆盖手工确认、Todolist 倒计时自动确认和多次 `ask_user` Resume。不能只对某一种工具做特殊判断，否则其他交互工具仍会漏掉 Post-run。
+
+## 3. 数据模型
+
+### 3.1 Project 与 Item
+
+```ts
+type ProjectV0 = {
+  id: string; // Project 全局唯一标识。
+  user_id: number; // 所属用户，用于权限隔离。
+  title: string; // 面向用户展示的项目名称。
+  goal?: string; // 项目最终目标；初始上下文不足时允许为空。
+  completion_criteria?: string; // 项目完成标准；为空时不能仅靠 Agent 推断完成。
+  status: "open" | "in_progress" | "waiting" | "completion_candidate" | "completed" | "archived"; // 项目生命周期状态。
+  current_stage?: string; // 当前阶段的一句话描述。
+  progress_summary?: string; // 根据必要 Item 聚合的整体进展摘要。
+  key_decisions: string[]; // 对后续执行仍有约束力的关键决策。
+  risks: string[]; // 当前可能阻止目标完成的风险。
+  open_questions: string[]; // 仍需回答或确认的问题。
+  version: number; // 乐观并发版本，每次状态更新递增。
+  completed_at?: string; // 最近一次进入 completed 的 ISO 8601 时间。
+  created_at: string; // 创建时间。
+  updated_at: string; // 最近更新时间。
+};
+
+type TrackedItemV0 = {
+  id: string; // Item 全局唯一标识。
+  user_id: number; // 所属用户，用于权限隔离。
+  project_id?: string; // 可选 Project；为空表示独立 Item。
+  category: "work" | "life" | "learning" | "other"; // 独立 Item 或项目事项的领域分类。
+  title: string; // 一句话事项名称。
+  goal?: string; // 事项要达到的最终结果。
+  completion_criteria?: string; // 判断事项彻底完成的标准。
+  status: "open" | "in_progress" | "waiting" | "completion_candidate" | "completed" | "archived"; // 事项生命周期状态。
+  required_for_project_completion: boolean; // 是否阻止所属 Project 完成；新建时默认 true。
+  progress_summary?: string; // 已经完成内容的一句话摘要。
+  next_action?: string; // 当前最合理的下一步。
+  blockers: string[]; // 当前阻塞事项继续推进的因素。
+  last_event_id?: string; // 最近一次影响状态的 Event 标识。
+  version: number; // 乐观并发版本，每次状态更新递增。
+  completed_at?: string; // 最近一次进入 completed 的 ISO 8601 时间。
+  created_at: string; // 创建时间。
+  updated_at: string; // 最近更新时间。
+};
+```
+
+Project 进入 `completion_candidate` 的必要条件是所有必要 Item 已完成、没有阻止目标完成的 blocker，且项目完成标准已满足。用户明确确认整个 Project / Item 完成时可以直接进入 `completed`；后续明确反例允许 `completed → in_progress`，原完成记录保留在 Event 中。
+
+### 3.2 Activity Event
+
+```ts
+type ActivityEventV0 = {
+  id: string; // Event 全局唯一标识。
+  user_id: number; // 所属用户，用于权限隔离。
+  session_id: string; // 产生本次 QA 的来源 Session。
+  user_message_id: string; // 本轮用户消息标识。
+  assistant_message_id: string; // 本轮最终 Agent 消息标识。
+  source_run_id: string; // 本轮 Agent Run 标识，具有唯一约束以保证幂等。
+  item_id?: string; // 最多关联一个 Item；Non Project 或待分类时为空。
+  summary?: string; // 对本轮 QA 发生内容的一句话描述。
+  event_type?: "progress" | "decision" | "blocker" | "completion_confirmed" | "reopened" | "reference"; // 本轮对事项状态的主要影响。
+  category?: "work" | "life" | "learning" | "other"; // Non Project 或独立事项分类。
+  processing_status: "processing" | "classified" | "classification_failed"; // 后台整理状态。
+  assignment_reason?: string; // 为什么归入当前 Item 或 Non Project。
+  last_error?: string; // 最近一次整理失败原因，成功时为空。
+  occurred_at: string; // QA 完成时间。
+  created_at: string; // Event 壳记录创建时间。
+  updated_at: string; // 归属或处理状态最近更新时间。
+};
+```
+
+Event 的 QA 来源字段不可修改；`item_id`、`category` 与归属原因允许用户纠正。Event 从 Item A 移到 Item B 时，服务端重新计算两个 Item 及其 Project 的受影响状态。
+
+纠正后的 Item 重算读取其全部 `classified` Event，并按 `occurred_at ASC, id DESC` 回放；`progress_summary` 按时间保留全部非空 Event 摘要，`last_event_id` 与公开时间线使用相同的并列时间排序。Item 的目标、完成标准、分类和下一步不是 Event 派生字段，重算时保持不变。
+
+Project 不再直接采用本轮模型给出的单条整体摘要。每次关联 Item 更新、Event 移动或 Item 移动后，服务端读取全部非归档 Item，确定性聚合 `current_stage`、`progress_summary`、`risks`、`status` 和 `completed_at`。进展逐项展示 Item 的必要/可选属性、状态和进展；完成判断仍只依赖必要 Item，可选 Item 的 blocker 只作为风险展示。
+
+### 3.3 Radar Item
+
+```ts
+type RadarItemV0 = {
+  id: string; // Radar Item 全局唯一标识。
+  user_id: number; // 所属用户，用于权限隔离。
+  tracked_item_id: string; // 建议主要关联的 Tracked Item。
+  project_id?: string; // 关联 Project；独立 Item 时为空。
+  source_event_ids: string[]; // 支撑建议判断的 Event 标识。
+  target_session_id: string; // Action Bar 展示和 Agent 执行的目标 Session。
+  type: "risk" | "next_step" | "decision" | "completion"; // 建议类型。
+  priority: "high" | "medium" | "low"; // 展示优先级。
+  title: string; // 用户可读的短标题。
+  summary: string; // 建议内容和潜在影响的一句话概述。
+  why_now: string; // 为什么当前任务边界适合提醒。
+  why_this_session: string; // 为什么应在目标 Session 展示与执行。
+  evidence_refs: Array<{ // 可追溯证据列表，至少一项。
+    type: "event" | "session" | "memory" | "todo" | "file"; // 证据来源类型。
+    title: string; // 证据的用户可读名称。
+    snippet: string; // 支撑判断的精简内容。
+    source_id?: string; // 原始 Event、Session、记忆、待办或文件标识。
+  }>;
+  action_label: string; // 主要操作按钮文案。
+  action_prompt: string; // 服务端传给 AgentV3 的执行指令。
+  expected_output: "draft" | "checklist" | "plan" | "summary"; // 期望产物类型。
+  context_snapshot: { // 生成 Radar 时冻结的服务端上下文。
+    project_state?: string; // 关联 Project 当前状态摘要。
+    item_state: string; // 关联 Item 当前状态摘要。
+    related_event_summaries: string[]; // 相关 Event 的摘要。
+    constraints: string[]; // 范围、用户偏好和禁止事项等约束。
+  };
+  status: "pending" | "accepted" | "running" | "done" | "snoozed" | "ignored" | "superseded" | "failed"; // Radar 生命周期状态；superseded 表示被更新真实 QA 取代。
+  dedupe_key: string; // 同类建议的稳定去重键。
+  execution_run_id?: string; // 接受后关联的 Agent Run 标识。
+  snoozed_until?: string; // 稍后处理的恢复时间。
+  expires_at?: string; // 超过后不再展示或执行的时间。
+  last_error?: string; // 最近一次执行失败原因。
+  created_at: string; // 创建时间。
+  updated_at: string; // 最近更新时间。
+};
+```
+
+Radar 的 `done` 只表示建议动作执行完成，不等同于 Tracked Item 或 Project 已完成。
+
+## 4. 存储与接口
+
+### 4.1 SQLite 表
+
+V0 复用现有 SQLite，新增五类表：
+
+- **`projects`**：保存 Project 身份和持久 Project State。
+- **`tracked_items`**：保存独立或项目内 Item 及其当前状态。
+- **`activity_events`**：保存每个 QA 的来源、摘要、归属和处理状态。
+- **`radar_items`**：保存主动建议、上下文快照和执行状态。
+- **`radar_feedback`**：保存 Radar 反馈，不直接写入长期记忆。
+
+必要索引：
+
+- `activity_events(source_run_id)` 唯一索引：保证每个 QA 只生成一个 Event。
+- `activity_events(user_id, item_id, occurred_at)`：按 Item 查询事件时间线。
+- `tracked_items(user_id, project_id, status)`：查询 Project 内事项和独立事项。
+- `projects(user_id, status, updated_at)`：查询活跃 Project。
+- `radar_items(user_id, target_session_id, status)`：查询当前会话的待处理建议。
+- `radar_items(user_id, tracked_item_id, dedupe_key, status)`：建议去重。
+- `radar_items(execution_run_id)`：Worker 完成时回写状态。
+
+### 4.2 内部调度与读取接口
+
+- `schedule_post_run()`：在 `end_stream` 后创建 Event、整理状态并按需生成 Radar；不暴露给前端。
+- `GET /api/radar/overview`：返回 Project、独立 Item、Non Project 和待分类计数与摘要。
+- `GET /api/radar/items/{id}/events`：返回 Item 近期 Event 及来源 Session。
+- `GET /api/radar/items?session_id=<id>&status=pending`：查询当前 Session 可展示的 Radar。
+
+### 4.3 纠正与状态接口
+
+- `PATCH /api/radar/events/{id}/assignment`：把 Event 移到其他 Item、改为 Non Project 或待分类。
+- `PATCH /api/radar/tracked-items/{id}`：V0 只允许修改 `project_id`、`status` 和必要/可选标记。
+- 不提供手工创建、删除、合并和批量整理接口。
+
+所有纠正操作必须验证当前用户权限，并在事务中更新关联状态和版本。
+
+### 4.4 Radar 执行接口
+
+- `POST /api/radar/items/{id}/accept`：条件更新 `pending → accepted`，返回 `radar_item_id`、目标 Session 和短消息，不直接启动 Agent。
+- 前端携带 `radar_item_id` 调用现有 `POST /api/query`。
+- `POST /api/radar/items/{id}/feedback`：保存反馈，并更新稍后、忽略等 Radar 状态。
+
+`/api/query` 验证 Radar 所属用户、状态和目标 Session 后，把 Radar 更新为 `running`，写入 `execution_run_id`，并把 Context Bundle 作为隐藏 `functional_instruction` 注入现有 AgentV3 管线。
+
+Radar 查询会把已经到达 `snoozed_until` 的建议恢复为 `pending`，过滤超过 `expires_at` 的建议，并把关联 Item / Project 已完成或归档的旧建议转为 `ignored`。普通真实 `/api/query` 成功占用 Conversation 时，会在同一数据库事务中把目标 Session 的 `pending/snoozed` Radar 转为 `superseded`；Radar Action Run 与 Resume 不执行该淘汰。
+
+## 5. 状态、执行与可靠性
+
+### 5.1 状态转换
+
+Item / Project：
+
+```text
+open → in_progress → waiting → completion_candidate → completed → archived
+completed → in_progress
+```
+
+Event 整理：
+
+```text
+processing → classified
+processing → classification_failed
+classification_failed → classified
+```
+
+Radar：
+
+```text
+pending → accepted → running → done
+pending → snoozed
+pending → ignored
+pending → superseded
+snoozed → superseded
+running → failed
+```
+
+`superseded` 是系统终态：表示建议所依据的 QA 已不是目标 Session 的最新真实 QA，不能重新展示、接受或恢复。`ignored` 则表示用户主动忽略，二者必须区分。`accepted/running` 已获得用户授权，不随新 Query 自动中断。
+
+Radar Candidate 有三道新鲜度 Gate：Analyzer 调用前比较来源 Event 的 `user_message_id` 与 Session 最新可见真实 User Record；Analyzer 返回后、持久化前再次比较；前端仅选择 `pending` 数据。Session 为 `running` 或 `waiting_user_input` 时来源默认不新鲜。Organizer 不受该 Gate 影响，仍完成 Event 和 Item / Project 状态更新。
+
+Analyzer 上下文包含最新 QA 的原始用户文本和最终 Assistant 文本。如果主 Agent 已经指出、警告或提出处理同一缺口，Policy Gate 返回空对象；仅改写标题或动作名称不构成新的主动价值。
+
+用户明确确认整个事项成功时可以直接写入 `completion_confirmed` Event 并把 Item 标记为 `completed`；只完成某一步时写入 `progress` Event。Agent 没有用户确认时最多进入 `completion_candidate`。
+
+### 5.2 Context Bundle
+
+点击推进时，后端基于目标 Session 重新构造上下文，包括：
+
+- 用户接受的 Radar 动作。
+- Project 目标、完成标准和当前摘要。
+- Item 目标、完成标准、进展、下一步和 blocker。
+- 相关 Event 摘要与来源 Session。
+- Radar 原因、证据和建议动作。
+- Radar 生成时冻结的证据与服务端动作信息。
+
+前端只显示一条短消息；完整 Bundle 以 `input_kind="functional_instruction"`、`source="runtime"`、`hidden=true` 注入，前端不能提交或覆盖隐藏内容。
+
+### 5.3 并发、失败与权限
+
+- Project 和 Item 使用 `version` 条件更新；冲突时重新读取最新状态并重试一次。
+- Event 壳记录先于模型整理写入，确保模型异常时 QA 仍进入待分类。
+- 只有状态事务成功后才能保存 Radar Candidate。
+- 接受 Radar 使用条件更新，只有 `pending` 可以进入 `accepted`。
+- Radar 只允许一次 `accepted → running` 条件领取；终态更新同时要求当前仍为 `running`，V0 不允许失败后重新进入同一执行链。
+- Worker 正常 `idle` 结束时 `running → done`；异常、用户终止或意外等待输入时进入 `failed`。
+- 所有 Overview、Event、Item 和 Radar API 使用 `require_auth`，并按当前用户过滤。
+- 前端提交的 Project、Item、Event、Session 和状态不能直接视为可信结果。
+- 交互续跑的 Post-run 以 `pending_post_run_qa.source_run_id` 幂等；重复 Resume、网络重试或重复调度只能得到同一条 Event。
+- `waiting_user_input` 不创建半成品 Event；最终 `idle` 才消费 pending QA。若用户明确终止，则清除 pending QA 且不生成成功 Event。
+- 回归测试必须覆盖直接完成、Todolist 手工确认、Todolist 自动确认、ask_user 单次与多次 Resume、重复 Resume、终止和异常边界。
+
+## 6. 工程接入与版本边界
+
+### 6.1 前端接入
+
+- `frontend/src/App.jsx`：维护 Overview、Radar、侧栏 Tab 和弹窗状态，接入 end-stream 有限轮询和现有发送流程。
+- 新增 `WorkspaceSidePanel` 与 `RadarPanel`：在现有右侧工作区提供 `Todolist / Radar` 双 Tab；Radar 展示单条建议并提供双栏弹窗入口。
+- 新增 `ProjectRadarModal`：居中双栏展示 Project、Item、Non Project 和待分类。
+- 新增 `RadarActionBar`：展示单条主动建议，并在同文件内提供原因、证据、反馈和动作详情。
+- 新增 `radarApi.js`：封装 Overview、Event、纠正、Radar 和反馈接口。
+- 新增 `radarExecution.js`：校验接受结果，构造同 Session 执行参数并合并重复点击。
+
+### 6.2 后端接入
+
+- `backend/database.py`：创建五类表并提供带版本的事务读写。
+- 新增 `backend/radar_service.py`：封装 Organizer、状态补丁、Overview 和 Radar 策略。
+- 新增 `backend/radar_post_run.py`：封装严格 JSON 模型适配、后台调度和 Organizer → Radar 编排。
+- 新增 `backend/radar_execution.py`：封装领取校验、服务端 Context Bundle 和执行终态。
+- `backend/server.py`：注册 API，并在主 Agent 完成后调度整理。
+- `agents/agentv3/core/context_pipeline.py`：接收隐藏 Radar Context Bundle。
+
+### 6.3 V0 与后续版本
+
+V0 真实实现：每个 QA 的 Event、自动创建与归属、Project / Item 持久状态、待分类、居中双栏弹窗、纠正操作、Post-run Radar、真实 AgentV3 执行和反馈闭环。
+
+允许演示兜底：模型整理失败时使用预置 Project / Item / Event 和一条高质量 Radar，但不得把兜底描述成自动整理成功。
+
+V0.1 先修复全量 Event 重算、Project 聚合并提高 Radar 判断与证据质量；V0.2 增加只读 Resume Brief。V1 再实现 Session End、时间扫描、停滞检测、夜间重组、Item 合并拆分、跨 Project 重新归类和多项目恢复；V2 再接入外部系统变化。
+
+### 6.4 当前实现状态
+
+V0 代码已在 `codex/project-radar-v0` 完成，包含数据迁移、用户隔离、Post-run、Overview / 纠正接口、双栏弹窗、Radar 有限轮询、接受执行、隐藏 Context Bundle、终态回写和防递归。
+
+当前保留两项明确边界：隐藏 Context Bundle 作为 `source="runtime"`、`hidden=true` 的审计记录保存在会话状态中，但不会进入公开 timeline 或普通 QA；Post-run 暂时为每个符合条件的 QA 创建一个命名 daemon thread，后续可替换为有容量限制的共享执行器。

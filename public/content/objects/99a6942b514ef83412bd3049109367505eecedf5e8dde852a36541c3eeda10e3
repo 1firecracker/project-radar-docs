@@ -1,0 +1,57 @@
+# 决策记录：采用项目事项事件三级模型
+
+> 决策状态：已采纳  
+> 决策日期：2026-07-10  
+> 最近更新：2026-07-10  
+> 权威范围：Project、Item、Event 与 Non Project 的概念边界
+
+[返回文档总览](../../README.md)
+
+## 1. 背景
+
+仅用 Session 或 Project 组织聊天记录会产生两个问题：Session 只是对话容器，无法表达同一件事跨多个会话推进；Project 又过于宽泛，无法准确判断一个具体目标是否彻底完成。把每个 QA 都直接创建为 Project 还会造成大量无价值项目。
+
+## 2. 决策
+
+采用三级模型：
+
+```text
+Project（可选的长期目标）
+└── Item（可完成的事项）
+    └── Event（每个完整 QA 产生的记录）
+```
+
+- 每个正常完成的 QA 创建一个 Event，并记录来源 Session。
+- 一个 Event 最多归属一个 Item。
+- Item 可以独立存在，也可以属于一个 Project。
+- 默认先创建独立 Item；只有明确的长期多事项目标才创建 Project。
+- Project 由必要和可选 Item 组成；只有必要 Item 影响项目完成判断。
+- 普通问答保存为 Non Project Event，可按生活、学习和其他分类。
+- 无法可靠整理的 Event 进入待分类，不强行更新状态。
+- Item 和 Project 都维护目标、完成标准、进展与完成状态。
+- 用户明确确认完成时可以直接更新；Agent 推断最多进入 `completion_candidate`。
+- 完成后出现明确反例时允许重新打开，并保留原完成 Event。
+
+V0 提供查看与纠正能力，但不提供手工创建、删除、合并和批量整理。Session End 与夜间把独立 Item 重组为 Project 留到 V1。
+
+## 3. 替代方案
+
+### 3.1 只维护 Project
+
+结构简单，但会把小目标、一次性任务和长期计划混在一起，无法稳定表达完成状态。
+
+### 3.2 把 Event 作为追踪主体
+
+Event 适合记录已经发生的事实，不适合承载目标、阻塞、下一步和完成标准。
+
+### 3.3 所有 QA 都创建 Project
+
+能够保证归属，但会迅速产生大量碎片项目，增加整理成本和用户负担。
+
+## 4. 影响与重新评估
+
+- V0 需要真实的 `projects`、`tracked_items` 和 `activity_events` 持久化。
+- Radar 主要针对 Item 或 Project 状态，而不是直接针对原始 Session。
+- Event 是跨 Session 追溯证据，Session 仍是执行上下文和展示目标。
+- 项目与事项弹窗需要同时展示 Project、独立 Item、Non Project 和待分类。
+- 当 V1 的夜间重组、合并拆分和多归属需求稳定后，再评估是否引入关系表或事件溯源模型。
