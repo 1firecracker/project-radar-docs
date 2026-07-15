@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-fc81c0ec571ea3ea3e010deb8eed44809a2694c502776d3a65d19a7a2c97e37a",
-  "generatedAt": "2026-07-15T13:53:28.092Z",
+  "revision": "snapshot-daa086d93f40384b0293e37c4fb1669fcacfff7fa2fcdc8c7b32fba688a703d6",
+  "generatedAt": "2026-07-15T14:03:39.704Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -61,8 +61,8 @@
     },
     {
       "path": "02-架构与设计/技术设计.md",
-      "sha256": "aa2f1fe5ce727b1ec4c5bbf9cad9a7c9a073099fdab2c15348220dd2cbe91843",
-      "bytes": 38461,
+      "sha256": "7daa1008899b9e9490c7b6a80325402a5eafc9cb8cf041d41ef8c7a91f05351a",
+      "bytes": 38585,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -138,8 +138,8 @@
     },
     {
       "path": "04-专项实施/主动建议新鲜度实施计划.md",
-      "sha256": "4132dd542deefd61e144b0a29339c4ae644e120d90621a760f60d7565de0d8c7",
-      "bytes": 5192,
+      "sha256": "8f4fb744d359340fef938c808fd5cab897efd926771fa6728e3b2c067e67998f",
+      "bytes": 5310,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },

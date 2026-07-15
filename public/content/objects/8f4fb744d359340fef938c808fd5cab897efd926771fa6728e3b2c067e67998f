@@ -22,7 +22,7 @@
 - [x] 新真实 Query 开始时，当前 Session 的 `pending/snoozed` Radar 进入 `superseded`。
 - [x] Analyzer 调用前和返回后校验来源 Event 仍对应该 Session 最新真实 QA。
 - [x] `radar_items` 保存 `source_item_version` 和可选的 `source_project_version`。
-- [x] Organizer 提交新 Item / Project 版本时，在同一事务内淘汰依赖旧版本的 `pending/snoozed` Radar，覆盖跨 Session 情况。
+- [x] Organizer、普通 Item / Project 更新和人工纠错提交新版本时，在同一事务内淘汰依赖旧版本的 `pending/snoozed` Radar，覆盖跨 Session 情况。
 - [x] Radar 落库事务复核版本；分析期间状态变化时返回 `stale`，Candidate 不落库。
 - [x] 读取和接受接口再次复核版本，防止人工纠正或迟到写入留下旧建议。
 - [x] `accepted/running` 已获用户授权，不因新 Query 或状态更新自动中断。
@@ -72,7 +72,7 @@ Analyzer 对所有 `ready + allowed` 的机会都返回 Candidate，即使它认
 - `user_requested`：用户已经明确要求同一动作。
 - `artifact_text`：动作只出现在代用户生成、引用或模拟的内容内部，不算覆盖。
 - `generic_offer`：只是条件式或泛化邀约，不算覆盖。
-- `constraint_check` 只比较约束与当前 `opportunity`；不得把“不要代我做最终决定”扩大成“不要准备比较材料”。
+- `constraint_check` 只比较约束与当前 `opportunity`；不得把“不要代我做最终决定”扩大成“不要准备比较材料”。它与 `feasibility` 独立：动作即使为 `ready`，命中明确禁止时仍静默。
 
 ## 5. 实现与验证状态
 
