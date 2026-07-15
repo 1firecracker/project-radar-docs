@@ -53,12 +53,13 @@ V0 需要证明：
 | 状态-003 | 整理模型失败 | Event 进入 classification_failed，主回复不受影响 |
 | 状态-004 | 连续 QA 推进同一目标 | 新 Event 追加到已有 Item 并更新进展 |
 | 状态-005 | 新的单一目标 | 创建独立 Item，不创建 Project |
-| 状态-006 | 明确的多事项目标 | 创建 Project 和首批 Item |
+| 状态-006 | 明确的多事项目标 | 创建 Project，并只创建或更新本轮当前主要 Item |
 | 状态-007 | 一次性学习问答 | 进入 Non Project learning 分类 |
 | 状态-008 | 无法可靠归属 | 进入待分类，不更新 Item / Project，不生成 Radar |
 | 状态-009 | 用户把 Event 从 A 移到 B | A、B 及其 Project 状态重新计算 |
 | 状态-010 | 用户把 Event 改为 Non Project | 原 Item 状态重新计算，Event 保留来源 |
-| 状态-011 | 所有必要 Item 完成，可选 Item 未完成 | Project 可以进入 completion_candidate |
+| 状态-011 | 当前唯一必要 Item 完成，但 Project 完成标准仍未满足 | Item 完成；Project 保持 in_progress，不进入 completion_candidate |
+| 状态-011A | 所有已声明必要 Item 完成，且有覆盖项目完成标准的项目级证据 | Project 可以进入 completion_candidate；用户明确确认时可直接 completed |
 | 状态-012 | 用户明确确认 Item 完成 | 写入 completion_confirmed Event，Item 进入 completed |
 | 状态-013 | 只完成一个步骤 | 只更新 progress_summary，不完成整个 Item |
 | 状态-014 | 已完成 Item 出现明确反例 | 写入 reopened Event，Item 回到 in_progress |

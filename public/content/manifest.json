@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-c886b8ece7a63bb306a4da698d48db1ba7b7958b97ceddf3f2c024eeb1bba6e9",
-  "generatedAt": "2026-07-15T09:21:36.734Z",
+  "revision": "snapshot-544c17beca77899101120181837a67a3cf91444bf1235fb3324814761b7d3778",
+  "generatedAt": "2026-07-15T09:31:50.003Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
-      "sha256": "6b33c29c3c32c9f517d00b544980c7887e2a9f4575076ec37190d05465bc9aa8",
-      "bytes": 8734,
+      "sha256": "dc82bcbbc1f2d726b8ff746824b3d8c027aaedfddd8222121ab7a2447fca29cd",
+      "bytes": 8974,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -19,8 +19,8 @@
     },
     {
       "path": "01-产品与规划/零版产品需求.md",
-      "sha256": "676e885e058b57ccea60e4df4e53a8325d9feb54bcc09a830bbdc0a7d239b69e",
-      "bytes": 10402,
+      "sha256": "a46519db3dbab6e3e38dc023d10f9ffb3dbe7f8376252b13002afd55295f5335",
+      "bytes": 11547,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -54,15 +54,15 @@
     },
     {
       "path": "02-架构与设计/决策记录/采用项目事项事件三级模型.md",
-      "sha256": "99a6942b514ef83412bd3049109367505eecedf5e8dde852a36541c3eeda10e3",
-      "bytes": 2635,
+      "sha256": "9417d9d03f0862b71761e1a25a63f257090936f67325ae999f3f4bdfb447fd98",
+      "bytes": 2889,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "02-架构与设计/技术设计.md",
-      "sha256": "d40033476261f341c0d35b588341a3342946112903478e1cc1a1729c7de96d84",
-      "bytes": 26669,
+      "sha256": "a11a8af2824dd476bb0b8b9feb0414ec97948112f4e89a0bd9c085bc631c7e15",
+      "bytes": 27489,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -124,8 +124,8 @@
     },
     {
       "path": "03-测试与评测/测试与演示.md",
-      "sha256": "6445d72e7e269e21fb67ee8effef4211a99cf912d9a8c21e73f217ac720f31dc",
-      "bytes": 10148,
+      "sha256": "31f15a58a977c68ef00716af38c1d9e48e1e9c2b662795ea69da10f049bdd96c",
+      "bytes": 10423,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1008,6 +1008,41 @@
       "path": "05-资源/图片/主动判断正例一单事项复测/05-SessionA品牌素材验收字段.jpg",
       "sha256": "7514a64c39082f71cebfb84ac5f12e018932e2de619532373cbd16d0fe67216d",
       "bytes": 64264,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断正例一单事项复测/06-SessionB输入事项完成事实.jpg",
+      "sha256": "b4464fbf4710dc9292b73c01efaad5740c87345b421fe1400c1e88a347b230e5",
+      "bytes": 47652,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断正例一单事项复测/07-SessionB主回答覆盖前端推进.jpg",
+      "sha256": "bcae5910e33c729280cf88e4259a79cd7be2a86f41c4ebe0ec6faec1a057699c",
+      "bytes": 88323,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断正例一单事项复测/08-SessionB-Radar因主回答覆盖而安静.jpg",
+      "sha256": "7aba56e725ec02855b098aca3125f7669ade50bfbc4b7c2858f3ada97b386625",
+      "bytes": 88692,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断正例一单事项复测/09-Project未上线却进入完成候选.jpg",
+      "sha256": "829942d715d0b64c45a367988978154f3029201405b18996cd9116c8d52e53f2",
+      "bytes": 60177,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断正例一单事项复测/10-SessionB品牌素材验收正确完成.jpg",
+      "sha256": "053901e90f3f81bbaa09c879328b214ffa735e950ad66f1bf02f088bae60f1ee",
+      "bytes": 58349,
       "mediaType": "image/jpeg",
       "kind": "asset"
     },
