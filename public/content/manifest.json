@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-c0ef036006d734a2b3533402e3e3112bd93d9ed8c152d8e2451832cc32ec89e8",
-  "generatedAt": "2026-07-15T08:41:24.124Z",
+  "revision": "snapshot-c886b8ece7a63bb306a4da698d48db1ba7b7958b97ceddf3f2c024eeb1bba6e9",
+  "generatedAt": "2026-07-15T09:21:36.734Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -966,6 +966,48 @@
       "path": "05-资源/图片/主动判断案例一复现/11-SessionB-Item完成但仍有下一步.jpg",
       "sha256": "c150344c42777ea15c07140f178c21a87a285818db3a58ce201c95dd9d6a805a",
       "bytes": 56180,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断正例一单事项复测/00-全新账号空白页面.jpg",
+      "sha256": "d085458ac8a24dbbd5be344c6fe78829822e5cf04d08223d2a660211e79f875f",
+      "bytes": 20590,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断正例一单事项复测/01-SessionA输入单一事项.jpg",
+      "sha256": "9c64e714fdd903ae95f23c561dc42da6a5990e3c643376d957a296b26714ac42",
+      "bytes": 58911,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断正例一单事项复测/02-SessionA主回答完成.jpg",
+      "sha256": "9f5a1f8d75b27fcdb5540acbaef6e4702e141c290196eedb43c496f0ad1c861e",
+      "bytes": 76595,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断正例一单事项复测/03-SessionA-Radar保持安静.jpg",
+      "sha256": "5d0c988c70976f39533b82a3733eef9f2c41ebfce4c52f5341bd545be20c161f",
+      "bytes": 75285,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断正例一单事项复测/04-SessionA项目仅含品牌素材验收.jpg",
+      "sha256": "d912cedcdd2ad65eeaa085d6026e3b922eeb5b4f9ab44f878adc7d3a87f8b4a4",
+      "bytes": 60105,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断正例一单事项复测/05-SessionA品牌素材验收字段.jpg",
+      "sha256": "7514a64c39082f71cebfb84ac5f12e018932e2de619532373cbd16d0fe67216d",
+      "bytes": 64264,
       "mediaType": "image/jpeg",
       "kind": "asset"
     },
