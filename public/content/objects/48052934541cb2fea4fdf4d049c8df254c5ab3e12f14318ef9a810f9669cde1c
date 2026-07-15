@@ -29,8 +29,8 @@ V0 主闭环已经可运行：
 | Radar 新鲜度 | 已完成 | 同 Session 新 Query 和跨 Session Item / Project 版本变化都会淘汰旧的 `pending/snoozed` 建议 |
 | Radar 判断协议 | 已完成 | Analyzer 输出动作、覆盖来源、约束和可执行性；Policy Gate 确定性决定推送或静默 |
 | Radar 决策审计 | 已完成 | 每个进入判断的 Event 记录结果、原因及结构化判断依据 |
-| 自动化验证 | 已完成 | Radar 后端 225 项、前端 Radar 25 项通过，生产构建成功；扩展集成套件另有 6 个既有 Context Pipeline 失败 |
-| 真实模型验证 | 待执行 | 需要重启后端后用全新账号重跑 3.2，并检查 Session A/B 与数据库审计 |
+| 自动化验证 | 已完成 | Radar 后端 227 项、前端 Radar 27 项通过，Ruff 与生产构建成功；扩展集成套件另有 6 个既有 Context Pipeline 失败 |
+| 真实模型验证 | 部分通过 | 修订后的 3.2 已验证 Project / Item、跨 Session 上下文和 Radar 后端生成；无切换自动展示待有效 Token 重启后复测 |
 | Resume Brief | 未开始 | 阶段三通过后进入 V0.2 |
 
 ## 2. 阶段三要完成什么
@@ -42,6 +42,7 @@ V0 主闭环已经可运行：
 - [x] 由服务端 Policy Gate 确定性生成 `actionable_gap`、`main_answer_covered`、`insufficient_evidence` 或 `not_actionable`。
 - [x] 生成产物内文字和泛化邀约不再算主 Agent 直接覆盖；用户约束按候选动作范围判断。
 - [x] `radar_decisions` 保存动作、覆盖来源、约束和可执行性，系统失败与产品静默分开记录。
+- [x] 前端根据最新 QA 的 Radar 分析状态进行有界轮询；生成建议或静默决策落定后立即停止，Re-entry 只查询一次。
 - [x] 完成状态版本、覆盖来源、约束范围和并发竞态的自动化测试。
 - [ ] 用真实模型完成正例、安静反例和跨 Session 旧建议失效复测。
 
@@ -49,11 +50,11 @@ V0 主闭环已经可运行：
 
 ## 3. 下一步顺序
 
-1. 重启后端，使 SQLite 迁移和新 Analyzer Prompt 生效。
-2. 使用全新账号逐轮执行《主动判断评测集》3.2：Session A 建立采购状态，Session B 生成报价汇总正文。
-3. 验证 Session A 的旧 `pending/snoozed` Radar 已进入 `superseded`；Session B 的 `radar_decisions` 记录 `coverage.kind=artifact_text` 或 `generic_offer` 时，最终结果应为 `actionable_gap`。
-4. 再执行 3.3、3.4 三个主动提醒正例，以及 3.5、3.6、3.7 的覆盖与约束反例。
-5. 若失败，先按 `radar_decisions` 判断是机会提取、覆盖来源、约束、可执行性、Candidate 校验还是状态版本问题，再决定是否改 Prompt 或代码。
+1. 在带有效模型 Token 的启动环境重启后端，使用修订后的 3.2 新建一个 Session B QA。
+2. 不切换 Session，确认主回答结束后页面保持“正在检查”，并在 Post-run 决策完成时自动显示 Radar；静默结果则自动停止轮询。
+3. 检查 Session B 的 `radar_decisions` 为 `coverage.kind=artifact_text` 或 `generic_offer`、`feasibility=ready`、`outcome=created`，且 Radar 绑定当前 Item / Project 版本。
+4. 再执行 3.3、3.4 的主动提醒正例，以及 3.5、3.6、3.7 的覆盖与约束反例。
+5. 若失败，先按审计字段判断是机会提取、覆盖来源、约束、可执行性、Candidate 校验、状态版本还是展示时序问题，再决定是否改 Prompt 或代码。
 6. 阶段三通过后冻结 V0 演示路径，再进入 Resume Brief。
 
 ## 4. 后续阶段

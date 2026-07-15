@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-daa086d93f40384b0293e37c4fb1669fcacfff7fa2fcdc8c7b32fba688a703d6",
-  "generatedAt": "2026-07-15T14:03:39.704Z",
+  "revision": "snapshot-0fa8f4f6dfeda2638db4cb3bcc494ab46ca5cb12f783d0b399a3418c094910de",
+  "generatedAt": "2026-07-15T14:53:53.027Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -12,8 +12,8 @@
     },
     {
       "path": "01-产品与规划/实施计划.md",
-      "sha256": "ecd5ab6918c5fe898257144a97fa4ba46d250b448ba7943227f0c6b5b0d8253f",
-      "bytes": 4132,
+      "sha256": "48052934541cb2fea4fdf4d049c8df254c5ab3e12f14318ef9a810f9669cde1c",
+      "bytes": 4405,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -61,15 +61,15 @@
     },
     {
       "path": "02-架构与设计/技术设计.md",
-      "sha256": "7daa1008899b9e9490c7b6a80325402a5eafc9cb8cf041d41ef8c7a91f05351a",
-      "bytes": 38585,
+      "sha256": "67b7125756c6e34e87ce86290bb5041af91dab1ba7fe51ee6b79cf383481dca5",
+      "bytes": 39504,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "302d4faf2f6ca7e7052b806055b54d1a4ddcf5a016efdb8aff80e4f0698e1735",
-      "bytes": 25326,
+      "sha256": "409baaa5649c3892ac2ad62bf947323ec2d847bbfc5f13cf653017ba285a6eb1",
+      "bytes": 27145,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -124,8 +124,8 @@
     },
     {
       "path": "03-测试与评测/测试与演示.md",
-      "sha256": "af8a739abeef90e1395abfc0192b86b2beee06cba13389cef4172a55ad2356d2",
-      "bytes": 14151,
+      "sha256": "0ad505d68c8612a0f5b3eeb6bb4728c26a8e24e343d913e71d55422b3031a1e7",
+      "bytes": 15008,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -138,8 +138,8 @@
     },
     {
       "path": "04-专项实施/主动建议新鲜度实施计划.md",
-      "sha256": "8f4fb744d359340fef938c808fd5cab897efd926771fa6728e3b2c067e67998f",
-      "bytes": 5310,
+      "sha256": "2313bfcac90d6df7b039cee92bd1919ecae7fdd1fb22a124e8e397b181c4bfff",
+      "bytes": 5808,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1202,8 +1202,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "5ac4534086ada57fd1d05aaa4087daeeb2e2e22b97863038067abaa2bbecc346",
-      "bytes": 11759,
+      "sha256": "f9e10869c525d9c39dcf2d6df8af74f963ce46e1da711bd0f486c6bcc708f92f",
+      "bytes": 11819,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }

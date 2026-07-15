@@ -79,17 +79,18 @@ Analyzer 对所有 `ready + allowed` 的机会都返回 Candidate，即使它认
 主要实现：
 
 - `backend/database.py`：版本字段、事务内失效、落库竞态守门和结构化审计字段。
-- `backend/radar_service.py`：协议校验、确定性 Policy Gate、版本校验和动作语义去重。
+- `backend/radar_service.py`：协议校验、确定性 Policy Gate、版本校验、动作语义去重和最新 QA 分析状态查询。
 - `backend/radar_post_run.py`：生产 Analyzer Prompt 与结构化输出约束。
+- `frontend/src/components/radarDisplayState.js`：依据最新 QA 的分析状态执行最长约 63 秒的有界轮询；建议出现或静默决策落定后停止，Re-entry 只查询一次。
 
-自动化结果：Radar 后端 225 项、前端 Radar 25 项通过，Ruff 通过，生产构建成功。覆盖场景包括跨 Session 状态更新、Analyzer 期间竞态、读取与接受防线、`artifact_text`、`generic_offer`、直接覆盖、动作级允许/阻止，以及已授权动作保护。扩展集成套件为 273 项通过、6 个既有 Context Pipeline 用例失败；失败集中在日期记忆模板、日期顺序和 Todolist 修订语义，与本次 Radar 修改无关。
+自动化结果：Radar 后端 227 项、前端 Radar 27 项通过，Ruff 通过，生产构建成功。覆盖场景包括跨 Session 状态更新、Analyzer 期间竞态、读取与接受防线、`artifact_text`、`generic_offer`、直接覆盖、动作级允许/阻止、已授权动作保护，以及“继续等待分析 / 静默落定立即停止”的前端时序。扩展集成套件为 273 项通过、6 个既有 Context Pipeline 用例失败；失败集中在日期记忆模板、日期顺序和 Todolist 修订语义，与本次 Radar 修改无关。
 
 ## 6. 真实复测
 
-尚未把自动化结果写成浏览器通过。重启后端后，使用全新账号执行《主动判断评测集》3.2：
+已使用全新账号执行修订后的《主动判断评测集》3.2：
 
-1. Session A 建立采购 Project 与“最终报价未齐”的阻塞状态。
-2. Session B 补齐报价，并只要求主 Agent 起草报价汇总正文。
-3. 正文内部的建议应标记为 `artifact_text`；泛化邀约应标记为 `generic_offer`，两者都不能导致 `main_answer_covered`。
-4. Session B 应生成比较材料类 Radar；Session A 依赖旧版本的未接受 Radar 应为 `superseded`。
-5. 若没有生成，直接检查 `radar_decisions` 的 `opportunity / coverage / constraint_check / feasibility / outcome`，不再凭界面猜测原因。
+1. 旧版 Session A 没有实际评分，审计为 `insufficient_evidence`，保持安静正确；修订输入必须提供三家四维评分。
+2. 修订版 Session A 正确建立采购 Project 与唯一当前 Item“平台选型”；Session B 补齐报价，并只要求主 Agent 起草报价汇总正文。
+3. Session B 审计为 `coverage.kind=generic_offer`、`constraint_check=allowed`、`feasibility=ready`、`outcome=created`，成功生成比较材料类 Radar，来源 Item / Project 版本均为 2。
+4. 旧前端因 Post-run 约 35 秒而轮询提前结束，切换 Session 后通过 Re-entry 才显示；现已完成状态感知轮询实现和自动化验证。
+5. 最终待办是在有效模型 Token 环境重启后端后重跑一个新 QA，确认不切换 Session 也会在分析完成时自动显示 Radar。
