@@ -1,33 +1,33 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-187ad89b43f0be411ceb91110209fac2057bfb4127d51c0f5d8e312c11fa1d76",
-  "generatedAt": "2026-07-15T10:02:16.340Z",
+  "revision": "snapshot-27100d7c9c500b955d805f8f971ce37dc7a90dc184baf11a45ce8832d8db926f",
+  "generatedAt": "2026-07-15T11:12:34.980Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
-      "sha256": "dc82bcbbc1f2d726b8ff746824b3d8c027aaedfddd8222121ab7a2447fca29cd",
-      "bytes": 8974,
+      "sha256": "1181a33a478e73906ec66451941c636db32e77ec3f8756a9aeb613bb80c67939",
+      "bytes": 9241,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "01-产品与规划/实施计划.md",
-      "sha256": "7d5caebc77308e95a50b0dfc29b0947a0d36e252beb5d628ca6d14b0a9250760",
-      "bytes": 6295,
+      "sha256": "8f9902551ea925cab7193dd3184add6f1c05c7c8b191d30c07076858c69ea9af",
+      "bytes": 6416,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "01-产品与规划/零版产品需求.md",
-      "sha256": "a46519db3dbab6e3e38dc023d10f9ffb3dbe7f8376252b13002afd55295f5335",
-      "bytes": 11547,
+      "sha256": "66f9beea58a1be353370d12e1a751b239d487b3b19cf72616144f9c8efa07f24",
+      "bytes": 12856,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "02-架构与设计/决策记录/跨会话理解并定向执行.md",
-      "sha256": "5313c621cb56dfe9a6ecef7b5e4743d883affc2cc331979d50e380043d82dc3a",
-      "bytes": 2673,
+      "sha256": "884c1e4066a30c9a66d05b971d026979452751ba490368ecf87a015567d5e952",
+      "bytes": 2804,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -54,22 +54,22 @@
     },
     {
       "path": "02-架构与设计/决策记录/采用项目事项事件三级模型.md",
-      "sha256": "9417d9d03f0862b71761e1a25a63f257090936f67325ae999f3f4bdfb447fd98",
-      "bytes": 2889,
+      "sha256": "6345a92bfcd622e4705b1ea36e3278127b90cbde6e34b83a2479638a7ce81270",
+      "bytes": 3566,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "02-架构与设计/技术设计.md",
-      "sha256": "a11a8af2824dd476bb0b8b9feb0414ec97948112f4e89a0bd9c085bc631c7e15",
-      "bytes": 27489,
+      "sha256": "adb77f716d66edf5ab1d3ac9ab80a45a3ce9de36de83feacb79fd0aab1e637e1",
+      "bytes": 31420,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "ef1fa9e13419944cf7651de36282a045e0faab689aad8a86a4503e8b02ae5182",
-      "bytes": 22662,
+      "sha256": "667d9944b19386f92b75d2cb28c5c09934b5c55bde17f55ddfb3fb0ebd584f5e",
+      "bytes": 22867,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -117,22 +117,22 @@
     },
     {
       "path": "03-测试与评测/案例实测/项目完成守门单事项复现实测.md",
-      "sha256": "0dbdc5fad9d3597798744abe6a0de3881949b8b91fc512b7fa435d494070bdf8",
-      "bytes": 11015,
+      "sha256": "762eb9c725434076d3c6b2368350277e9d10fc6e198ee68f711bd91157bd9637",
+      "bytes": 11702,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "03-测试与评测/测试与演示.md",
-      "sha256": "31f15a58a977c68ef00716af38c1d9e48e1e9c2b662795ea69da10f049bdd96c",
-      "bytes": 10423,
+      "sha256": "153d816366363de01dad277b90423d767ff95afea78b9f37105c9970c662172c",
+      "bytes": 11626,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "03-测试与评测/演示案例.md",
-      "sha256": "52bcb98bf4edfdd6b72aaa26dfad60114964aaebe36bcbd41d2b32aa67192be1",
-      "bytes": 19211,
+      "sha256": "81ec20a33c58e9d7beb9a8338ed0762730c92ad9f7d5b868120ddcb693a0c65d",
+      "bytes": 20752,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1202,8 +1202,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "2f96ccfc557e4e3daa95b19c36ecc7591f272059c1e8e4e6477ca7d66795d348",
-      "bytes": 11230,
+      "sha256": "70cf0dd1e56e6c58f90fc4a122f32c86e3e6af03f5a33853828224c700fc947c",
+      "bytes": 11388,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }

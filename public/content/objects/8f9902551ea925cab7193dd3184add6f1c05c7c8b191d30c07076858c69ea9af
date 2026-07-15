@@ -26,8 +26,8 @@ Progress Agent V0 已跑通以下闭环：
 | V0 前后端 | 已完成 | 状态持久化、Organizer、Overview、纠正、Radar 和执行回流已经实现 |
 | 自动化验证 | 已完成 | V0 后端、Agent 上下文、前端 Radar 测试和生产构建已验证 |
 | 真实浏览器验证 | 已完成 | 六个 Case 已覆盖跨 Session、独立 Item、Non Project、纠正、完成重开和主动推进 |
-| 状态可靠性 | Project 守门待修复 | 单一 Item 创建、更新和完成正确；Project 却只凭当前必要 Item 完成而提前进入完成候选 |
-| Radar 判断质量 | 当前阶段 | 新版单事项 Case 中主回答已覆盖下一步，Radar 安静符合去重；三个主动提醒正例仍待稳定验证 |
+| 状态可靠性 | 设计已对齐，代码待实现 | Organizer 应维护 Project 语义状态；代码自动完成候选规则仍待删除 |
+| Radar 判断质量 | 等待状态前置修复 | 新版单事项 Case 中 Radar 去重正确；三个主动提醒正例在 Project 状态修复后继续验证 |
 | Resume Brief | 未开始 | 状态与 Radar 稳定后进入 V0.2 |
 | 连续演示排练 | 待执行 | 需要形成一条稳定的五分钟演示路径并连续运行两次 |
 
@@ -47,15 +47,15 @@ Progress Agent V0 已跑通以下闭环：
 
 完成标准：纠正 Event 后，两个受影响 Item 都能得到完整、可追溯的状态。
 
-### 2.2 Project 聚合（已完成）
+### 2.2 Project 统计聚合（已完成）
 
 - Organizer 更新 Item，或用户移动 Event / Item 后，重新读取 Project 下全部有效 Item。
-- 确定性生成当前阶段、整体进展、风险、完成状态和完成时间。
+- 确定性生成整体 Item 进展和由 blocker 导出的基础风险。
 - Project 进展逐项包含必要/可选、状态和 Item 最新进展，不再只使用本轮模型摘要。
-- 只有必要 Item 影响完成判断；可选 Item 的 blocker 仍会作为风险展示。
+- 只有必要 Item 计入必要进度；可选 Item 的 blocker 仍会作为风险展示。
 - Case 1 对应的失败测试和回归测试已补充。
 
-完成标准：Project 摘要始终包含必要 Item 的最新有效状态，不停留在较早进展。
+完成标准：Project 的统计摘要始终包含 Item 最新有效状态，不停留在较早进展。
 
 ### 2.3 状态可靠性验收（已完成）
 
@@ -70,7 +70,7 @@ Progress Agent V0 已跑通以下闭环：
 
 最终结论：**阶段二通过。** Case 4 证明 Item 能从全部有效 Event 重算且刷新后不回退；Case 1 证明 Project 能聚合全部有效 Item，阶段、摘要和风险随最新进展更新且刷新后保持。详细证据见 [Case 4 归属纠正实测](../03-测试与评测/案例实测/案例四归属纠正实测.md) 和 [Case 1 跨会话项目实测](../03-测试与评测/案例实测/案例一跨会话项目实测.md)。
 
-2026-07-15 增补：新版单事项 Case 证明“一次完整 QA 维护一个主要 Item”本身没有问题；“品牌素材验收”能正确从 `in_progress` 变为 `completed`。新增缺陷位于 Project 完成守门：聚合器把“当前已记录的必要 Item 全部完成”当成项目完成充分条件，没有验证“官网改版完成并正式上线”这一项目级标准。
+2026-07-15 增补：新版单事项 Case 证明“一次完整 QA 维护一个主要 Item”本身没有问题；“品牌素材验收”能正确从 `in_progress` 变为 `completed`。新增缺陷位于 Project 完成守门：代码把“当前已记录的必要 Item 全部完成”当成项目完成充分条件。设计现已调整为 Organizer 维护 Project 的 `status` 与 `current_stage`，代码只做统计和非法转换守门。
 
 ## 3. 当前及后续顺序
 
@@ -82,9 +82,15 @@ Progress Agent V0 已跑通以下闭环：
 
 当前不做：新增 Radar 类型、复杂项目管理、夜间重组、外部系统监控和自动执行。先把 Radar 的提醒价值和安静边界做可信，再扩展主动能力。
 
-阶段三当前先修复 Project 完成守门，再评价 Radar：重跑 3.1 单事项守门 Case，确认 Item 完成但 Project 仍保持推进中；通过后，再按 [Radar 主动判断评测集](../03-测试与评测/主动判断评测集.md) 执行三个主动提醒正例、安静反例和机制守门，并形成稳定演示路径。
+阶段三当前先完成以下状态任务，再评价 Radar：
 
-当前状态：评测集设计与五轮独立审查已完成，尚未宣称 Radar 质量达标。3.1 已按单事项原则重新实测：Organizer 正确只创建“品牌素材验收”Item，Session B 正确完成它；主 Agent 已指出可以进入前端制作，Radar 因此安静并通过去重检查。唯一失败是 Project 在官网尚未制作和上线时进入 `completion_candidate`。下一步只修 Project 完成守门，不扩展多 Item 协议，详见[项目完成守门：单事项复现实测](../03-测试与评测/案例实测/项目完成守门单事项复现实测.md)。
+1. Organizer 输出增加 `completion_scope`，项目内 Item 变化时同步输出 `project_patch`。
+2. 删除代码自动进入 `completion_candidate` 的规则，保留必要 Item 重开时的安全降级。
+3. 保留 Item 进度与 blocker 的确定性汇总，不再覆盖 Organizer 给出的 `status` 和 `current_stage`。
+4. 重跑 3.1 单事项守门 Case，确认 Item=`completed`、Project=`in_progress`、阶段指向前端制作。
+5. 前置通过后，执行三个主动提醒正例、安静反例和机制守门。
+
+当前状态：设计文档已经对齐 Organizer 驱动的 Project 语义状态方案，代码尚未修改。3.1 已按单事项原则实测：Item 完成和 Radar 去重通过，Project 自动进入 `completion_candidate` 失败。下一步实现上述四项状态修改并复测，不扩展多 Item 协议，详见[项目完成守门：单事项复现实测](../03-测试与评测/案例实测/项目完成守门单事项复现实测.md)。
 
 ## 4. 阶段二完成结论
 

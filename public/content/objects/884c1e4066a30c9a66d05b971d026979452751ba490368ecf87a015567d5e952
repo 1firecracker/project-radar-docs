@@ -2,7 +2,7 @@
 
 > 决策状态：已采纳  
 > 决策日期：2026-07-09  
-> 最近更新：2026-07-10  
+> 最近更新：2026-07-15  
 > 权威范围：Event 来源、跨 Session 状态、Radar 展示与执行 Session
 
 [返回文档总览](../../README.md)
@@ -17,7 +17,7 @@
 
 - 每个 Activity Event 保存 `session_id`、用户消息、Agent 消息和 Run 标识。
 - Event 归入 Item 后，Item State 可以聚合来自不同 Session 的进展。
-- Project State 再聚合其 Item，因此不依赖单一项目主会话。
+- Organizer 读取跨 Session 的相关 Event 与 Item，维护 Project 的语义状态和当前阶段；服务端只确定性统计 Item 进度与 blocker，因此 Project 不依赖单一项目主会话。
 - Radar Item 必须保存 `target_session_id` 和 `why_this_session`。
 - V0 默认选择最近且与建议动作直接相关的 Event 来源 Session 作为执行目标。
 - 只有当前会话与目标 Session 匹配时才显示 Action Bar；项目与事项弹窗可以在其他会话查看状态，但不能默认在当前会话执行。
