@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-fff3f37fd9f367cfb0f20fe7096d5358c04a9d7d4dab697091dd81e74e88461e",
-  "generatedAt": "2026-07-15T05:20:37.841Z",
+  "revision": "snapshot-7e00bee3d46ce37c1ae6b62d64e2c220c5652de880e97bc1050c3a5ee1ce6485",
+  "generatedAt": "2026-07-15T08:20:58.415Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -876,6 +876,55 @@
       "sha256": "e1a1e4d8a79ccead52e04b0f70338896d2561bc63a2cec1e8b03063260838635",
       "bytes": 1239246,
       "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断案例一复现/01-独立账号初始页面.jpg",
+      "sha256": "6fd2665a9297207519845338fb480bc545b803ce758e98fc3220af2b723c5688",
+      "bytes": 10302,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断案例一复现/02-SessionA发送前.jpg",
+      "sha256": "969e7496c050e459e8808c46e4058f3f607076acac271e6daea4e464fbf22d35",
+      "bytes": 20434,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断案例一复现/03-SessionA主回复完成.jpg",
+      "sha256": "e49ea440bb249ceb8b72fe8a50aa877b32b4198b3e00829615f3b7b8dac1b6cd",
+      "bytes": 10384,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断案例一复现/04-SessionA-Radar保持安静.jpg",
+      "sha256": "e49ea440bb249ceb8b72fe8a50aa877b32b4198b3e00829615f3b7b8dac1b6cd",
+      "bytes": 10384,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断案例一复现/05-SessionA项目总览-仅一个Item.jpg",
+      "sha256": "e49ea440bb249ceb8b72fe8a50aa877b32b4198b3e00829615f3b7b8dac1b6cd",
+      "bytes": 10384,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断案例一复现/06-SessionA-Item字段详情.jpg",
+      "sha256": "e49ea440bb249ceb8b72fe8a50aa877b32b4198b3e00829615f3b7b8dac1b6cd",
+      "bytes": 10384,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/主动判断案例一复现/07-SessionB发送前.jpg",
+      "sha256": "af07801fff606ce2f58e9156673b5100f129b337093df79d5655db98f6c5b98a",
+      "bytes": 24012,
+      "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
