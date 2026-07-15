@@ -82,7 +82,7 @@
 
 失败条件：只复述报价、重复邮件，或不基于既有评估维度直接武断选择供应商。
 
-实测记录：使用上述修订输入后，Organizer 正确形成一个 Project 和一个“平台选型”Item；Session B 的 Item / Project 版本均更新为 2。主回答只完成报价邮件并给出泛化继续帮助邀约，审计记录为 `coverage.kind=generic_offer`、`constraint_check=allowed`、`feasibility=ready`、`outcome=created`，Radar 正确生成“整理评分与报价对比材料助力选型决策”。旧前端因只轮询约 4.6 秒，而该次 Post-run 约耗时 35 秒，必须切换 Session 才显示；现已改为读取最新 QA 的分析状态并进行最长约 63 秒的有界轮询，最终“不切换 Session 自动出现”的浏览器复测需在有效模型 Token 的后端重启后完成。
+实测记录：使用上述修订输入后，Organizer 正确形成一个 Project 和一个“平台选型”Item；Session B 的 Item / Project 版本均更新为 2。主回答只完成报价邮件并给出泛化继续帮助邀约，审计记录为 `coverage.kind=generic_offer`、`constraint_check=allowed`、`feasibility=ready`、`outcome=created`，Radar 正确生成评分与报价一体化对照表建议。旧前端因只轮询约 4.6 秒，而 Post-run 耗时更长，必须切换 Session 才显示；改为读取最新 QA 分析状态并进行最长约 63 秒的有界轮询后，2026-07-15 使用全新账号再次实测：页面在 Session B 主回答结束后持续显示“正在检查可推进事项…”，约 20 秒后在未切换 Session 的情况下自动显示“整理评分+价格一体化对照表”。来源 Item / Project 版本均为 2，本 Case 完整通过。
 
 ### 3.3 正例二：交付完成后发现上线保障缺口
 

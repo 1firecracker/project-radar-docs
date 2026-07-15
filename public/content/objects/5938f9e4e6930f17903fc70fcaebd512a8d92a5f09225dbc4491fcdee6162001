@@ -115,7 +115,7 @@ V0 允许用户移动 Event、改为 Non Project、移动 Item、确认完成和
 | V1 | 建立持续工作节奏 | 时间扫描、停滞检测、夜间重组、多项目恢复、多 Radar 管理 |
 | V2 | 感知真实工作环境 | 外部工具变化、跨系统状态和持续监控 |
 
-当前工程已经跑通 V0 前后端、六类真实浏览器 Case、Radar 执行与 Event 回流。历史 Event 重算、Organizer Project Patch、完成层级守门、跨 Session Radar 版本失效和动作级确定性 Policy Gate 均已实现；下一步重启后端并用全新账号重跑主动判断评测集 3.2—3.7，确认真实模型与界面结果。Resume Brief 在 Radar 判断可信后进入 V0.2。
+当前工程已经跑通 V0 前后端、六类真实浏览器 Case、Radar 执行与 Event 回流。历史 Event 重算、Organizer Project Patch、完成层级守门、跨 Session Radar 版本失效、动作级确定性 Policy Gate 和状态感知有界轮询均已实现；主动判断评测集 3.2 已用全新账号完整通过，能够在 Session B 不切换页面的情况下自动显示正确 Radar。下一步继续验证 3.3—3.7，稳定后进入 V0.2 的 Resume Brief。
 
 ## 6. 验证目标与研究依据
 

@@ -30,7 +30,7 @@ V0 主闭环已经可运行：
 | Radar 判断协议 | 已完成 | Analyzer 输出动作、覆盖来源、约束和可执行性；Policy Gate 确定性决定推送或静默 |
 | Radar 决策审计 | 已完成 | 每个进入判断的 Event 记录结果、原因及结构化判断依据 |
 | 自动化验证 | 已完成 | Radar 后端 227 项、前端 Radar 27 项通过，Ruff 与生产构建成功；扩展集成套件另有 6 个既有 Context Pipeline 失败 |
-| 真实模型验证 | 部分通过 | 修订后的 3.2 已验证 Project / Item、跨 Session 上下文和 Radar 后端生成；无切换自动展示待有效 Token 重启后复测 |
+| 真实模型验证 | 3.2 已通过 | Project / Item、跨 Session 上下文、动作级判断和无切换自动展示均已用全新账号验证 |
 | Resume Brief | 未开始 | 阶段三通过后进入 V0.2 |
 
 ## 2. 阶段三要完成什么
@@ -50,12 +50,10 @@ V0 主闭环已经可运行：
 
 ## 3. 下一步顺序
 
-1. 在带有效模型 Token 的启动环境重启后端，使用修订后的 3.2 新建一个 Session B QA。
-2. 不切换 Session，确认主回答结束后页面保持“正在检查”，并在 Post-run 决策完成时自动显示 Radar；静默结果则自动停止轮询。
-3. 检查 Session B 的 `radar_decisions` 为 `coverage.kind=artifact_text` 或 `generic_offer`、`feasibility=ready`、`outcome=created`，且 Radar 绑定当前 Item / Project 版本。
-4. 再执行 3.3、3.4 的主动提醒正例，以及 3.5、3.6、3.7 的覆盖与约束反例。
-5. 若失败，先按审计字段判断是机会提取、覆盖来源、约束、可执行性、Candidate 校验、状态版本还是展示时序问题，再决定是否改 Prompt 或代码。
-6. 阶段三通过后冻结 V0 演示路径，再进入 Resume Brief。
+1. 以已经通过的 3.2 作为主动判断与展示时序基线，不再修改其输入。
+2. 执行 3.3、3.4 的主动提醒正例，以及 3.5、3.6、3.7 的覆盖与约束反例。
+3. 若失败，先按审计字段判断是机会提取、覆盖来源、约束、可执行性、Candidate 校验、状态版本还是展示时序问题，再决定是否改 Prompt 或代码。
+4. 三个正例和安静反例稳定后冻结 V0 演示路径，再进入 Resume Brief。
 
 ## 4. 后续阶段
 

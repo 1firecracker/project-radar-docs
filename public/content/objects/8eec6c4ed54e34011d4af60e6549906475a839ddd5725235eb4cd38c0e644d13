@@ -93,4 +93,4 @@ Analyzer 对所有 `ready + allowed` 的机会都返回 Candidate，即使它认
 2. 修订版 Session A 正确建立采购 Project 与唯一当前 Item“平台选型”；Session B 补齐报价，并只要求主 Agent 起草报价汇总正文。
 3. Session B 审计为 `coverage.kind=generic_offer`、`constraint_check=allowed`、`feasibility=ready`、`outcome=created`，成功生成比较材料类 Radar，来源 Item / Project 版本均为 2。
 4. 旧前端因 Post-run 约 35 秒而轮询提前结束，切换 Session 后通过 Re-entry 才显示；现已完成状态感知轮询实现和自动化验证。
-5. 最终待办是在有效模型 Token 环境重启后端后重跑一个新 QA，确认不切换 Session 也会在分析完成时自动显示 Radar。
+5. 2026-07-15 使用全新账号完成最终复测：Session B 主回答结束后保持在当前页面，约 20 秒后自动显示“整理评分+价格一体化对照表”；数据库记录 `outcome=created`、`reason_code=actionable_gap`，来源 Item / Project 版本均为 2。状态感知轮询完整通过。
