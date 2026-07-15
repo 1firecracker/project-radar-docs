@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-27100d7c9c500b955d805f8f971ce37dc7a90dc184baf11a45ce8832d8db926f",
-  "generatedAt": "2026-07-15T11:12:34.980Z",
+  "revision": "snapshot-3d37a3b6933c2a3bef458d17fea3172b818a684edd66985a61c7dd8d7808e9bd",
+  "generatedAt": "2026-07-15T11:22:47.177Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -19,8 +19,8 @@
     },
     {
       "path": "01-产品与规划/零版产品需求.md",
-      "sha256": "66f9beea58a1be353370d12e1a751b239d487b3b19cf72616144f9c8efa07f24",
-      "bytes": 12856,
+      "sha256": "87dc2833db31b275895fa58d22a1f79c75228fc02c3729027ba344407249bbee",
+      "bytes": 12871,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
