@@ -1,0 +1,216 @@
+# 项目完成守门：单事项复现实测
+
+> 文档状态：已实测，Project 完成守门失败；Item / Radar 通过  
+> 测试日期：2026-07-15  
+> 测试账号：`radar_case1_single_item_0715`  
+> 对应评测：[主动判断评测集 3.1](../主动判断评测集.md#31-状态守门单一-item-完成不等于-project-完成)  
+> 权威范围：新版单事项 Case 的真实浏览器轨迹、字段变化、判定与修复边界
+
+[返回文档总览](../../README.md) · [返回主动判断评测集](../主动判断评测集.md)
+
+## 1. 测试目标与结论
+
+本次不再要求一个 QA 同时创建“素材、前端、上线”多个 Item，而是严格遵守 V0 规则：**一次完整 QA 最多创建或更新一个主要 Item。** Project 保存长期目标，后续 QA 再逐步创建或推进其他 Item。
+
+测试结论：**Case 粒度正确，Item 与 Radar 表现符合预期；Project 完成守门不符合预期。**
+
+| 检查点 | 实际结果 | 判定 |
+|---|---|---|
+| Session A 状态建立 | 创建 1 个 Project 和 1 个“品牌素材验收”Item | 通过 |
+| Session A Radar | 没有当前可执行且主回答未覆盖的建议 | 通过 |
+| Session B Item 更新 | 四项素材验收后，唯一 Item 进入 `completed` | 通过 |
+| Session B 主回答 | 给出四个文件名，并指出可以进入前端制作 | 符合业务语义 |
+| Session B Radar | 因主回答已覆盖前端推进而保持安静 | 通过 |
+| Session B Project | 官网尚未制作和上线，却进入 `completion_candidate` | **失败** |
+
+失败链条很短：
+
+```text
+“品牌素材验收”Item 正确完成
+→ 聚合器发现当前唯一必要 Item 已完成且无 blocker
+→ 只检查 Project 完成标准是否为非空文本
+→ 把“官网改版并正式上线”Project 错误推进为 completion_candidate
+```
+
+因此，本轮不应修改 Item 粒度或扩展多 Item 协议；应只修复 Project 的项目级完成判断。
+
+## 2. Case 设计
+
+### 2.1 对象边界
+
+| 对象 | 本 Case 中的含义 | 完成条件 |
+|---|---|---|
+| Project | 星河科技官网改版并上线 | 官网改版完成并正式上线 |
+| Item | 品牌素材验收 | Logo、品牌色规范、产品主视觉、正式宣传文案全部验收通过 |
+| Event A | 建立当前进度 | 两项已通过，两项等待交付 |
+| Event B | 确认 Item 完成 | 四项素材全部验收通过 |
+
+素材验收完成只说明前端制作的前置条件已经解除，不说明整个官网项目已经完成。后续可以由新的 QA 创建“前端制作”等 Item，但本次 Demo 不测试一句话推进多个 Item。
+
+### 2.2 预期字段变化
+
+| 时点 | Item | Project | Radar |
+|---|---|---|---|
+| Session A 后 | `in_progress` | `in_progress` | 安静 |
+| Session B 后 | `completed` | 仍为 `in_progress` | 主回答覆盖时安静 |
+
+## 3. Session A：建立一个 Project 和一个 Item
+
+### 3.1 全新账号
+
+账号初始没有历史 Session、Project、Item 或 Radar。
+
+![全新账号空白页面](../../05-资源/图片/主动判断正例一单事项复测/00-全新账号空白页面.jpg)
+
+### 3.2 输入单一事项
+
+本轮明确声明“当前只推进一个事项：品牌素材验收”，避免一个 QA 暗含多个 Item。
+
+![Session A 输入单一事项](../../05-资源/图片/主动判断正例一单事项复测/01-SessionA输入单一事项.jpg)
+
+### 3.3 主 Agent 回答
+
+主 Agent 正确区分了长期项目、当前事项、已通过素材和待交付素材，没有把项目标记为完成。
+
+![Session A 主回答完成](../../05-资源/图片/主动判断正例一单事项复测/02-SessionA主回答完成.jpg)
+
+### 3.4 Radar 保持安静
+
+剩余两项素材仍在客户承诺期内，当前没有必须由 Agent 执行、且主回答尚未覆盖的动作，因此 Radar 安静符合预期。
+
+![Session A Radar 保持安静](../../05-资源/图片/主动判断正例一单事项复测/03-SessionA-Radar保持安静.jpg)
+
+### 3.5 Organizer 状态
+
+Project 下只有一个“品牌素材验收”Item，与 Case 设计一致。
+
+![Session A Project 仅含品牌素材验收](../../05-资源/图片/主动判断正例一单事项复测/04-SessionA项目仅含品牌素材验收.jpg)
+
+![Session A 品牌素材验收字段](../../05-资源/图片/主动判断正例一单事项复测/05-SessionA品牌素材验收字段.jpg)
+
+数据库结果：
+
+| 对象 | 字段 | Session A 后的值 |
+|---|---|---|
+| Project | `title` | 星河科技官网改版并上线 |
+| Project | `goal` | 2026-07-31 前完成星河科技官网改版并正式上线 |
+| Project | `completion_criteria` | 官网改版完成并正式上线 |
+| Project | `status` | `in_progress` |
+| Project | `current_stage` | 推进中：品牌素材验收 |
+| Item | `title` | 品牌素材验收 |
+| Item | `completion_criteria` | 四项品牌素材全部验收通过 |
+| Item | `status` | `in_progress` |
+| Item | `next_action` | 等待客户 2026-07-17 交付后验收 |
+| Item | `required_for_project_completion` | `true` |
+
+Event A 的 `assignment_reason` 明确写出：这是一个包含多个阶段的长期 Project，而“当前推进的品牌素材验收为首个可追踪事项”。这正是 V0 增量建立 Item 的预期语义。
+
+## 4. Session B：只完成当前 Item
+
+### 4.1 输入完成事实
+
+用户只确认四项素材已经验收，并要求列出归档文件名；没有说官网已经完成或上线。
+
+![Session B 输入事项完成事实](../../05-资源/图片/主动判断正例一单事项复测/06-SessionB输入事项完成事实.jpg)
+
+### 4.2 主 Agent 覆盖前端推进
+
+主 Agent 正确列出四个文件名，并明确说“素材验收环节到此全部完成，项目具备进入前端制作阶段的条件”。这句话已经覆盖了 Radar 原本可能发现的下一步。
+
+![Session B 主回答覆盖前端推进](../../05-资源/图片/主动判断正例一单事项复测/07-SessionB主回答覆盖前端推进.jpg)
+
+### 4.3 Radar 去重正确
+
+由于主 Agent 已经指出可以进入前端制作，Radar 没有重复提醒。数据库中该账号的 Radar 数量也是 `0`。
+
+![Session B Radar 因主回答覆盖而安静](../../05-资源/图片/主动判断正例一单事项复测/08-SessionB-Radar因主回答覆盖而安静.jpg)
+
+### 4.4 Item 正确完成
+
+“品牌素材验收”满足自身完成标准，进入 `completed`，`next_action` 清空，`blockers` 为空。
+
+![Session B 品牌素材验收正确完成](../../05-资源/图片/主动判断正例一单事项复测/10-SessionB品牌素材验收正确完成.jpg)
+
+| Item 字段 | Session A 后 | Session B 后 | 判定 |
+|---|---|---|---|
+| `status` | `in_progress` | `completed` | 正确 |
+| `progress_summary` | 两项已通过、两项待交付 | 四项全部验收并归档 | 正确 |
+| `next_action` | 等待剩余素材后验收 | 空 | 正确 |
+| `blockers` | 两项素材待交付 | `[]` | 正确 |
+| `version` | `1` | `2` | 正确 |
+
+### 4.5 Project 错误进入完成候选
+
+Project 的完成标准仍是“官网改版完成并正式上线”，但实际只完成了素材验收，界面却显示 `1 / 1` 并进入“等待完成确认”。
+
+![Project 未上线却进入完成候选](../../05-资源/图片/主动判断正例一单事项复测/09-Project未上线却进入完成候选.jpg)
+
+| Project 字段 | Session A 后 | Session B 后 | 判定 |
+|---|---|---|---|
+| `completion_criteria` | 官网改版完成并正式上线 | 未变化 | 标准仍正确 |
+| `status` | `in_progress` | `completion_candidate` | **错误** |
+| `current_stage` | 推进中：品牌素材验收 | 等待完成确认 | **错误** |
+| `progress_summary` | 素材验收进行中 | 素材验收已完成 | 事实正确但范围不完整 |
+| `version` | `1` | `2` | 正常 |
+
+正确结果应是：Item 保持 `completed`；Project 保持 `in_progress`，当前阶段变为“素材验收完成，待进入前端制作”或等价表达。
+
+## 5. 数据证据
+
+| 对象 | ID |
+|---|---|
+| 用户 | `23` |
+| Session A | `6a86b59a-63cf-4591-bbe2-6e2a79c873f8` |
+| Session B | `768dd5cd-9f12-4bbe-b4b6-14c2a0d1dd00` |
+| Project | `ed614a84-7c49-4daa-980f-2e8c74c60246` |
+| Item | `e8953a8f-308c-470b-bac0-601d9e8260ee` |
+| Event A | `14b1dfed-d1c0-47e7-9a18-1398bc033a66` |
+| Event B | `fad12b6a-05ac-47c2-a72f-5c23859e537f` |
+
+Event B 的类型是 `completion_confirmed`，归属当前 Item。这能证明“品牌素材验收”完成，不能证明 Project 完成。
+
+## 6. 根因与修复边界
+
+### 6.1 根因
+
+[`_aggregate_project_state()`](../../../../backend/radar_service.py#L620-L687) 当前把以下条件视为自动进入完成候选的充分条件：
+
+```text
+当前已记录的必要 Item 全部 completed
++ 当前必要 Item 没有 blocker
++ Project completion_criteria 是非空字符串
+```
+
+实现没有判断当前 Event 是 Item 级还是 Project 级完成证据，也没有验证 Project 完成标准是否真的被满足。换句话说，`completion_criteria` 只被检查“有没有文字”，没有被检查“是否已实现”。
+
+### 6.2 V0 正确规则
+
+1. 一个完整 QA 最多创建或更新一个主要 Item；本次不扩展多个 Item 输出。
+2. Item 的 `completion_confirmed` 只完成该 Item。
+3. 当前必要 Item 全部完成只是 Project 完成的必要条件，不是充分条件。
+4. Project 进入 `completion_candidate` 必须有覆盖整个 Project 完成标准的项目级证据。
+5. 用户明确确认整个 Project 已完成时，才可直接进入 `completed`。
+6. 若只完成当前 Item，Project 保持未完成，并把阶段推进到后续工作。
+
+### 6.3 最小修复与回归
+
+只修改 Project 完成守门，不改 Organizer 的单 Item 协议：
+
+- 聚合时区分 Item 级 `completion_confirmed` 与 Project 级完成证据；
+- 没有项目级证据时，不得自动写入 `completion_candidate`；
+- 当前 Item 完成后仍聚合进展，并给 Project 保留后续阶段；
+- 使用本 Case 重跑，断言 Item=`completed`、Project=`in_progress`、Radar=安静。
+
+## 7. 复现输入
+
+### 7.1 Session A
+
+> 我们计划在 2026 年 7 月 31 日前完成星河科技官网改版并正式上线。当前只推进一个事项：品牌素材验收。这个事项的完成标准是 Logo、品牌色规范、产品主视觉和正式宣传文案四项素材全部验收通过。现在 Logo 和品牌色规范已通过；产品主视觉和正式宣传文案由客户承诺在 2026 年 7 月 17 日交付。素材验收完成后，项目才能进入前端制作。请帮我记录当前项目和这个事项的状态。
+
+等待主 Agent 回答结束和 Post-run 完成，再新建 Session B。
+
+### 7.2 Session B
+
+> 继续星河科技官网改版。客户刚确认产品主视觉和正式宣传文案已经交付；连同此前通过的 Logo 和品牌色规范，四项素材现在都已验收无误。请按“星河科技_素材类型_最终版_20260715”的格式列出四个归档文件名。
+
+等待主 Agent 回答结束和 Post-run 完成，再检查 Item、Project 与 Radar。

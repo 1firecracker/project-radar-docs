@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-544c17beca77899101120181837a67a3cf91444bf1235fb3324814761b7d3778",
-  "generatedAt": "2026-07-15T09:31:50.003Z",
+  "revision": "snapshot-1e8f2711bbbe2e6f3f50c5d2305f557fcc21863dfb855c1b82fb4e1c17f79bde",
+  "generatedAt": "2026-07-15T09:42:02.991Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -12,8 +12,8 @@
     },
     {
       "path": "01-产品与规划/实施计划.md",
-      "sha256": "7449a5a337d0533e0081faf211ddbbbb594faf6fb7f2d9c7a55f4660c1d6a500",
-      "bytes": 6150,
+      "sha256": "7d5caebc77308e95a50b0dfc29b0947a0d36e252beb5d628ca6d14b0a9250760",
+      "bytes": 6295,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -68,15 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "25aede88c99b0b48498617896c8478cc9e6788bcea61d1039152c85842ae072e",
-      "bytes": 22193,
-      "mediaType": "text/markdown; charset=utf-8",
-      "kind": "markdown"
-    },
-    {
-      "path": "03-测试与评测/案例实测/主动判断正例一依赖解除复现实测.md",
-      "sha256": "ca683bed19bd8d532502497758abfd0a060336db802b7d826105628eda13d6b5",
-      "bytes": 14050,
+      "sha256": "ef1fa9e13419944cf7651de36282a045e0faab689aad8a86a4503e8b02ae5182",
+      "bytes": 22662,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -119,6 +112,13 @@
       "path": "03-测试与评测/案例实测/案例四归属纠正实测.md",
       "sha256": "bd913484535f4a423334cef3287ac0caab790485d2790947f9458988928ceac5",
       "bytes": 14596,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "03-测试与评测/案例实测/项目完成守门单事项复现实测.md",
+      "sha256": "aa447481e7eb448edc560dbae5b98da5adaddcca39f1091d29a56801b51319de",
+      "bytes": 11054,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1034,8 +1034,8 @@
     },
     {
       "path": "05-资源/图片/主动判断正例一单事项复测/09-Project未上线却进入完成候选.jpg",
-      "sha256": "829942d715d0b64c45a367988978154f3029201405b18996cd9116c8d52e53f2",
-      "bytes": 60177,
+      "sha256": "527c6ff1c11538dca25c6fbbb201e36d4e33ae8c1096945589a7fe1a41970348",
+      "bytes": 60258,
       "mediaType": "image/jpeg",
       "kind": "asset"
     },
@@ -1202,8 +1202,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "cca2e647e786fcc7883407794bb7a78568995eaf19c91fcb54a1faeb4e5c20d4",
-      "bytes": 11241,
+      "sha256": "2f96ccfc557e4e3daa95b19c36ecc7591f272059c1e8e4e6477ca7d66795d348",
+      "bytes": 11230,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }
