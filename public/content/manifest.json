@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-1e8f2711bbbe2e6f3f50c5d2305f557fcc21863dfb855c1b82fb4e1c17f79bde",
-  "generatedAt": "2026-07-15T09:42:02.991Z",
+  "revision": "snapshot-187ad89b43f0be411ceb91110209fac2057bfb4127d51c0f5d8e312c11fa1d76",
+  "generatedAt": "2026-07-15T10:02:16.340Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -117,8 +117,8 @@
     },
     {
       "path": "03-测试与评测/案例实测/项目完成守门单事项复现实测.md",
-      "sha256": "aa447481e7eb448edc560dbae5b98da5adaddcca39f1091d29a56801b51319de",
-      "bytes": 11054,
+      "sha256": "0dbdc5fad9d3597798744abe6a0de3881949b8b91fc512b7fa435d494070bdf8",
+      "bytes": 11015,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
