@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-6fdac6c11fbcd2fb99ac22feb45bf02b0a48ea4b9d25701ee019ed192bea3150",
-  "generatedAt": "2026-07-15T08:31:11.256Z",
+  "revision": "snapshot-c0ef036006d734a2b3533402e3e3112bd93d9ed8c152d8e2451832cc32ec89e8",
+  "generatedAt": "2026-07-15T08:41:24.124Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -12,8 +12,8 @@
     },
     {
       "path": "01-产品与规划/实施计划.md",
-      "sha256": "a61fa2ad2dcd63d23535e1698f2ac7595caeceb17a209de8b4c2155365467d31",
-      "bytes": 5401,
+      "sha256": "7449a5a337d0533e0081faf211ddbbbb594faf6fb7f2d9c7a55f4660c1d6a500",
+      "bytes": 6150,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -68,8 +68,15 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "58ae90ee2f28338f3cbaa8153fe1c029d77dfbc51855e56f86812b97051c9c00",
-      "bytes": 21572,
+      "sha256": "25aede88c99b0b48498617896c8478cc9e6788bcea61d1039152c85842ae072e",
+      "bytes": 22193,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "03-测试与评测/案例实测/主动判断正例一依赖解除复现实测.md",
+      "sha256": "ca683bed19bd8d532502497758abfd0a060336db802b7d826105628eda13d6b5",
+      "bytes": 14050,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1118,8 +1125,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "216b69664d1119f857d55fb66e5dfd38ed9b03cb1a3c422e4e5aea4a8d8a83de",
-      "bytes": 10827,
+      "sha256": "cca2e647e786fcc7883407794bb7a78568995eaf19c91fcb54a1faeb4e5c20d4",
+      "bytes": 11241,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }
