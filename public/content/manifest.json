@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-10210cb1a33ec64a26c13102351931185a280cb9d7cf40023387ea23be25fb46",
-  "generatedAt": "2026-07-16T16:00:12.724Z",
+  "revision": "snapshot-cbacc12ec0c577b5cb4da47386a0754a9b86bba6bea9fb7df560dd03c73208dd",
+  "generatedAt": "2026-07-16T16:10:25.569Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -68,8 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "5f736eff00bf3970ed5a2c8a95e30d439e6b6ef788373e47fdc1a92975cf832d",
-      "bytes": 36369,
+      "sha256": "8bcf60624531c070b35211283b83a480c48610928765a342c2ae40af9c3c9e40",
+      "bytes": 37946,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -677,8 +677,15 @@
     },
     {
       "path": "03-测试与评测/测试与演示.md",
-      "sha256": "701b8fe7aee0c1b47d79fd31515cd240644efc579d173baed87d3fecca9619b2",
-      "bytes": 15893,
+      "sha256": "15871ee1b75f946073ab755cf3eebd840191fbacbecbcd31dce6808aaeba29ae",
+      "bytes": 15976,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "03-测试与评测/浏览器稳定性验证总结.md",
+      "sha256": "c2677c16c717b21d995054ba845028a650a733295013a9a8af6e812fd9ad7e55",
+      "bytes": 2799,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
