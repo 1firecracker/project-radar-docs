@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-936267ca855bb4f6e9b1e75cf28436747143cfd1e146c9e7ab2dfc76d60bf645",
-  "generatedAt": "2026-07-16T15:29:41.227Z",
+  "revision": "snapshot-f635db628b8a15f941e87bc1c2c8baafba7a20318cbe80f08cf97a1f153f59fd",
+  "generatedAt": "2026-07-16T15:39:54.114Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -574,6 +574,20 @@
       "path": "03-测试与评测/案例实测/3.9已完成项目稳定性/第1次/03-Session-C因状态未完成误推Radar.png",
       "sha256": "b5b5a398842b34e8f6499066f5c1fefaddaf465a2756d82f47d64ad4cfa4d21a",
       "bytes": 76093,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.9已完成项目稳定性/第2次/02-主回答完成但Project仍为in_progress.png",
+      "sha256": "10db709c26bccf3becb8e704f782607044c09981422846206f04993d1e15dd81",
+      "bytes": 60989,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.9已完成项目稳定性/第2次/03-Session-C最终Radar状态.png",
+      "sha256": "601e2d772dc26d0ffbb363931362a851e13f144a77173c7ec2fb2e32cda6b32e",
+      "bytes": 45157,
       "mediaType": "image/png",
       "kind": "asset"
     },
