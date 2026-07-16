@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-9dbc0a02167c7a4124efc5f5b323fa1fe7200ed77f023f40b04190ebee1bbe0d",
-  "generatedAt": "2026-07-16T14:59:02.929Z",
+  "revision": "snapshot-c2d4c6cd1f934eca9e0a43a604abcd57fd7247ba72b1f072719cd034ada4ffef",
+  "generatedAt": "2026-07-16T15:09:15.791Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -68,8 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "703f34a3d6fe88f75a9a94e21e6085a6d796c59d5315ad0da45aa83cee2d26d7",
-      "bytes": 35772,
+      "sha256": "b8c792b858cf0dfc624e524f85f064e870b38f8e6f67f200a6192c856beec36a",
+      "bytes": 36103,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -462,6 +462,55 @@
       "path": "03-测试与评测/案例实测/3.6用户已要求同一动作稳定性实测.md",
       "sha256": "8bdc0303e490f545a8cd594f6fc086bf094902784b34bc1dbc08d0f76b326411",
       "bytes": 3108,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.7关键动作受阻稳定性/第1次/01-Session-A-Radar安静.png",
+      "sha256": "ce0bf87a6cda6da8aebffb2a60ba696efb11e3ebc8181db36bcabd52a3614b12",
+      "bytes": 64836,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.7关键动作受阻稳定性/第1次/02-Session-B-Radar安静.png",
+      "sha256": "1eec7198a96fe391ade569911a6ab7cc9e80e15684b4c021c16f27329feeafef",
+      "bytes": 42789,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.7关键动作受阻稳定性/第2次/01-Session-A-Radar安静.png",
+      "sha256": "2e9052a867f66e8c9abae494407dcc33636d671df39a1822b68f63490986ca0e",
+      "bytes": 64780,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.7关键动作受阻稳定性/第2次/02-Session-B-Radar安静.png",
+      "sha256": "a72eb733b36b62c116108ec4dfb1db5fa03b84b09759539a8b46d92189807bb8",
+      "bytes": 42760,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.7关键动作受阻稳定性/第3次/01-Session-A-Radar安静.png",
+      "sha256": "9366378e156a29e04e9431200e1c311c3654276d50cdff3e8b5f303c45ec12f9",
+      "bytes": 64783,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.7关键动作受阻稳定性/第3次/02-Session-B-Radar安静.png",
+      "sha256": "bba81acd2fc584121cb67e425103176ad40f2a3d8940f1e0b858254e02c5eb0c",
+      "bytes": 42757,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.7关键动作受阻稳定性实测.md",
+      "sha256": "744fa8db5f3da9999b470b276127ad72de4baeb34214c9b773cd272a951791c2",
+      "bytes": 2107,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
