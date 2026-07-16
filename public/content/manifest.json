@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-33d88f6465ef3063c92abb275e921b52c759a5e404a11d70ad7fe34dfdeca378",
-  "generatedAt": "2026-07-16T14:28:23.257Z",
+  "revision": "snapshot-f9c43865a35475c62a28b3dbf0b9ae33d94fc4b0edf94c157f66dec8c491f2b7",
+  "generatedAt": "2026-07-16T14:38:36.964Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -68,8 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "70f56ec3321cc2560d32a3169a827270ee28b00abc0fe4e53280327ef619e1b6",
-      "bytes": 34745,
+      "sha256": "6c54d8b08babfa470b0096e00ef09abcb70b517b159d79a964a585dd492634aa",
+      "bytes": 34973,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -298,6 +298,27 @@
       "kind": "asset"
     },
     {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第五次修订-第3次/02-Session-B-Radar命中.png",
+      "sha256": "2d785ba37d43950134e6f48ad44b9bed437c74dcfcb7cdaaa21cf1ab18c46dea",
+      "bytes": 101444,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第五次修订-第3次/03-Action-Runner补造验收事实.png",
+      "sha256": "8e69fcf5b162b008d98fc8be04b7c951ac2728fbcd80896f1bb9e77486a7537b",
+      "bytes": 71284,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第五次修订-第3次/04-执行后Item仍未完成.png",
+      "sha256": "1e1d56c5a06b7d5cad89aa10b0268bf46a32a3152756440df4a9a03446f03980",
+      "bytes": 63928,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
       "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第四次修订-第1次/01-Session-A-Radar安静.png",
       "sha256": "b1dc763ce69539acbd9b7accb8c9336caa8ce57100ed9d3820cbf594ae1b77ba",
       "bytes": 69230,
@@ -362,10 +383,24 @@
     },
     {
       "path": "03-测试与评测/案例实测/3.4收尾确认稳定性实测.md",
-      "sha256": "a8c2be59ea084ea227bbea6bcab590039155a2ac9c7d290e95a56d10180fc41d",
-      "bytes": 9231,
+      "sha256": "10d0aac5d518e32cb31532e51a5d098a1885c156893ff4b20714e1fd28d0eeba",
+      "bytes": 11831,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.5主回答覆盖去重稳定性/第1次/01-主回答覆盖且Radar安静.png",
+      "sha256": "a0b3e5472a2ae771b4d3fa071234526d79a3807fbaafd7feccb660cf1f0b8a76",
+      "bytes": 90760,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.5主回答覆盖去重稳定性/第2次/01-主回答覆盖且Radar安静.png",
+      "sha256": "294524924a91e9a546fcb4a6ccb2272c466f2dbc83fb569c41923811948e542c",
+      "bytes": 98401,
+      "mediaType": "image/png",
+      "kind": "asset"
     },
     {
       "path": "03-测试与评测/案例实测/案例一跨会话项目实测.md",
