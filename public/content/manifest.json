@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-f9c43865a35475c62a28b3dbf0b9ae33d94fc4b0edf94c157f66dec8c491f2b7",
-  "generatedAt": "2026-07-16T14:38:36.964Z",
+  "revision": "snapshot-260e9f341df04f506651043c282fc39768fdce584a95d2f3c6ef36a770d3ad82",
+  "generatedAt": "2026-07-16T14:48:49.709Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -68,8 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "6c54d8b08babfa470b0096e00ef09abcb70b517b159d79a964a585dd492634aa",
-      "bytes": 34973,
+      "sha256": "fc90597dca60da5f0fd3011595c345da81dd5c129de6fc0c4cb91fa66d6644b4",
+      "bytes": 35271,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -399,6 +399,41 @@
       "path": "03-测试与评测/案例实测/3.5主回答覆盖去重稳定性/第2次/01-主回答覆盖且Radar安静.png",
       "sha256": "294524924a91e9a546fcb4a6ccb2272c466f2dbc83fb569c41923811948e542c",
       "bytes": 98401,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.5主回答覆盖去重稳定性/第3次/01-主回答覆盖且Radar安静.png",
+      "sha256": "218be4967d6d001b6d04558231d97844d08daeda046b7f3f6e1c074f046dee3f",
+      "bytes": 101773,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.5主回答覆盖去重稳定性实测.md",
+      "sha256": "ebeee3ea4ba2ad7da6dfaee014cfc7cbdac7eeb9e74fdf69b26b128736bf6bfc",
+      "bytes": 1842,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.6用户已要求同一动作稳定性/第1次/01-Session-A-Radar安静.png",
+      "sha256": "7bd9e0c5a12599096b8953cc774686296659ea28df9dee659177540c67a6602c",
+      "bytes": 72018,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.6用户已要求同一动作稳定性/第1次/02-Session-B主回答已产出且Radar安静.png",
+      "sha256": "c3df957b8d90c37c8212806773f93c966632f0d9b00cd9f3323d0c5dbb36cd89",
+      "bytes": 70315,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.6用户已要求同一动作稳定性/第2次/01-Session-A提前提醒.png",
+      "sha256": "1789f817972a2b6545b9f3cd7bc394d48c6a51db912143351e8565846670ba42",
+      "bytes": 112165,
       "mediaType": "image/png",
       "kind": "asset"
     },
