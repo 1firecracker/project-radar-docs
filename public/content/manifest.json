@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-ba10bb9350a09661bfd496fed0938af24339cf374dbd06a2906b059e3a2b66c5",
-  "generatedAt": "2026-07-16T12:26:01.596Z",
+  "revision": "snapshot-6ac7f2000d23b52f26b516e371e3754e7d56dc7b50bcc516d149712744f7812c",
+  "generatedAt": "2026-07-16T12:46:16.040Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -72,6 +72,27 @@
       "bytes": 31101,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.3回滚方案稳定性/第1轮/01-Session-A项目状态.png",
+      "sha256": "a89a5953d2552dc25118e5078e838e1d49bfee4c1c5b9479292cfd84e4b48f79",
+      "bytes": 56305,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.3回滚方案稳定性/第1轮/02-Session-B项目状态.png",
+      "sha256": "aae4154a9313756d479caabb001a8fca8dc8a8f1577bedcf9e4e2fcc13cf44bf",
+      "bytes": 68715,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.3回滚方案稳定性/第1轮/03-Session-C-Radar命中.png",
+      "sha256": "74be9ccce500cf7b4edbc5016f2fc0c6d5657c8d9362fed1c97ff1f18a8f4ed4",
+      "bytes": 97293,
+      "mediaType": "image/png",
+      "kind": "asset"
     },
     {
       "path": "03-测试与评测/案例实测/案例一跨会话项目实测.md",
