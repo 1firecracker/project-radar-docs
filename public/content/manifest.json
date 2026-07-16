@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-260e9f341df04f506651043c282fc39768fdce584a95d2f3c6ef36a770d3ad82",
-  "generatedAt": "2026-07-16T14:48:49.709Z",
+  "revision": "snapshot-9dbc0a02167c7a4124efc5f5b323fa1fe7200ed77f023f40b04190ebee1bbe0d",
+  "generatedAt": "2026-07-16T14:59:02.929Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -68,8 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "fc90597dca60da5f0fd3011595c345da81dd5c129de6fc0c4cb91fa66d6644b4",
-      "bytes": 35271,
+      "sha256": "703f34a3d6fe88f75a9a94e21e6085a6d796c59d5315ad0da45aa83cee2d26d7",
+      "bytes": 35772,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -436,6 +436,34 @@
       "bytes": 112165,
       "mediaType": "image/png",
       "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.6用户已要求同一动作稳定性/第2次/02-Session-B主回答已产出且Radar安静.png",
+      "sha256": "841b3ddb522165a03facd8cfd73d4f0ff53815059186bc3a436b29b75dc517e2",
+      "bytes": 76172,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.6用户已要求同一动作稳定性/第3次/01-Session-A-Radar安静.png",
+      "sha256": "61f4ea66cef73aa0c399737a6dfa84ef524292786fe6e62b6753accdf95d1909",
+      "bytes": 72126,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.6用户已要求同一动作稳定性/第3次/02-Session-B主回答已产出且Radar安静.png",
+      "sha256": "952028058375cbfc887593673fdf8206801dc5d822b842ac381bfcc1201d17a8",
+      "bytes": 70507,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.6用户已要求同一动作稳定性实测.md",
+      "sha256": "8bdc0303e490f545a8cd594f6fc086bf094902784b34bc1dbc08d0f76b326411",
+      "bytes": 3108,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
     },
     {
       "path": "03-测试与评测/案例实测/案例一跨会话项目实测.md",
