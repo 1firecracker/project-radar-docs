@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-c2d4c6cd1f934eca9e0a43a604abcd57fd7247ba72b1f072719cd034ada4ffef",
-  "generatedAt": "2026-07-16T15:09:15.791Z",
+  "revision": "snapshot-4d0dda699411a72ea2cb3ab019775b582dc0342bc03c28e1465653516692b1b5",
+  "generatedAt": "2026-07-16T15:19:28.161Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -68,8 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "b8c792b858cf0dfc624e524f85f064e870b38f8e6f67f200a6192c856beec36a",
-      "bytes": 36103,
+      "sha256": "5f736eff00bf3970ed5a2c8a95e30d439e6b6ef788373e47fdc1a92975cf832d",
+      "bytes": 36369,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -513,6 +513,41 @@
       "bytes": 2107,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.8一次性问答稳定性/第1次/01-NonProject且Radar安静.png",
+      "sha256": "1580f0bcb87e26092b40d8c031901afef234af29092c6511596d8b31b66d0a82",
+      "bytes": 44308,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.8一次性问答稳定性/第2次/01-NonProject且Radar安静.png",
+      "sha256": "a88063a7bfee806dee00a7ed7649d251e2801ee1d9eb82161ef1ffc8519e489d",
+      "bytes": 44296,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.8一次性问答稳定性/第3次/01-NonProject且Radar安静.png",
+      "sha256": "0068465271484d772de790077ca852dd74ba241cf74726d2615d1c8fa74edcb4",
+      "bytes": 44469,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.8一次性问答稳定性实测.md",
+      "sha256": "03ae6019a753b93b6d454bf1fe1b00bbc455d913f87e28004e34f53856f00466",
+      "bytes": 1371,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.9已完成项目稳定性/第1次/01-Session-A-Radar安静.png",
+      "sha256": "ef7ef1d02f58ffabe9bb433b4386377ce11d8a10e748355bb99c2bf0b2c92109",
+      "bytes": 62714,
+      "mediaType": "image/png",
+      "kind": "asset"
     },
     {
       "path": "03-测试与评测/案例实测/案例一跨会话项目实测.md",
