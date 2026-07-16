@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-abfe84b4195b9bc3914cf36644df09162ace9acc7ea58aedfe75de3aa77d1bce",
-  "generatedAt": "2026-07-16T13:27:06.550Z",
+  "revision": "snapshot-c88f3314afbf96d710b2aa8219fefeca368a945a7f15ac40bacd465de53bb376",
+  "generatedAt": "2026-07-16T13:37:19.170Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -68,8 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "1b3bcfae0bd205e9dcb67e06843d88875782cf6b0543415c1afd6373f46a6153",
-      "bytes": 33881,
+      "sha256": "c3f39b9575c76d82a3483a4068508748f9a1befe8c30adec232dd0fccff80278",
+      "bytes": 34277,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -130,6 +130,13 @@
       "kind": "markdown"
     },
     {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/最终脚本-第1次/01-Session-A-Radar安静.png",
+      "sha256": "e69465ebcfd202433a01abb43c4574e54d2d50920db5021a735701e0464da074",
+      "bytes": 69300,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
       "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第1轮-旧版/01-Session-A提前触发Radar.png",
       "sha256": "755e13986d0861e4103223d405bc58370543e97856c6e9f73b305a67accb63f0",
       "bytes": 108455,
@@ -165,9 +172,37 @@
       "kind": "asset"
     },
     {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第3轮-第二次修订第1次/02-Session-B-Radar命中.png",
+      "sha256": "375e5dd4d5ccf2b0fb1e024560d771b6b899cfa217464097a2d80ddbfb156492",
+      "bytes": 100544,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第3轮-第二次修订第1次/03-主Agent泛化邀约与Radar具体动作.png",
+      "sha256": "e20cebcfe51f479d11cc4084bdd9f468351ac3a08dafb229164a5cdff25cea54",
+      "bytes": 118068,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第3轮-第二次修订第1次/04-Radar执行生成最终核对单.png",
+      "sha256": "3268ad963145358e27d128278460bc5b42f8b858602041d029267c52b05ce836",
+      "bytes": 74696,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第3轮-第二次修订第1次/05-执行后Item保持未完成.png",
+      "sha256": "20f224da7953fcc13eff2d13bec4fd27a85b8ed10b42045139ee60f128aef713",
+      "bytes": 64369,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
       "path": "03-测试与评测/案例实测/3.4收尾确认稳定性实测.md",
-      "sha256": "af82ec8250bdb731f2d2c1a296e55ad9892cb0a637ace16718b386d528e97c13",
-      "bytes": 2953,
+      "sha256": "1be74f54e6ad90f0a33b6d0efde13bbe582d3a06bcac5b66c1bf0390a638cd18",
+      "bytes": 4957,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
