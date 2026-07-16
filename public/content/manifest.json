@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-c88f3314afbf96d710b2aa8219fefeca368a945a7f15ac40bacd465de53bb376",
-  "generatedAt": "2026-07-16T13:37:19.170Z",
+  "revision": "snapshot-472d4a04a8fe4426e82db357e9bbd065417e6fb7cfa0151bb7bae7f797abb8e5",
+  "generatedAt": "2026-07-16T13:47:32.525Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -68,8 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "c3f39b9575c76d82a3483a4068508748f9a1befe8c30adec232dd0fccff80278",
-      "bytes": 34277,
+      "sha256": "d6da72c862a5ac4f4ae2f11e0e14294f1bec358f867cee803df5b7d228cd62f8",
+      "bytes": 34451,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -133,6 +133,41 @@
       "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/最终脚本-第1次/01-Session-A-Radar安静.png",
       "sha256": "e69465ebcfd202433a01abb43c4574e54d2d50920db5021a735701e0464da074",
       "bytes": 69300,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/最终脚本-第1次/02-Session-B-Radar命中.png",
+      "sha256": "b7c8fa934ea3cb7a8296ab579da11eb2f94fb766db23969d09aedf4706eb0425",
+      "bytes": 97100,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/最终脚本-第1次/03-Radar执行生成核对单.png",
+      "sha256": "2ac4c4bc8330335ce531ab1ea6a46f19f7f56533b06ec70a66c5ebf7099bca1d",
+      "bytes": 71124,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/最终脚本-第1次/04-执行后Item状态正确.png",
+      "sha256": "64defac5944006efc31f2ea3780dd6bb866f830a0889ae83348b18cb372260f4",
+      "bytes": 65304,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/最终脚本-第2次/01-Session-A-Radar安静.png",
+      "sha256": "74364fc132789f57873a764f140025713a4efe23754071132b5e3e768affb000",
+      "bytes": 74514,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/最终脚本-第2次/02-Session-B主回答覆盖且Radar安静.png",
+      "sha256": "158974cadbdcb3a99c85ae5c65461e3a409c5e9d27174a9684ea28fdf59f086f",
+      "bytes": 88015,
       "mediaType": "image/png",
       "kind": "asset"
     },
@@ -201,8 +236,8 @@
     },
     {
       "path": "03-测试与评测/案例实测/3.4收尾确认稳定性实测.md",
-      "sha256": "1be74f54e6ad90f0a33b6d0efde13bbe582d3a06bcac5b66c1bf0390a638cd18",
-      "bytes": 4957,
+      "sha256": "e20faa729fda48193ab537d7b866e19110568cf8bef7e74ad445db96d948304d",
+      "bytes": 6718,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
