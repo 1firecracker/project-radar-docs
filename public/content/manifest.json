@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-6ac7f2000d23b52f26b516e371e3754e7d56dc7b50bcc516d149712744f7812c",
-  "generatedAt": "2026-07-16T12:46:16.040Z",
+  "revision": "snapshot-b94715591e99e0f9ff5751a915033c80815475ffae61871ac9f4ee8f07456b1f",
+  "generatedAt": "2026-07-16T12:56:28.528Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -68,8 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "2eb0ace1f05426515e1b3fb88953236ef65f83f64afb9b83fd5a2bbc44b8f805",
-      "bytes": 31101,
+      "sha256": "f66d4d929258b641e133badc6b99eb790dbcde83ec8f061e88c6afd95116009a",
+      "bytes": 31651,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -93,6 +93,27 @@
       "bytes": 97293,
       "mediaType": "image/png",
       "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.3回滚方案稳定性/第1轮/04-Radar执行产物补造信息.png",
+      "sha256": "4bb89fbce4cff6fadd9769a8f3a0237620cf7a7941ff1d820b2dc97988c85efb",
+      "bytes": 90716,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.3回滚方案稳定性/第1轮/05-执行后项目状态.png",
+      "sha256": "7c8afa8dc1ea1fcb6e6347ee920583d925eb2cc9ce42bbd8dad14ff5f46dec69",
+      "bytes": 73770,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.3回滚方案稳定性实测.md",
+      "sha256": "c838157cbc5345856c07fb6d8f0606df8670151d99815eb0182a073c27f550bc",
+      "bytes": 2818,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
     },
     {
       "path": "03-测试与评测/案例实测/案例一跨会话项目实测.md",
