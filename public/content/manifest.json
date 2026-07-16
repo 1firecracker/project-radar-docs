@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-4d0dda699411a72ea2cb3ab019775b582dc0342bc03c28e1465653516692b1b5",
-  "generatedAt": "2026-07-16T15:19:28.161Z",
+  "revision": "snapshot-936267ca855bb4f6e9b1e75cf28436747143cfd1e146c9e7ab2dfc76d60bf645",
+  "generatedAt": "2026-07-16T15:29:41.227Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -546,6 +546,34 @@
       "path": "03-测试与评测/案例实测/3.9已完成项目稳定性/第1次/01-Session-A-Radar安静.png",
       "sha256": "ef7ef1d02f58ffabe9bb433b4386377ce11d8a10e748355bb99c2bf0b2c92109",
       "bytes": 62714,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.9已完成项目稳定性/第1次/01-Session-B项目完成且Radar安静.png",
+      "sha256": "7af23c3a2ccd76dcd38b18ff2c38f9fdc9be6ede297bbb3acb0d4eeec3248c60",
+      "bytes": 70086,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.9已完成项目稳定性/第1次/02-Session-B-Radar安静.png",
+      "sha256": "de0b4df3a7110bbc38139b9caa8d841bb0a720722e42ce93b7fc307ee2282a43",
+      "bytes": 48389,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.9已完成项目稳定性/第1次/02-主回答完成但Project仍为in_progress.png",
+      "sha256": "4215f0682ffdbea2ebdc9803161090e71715de9022f3b74d42fe1f84b39feb17",
+      "bytes": 60780,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.9已完成项目稳定性/第1次/03-Session-C因状态未完成误推Radar.png",
+      "sha256": "b5b5a398842b34e8f6499066f5c1fefaddaf465a2756d82f47d64ad4cfa4d21a",
+      "bytes": 76093,
       "mediaType": "image/png",
       "kind": "asset"
     },
