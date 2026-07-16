@@ -48,6 +48,8 @@ V0 需要证明：
 
 2026-07-16 将 3.2 重构为三 Session 分批报价演示版，并完成视频实测。Session A 建立采购背景；Session B 录入甲报价；Session C 录入乙报价；随后返回 Session B 录入丙报价，不创建 Session D。甲、乙阶段 Radar 安静，丙报价使三家报价在 Item 层面收齐后，Session B 出现“汇总三家报价并生成选型表格草稿”。主 Agent 只完成报价文件名，没有覆盖该动作；点击后生成包含三家报价、预算判断和四维评分待确认字段的可编辑草稿。该版本同时验证跨 Session 累积、既有 Session 回写、目标 Session 定向、可编辑初稿与 Action Runner 回流，恢复为现场主 Case。
 
+2026-07-16 首次执行旧版 3.3 未通过。Organizer 将“业务审批”和“生产窗口确认”拆成两个 completed Item，没有把“完成回滚方案”保留为持续追踪 Item；Radar 虽创建“起草上线后 24 小时监控安排计划”，但绑定 completed Item，读取时立即转为 `ignored`，同时与“监控安排已经完成”的历史事实冲突。3.3 已改为单 Item 三 Session 脚本：三轮始终更新“完成上线回滚方案”，审批、窗口和版本只作为 blockers，待重新实测。
+
 ## 2. 核心测试用例
 
 | 编号 | 场景 | 预期结果 |

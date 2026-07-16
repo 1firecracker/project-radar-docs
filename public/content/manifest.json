@@ -1,19 +1,19 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-359cbb2f521d89a8ebcb05b6cf6b5bfcbe64e281633ac06f03823344aa3dc406",
-  "generatedAt": "2026-07-16T10:45:46.840Z",
+  "revision": "snapshot-ba10bb9350a09661bfd496fed0938af24339cf374dbd06a2906b059e3a2b66c5",
+  "generatedAt": "2026-07-16T12:26:01.596Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
-      "sha256": "6b5c03996f928b8dd4dd8c9031bacba2129da6db4895a301e3837ab181ee535a",
-      "bytes": 9668,
+      "sha256": "4549c93b7c0354529e3168efb79f41d746803407ee05c8033a9001180d971d7e",
+      "bytes": 9868,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "01-产品与规划/实施计划.md",
-      "sha256": "d513eba9302358110b5a1c7501bff9c9ef3fac4f99031d16b9c3c33856f17262",
-      "bytes": 4388,
+      "sha256": "19766cbe44d407f1313b63e1e7ba23272567f55685a94898448939f103421c06",
+      "bytes": 4491,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -68,8 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "62c152c11872708f700d3d7e8c05b141b816a053ca0cd30c56209406883ced93",
-      "bytes": 27855,
+      "sha256": "2eb0ace1f05426515e1b3fb88953236ef65f83f64afb9b83fd5a2bbc44b8f805",
+      "bytes": 31101,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -124,8 +124,8 @@
     },
     {
       "path": "03-测试与评测/测试与演示.md",
-      "sha256": "0d6b7a09a123349a878ea8479ae492504734103db0ee2f58585982d0a24c9f1b",
-      "bytes": 15398,
+      "sha256": "2104e40c27c666693270ed6dc21c8405d9646f471954a5c2a9eef95ce845ccfd",
+      "bytes": 15944,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1202,8 +1202,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "dc23512525ace38a0d17faf4e9a7b13572b0a4feb6e21440ef516fb3caed3a3a",
-      "bytes": 11890,
+      "sha256": "43bac6ba92c47c60a14383b635101f63d34a9f6b54a3defeb5c269cefd1676b4",
+      "bytes": 11955,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }
