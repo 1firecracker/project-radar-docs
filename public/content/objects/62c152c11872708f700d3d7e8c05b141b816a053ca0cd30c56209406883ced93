@@ -58,33 +58,47 @@
 
 失败条件：一个 QA 创建多个 Item；素材 Item 没有完成；Project 在未制作、未上线时进入 `completion_candidate` / `completed`；或主 Agent 已覆盖后 Radar 重复提醒。
 
-### 3.2 正例一：报价齐备后生成选型决策 Excel
+### 3.2 正例一：分批报价收齐后生成选型表格草稿
 
-> 2026-07-15 实测结论：旧版 Session A 只说“四维评分已经完成”，没有提供甲、乙、丙的实际评分，Analyzer 因 `feasibility=insufficient_evidence` 保持安静是正确行为；同时该输入只表达一个长期事项，因此被整理为 Standalone Item 也符合默认规则。下列输入已补齐“明确长期多事项 Project、当前唯一主要 Item、可直接使用的四维评分”三项前提。
+本 Case 验证跨 Session 累积事实、最后一个前置条件解除、主回答与 Radar 分工，以及 Radar 定向执行。共使用三个 Session；甲和丙在同一个 Session B，乙在 Session C，不创建 Session D。
 
-**Session A**
+**Session A：建立项目背景**
 
-> 用户：我们正在推进一个长期的客户数据分析平台采购项目，后续包含平台选型、合同签署、部署验收三个可独立跟踪事项。当前只建立并推进“平台选型”事项。采购预算上限是含税 50 万元，本年度不能追加。三家候选平台四维评分已经完成，均按 10 分制：甲的功能 9 分、数据规模 9 分、集成方式 7 分、安全合规 9 分；乙的功能 8 分、数据规模 8 分、集成方式 9 分、安全合规 9 分；丙的功能 9 分、数据规模 8 分、集成方式 8 分、安全合规 8 分。三家信息安全评审均已通过。目前只缺最终含税报价，供应商仍在承诺期内，无需催办；报价齐备后由项目负责人完成平台选型决策（交付 Excel）。先帮我准确记录当前项目、平台选型事项和每项评分。
+> 用户：我们正在推进客户数据分析平台采购，候选供应商是甲、乙、丙。预算上限为含税 50 万元，本年度不能追加。三家平台的功能、数据规模、集成方式和安全合规评分已经完成，信息安全评审也都已通过。后续需要等三家最终含税报价全部到齐，再交给项目负责人进行选型。请先记录项目状态和评分信息。
 
-预期：形成“客户数据分析平台采购项目”Project，并且只形成当前主要 Item“平台选型”；Project 和 Item 均保持 `in_progress`，评分、预算和“报价齐备后交付决策 Excel”被准确写入进展，尚未创建合同签署和部署验收 Item。最终报价仍缺失并记录为 Item blocker，Radar 安静；即使 Analyzer 提议加权模板、占位表或其他下游准备，服务端也必须覆盖为 `dependency_check=blocked_by_current_prerequisite`。
+预期：形成“客户数据分析平台采购”Project 和当前主要 Item“收集三家最终含税报价并生成选型表格”或等价 Item；Project / Item 保持 `in_progress`。三家报价均未到齐，Radar 安静。Session A 只声明四维评分已经完成，不提供具体数值；后续选型草稿允许把具体评分标为“待确认”，不得补造。
 
-**Session B**
+**Session B：收到甲报价**
 
-> 用户：继续客户数据分析平台采购项目。三家供应商的最终含税总价分别是甲 46 万元、乙 48 万元、丙 49 万元。先起草一封发给项目负责人的内部报价汇总邮件正文，准确保留三项报价。
+> 用户：供应商甲发来了最终报价，含税 46 万元。请按照“项目名称_供应商_材料类型_日期”的格式，给这份报价单生成一个归档文件名。
 
-预期主回答：完成内部报价汇总邮件；未主动生成选型决策 Excel。
+预期主回答：只处理甲报价单归档命名；不得生成选型表格。甲报价写入原 Item，乙、丙报价仍缺失，Radar 安静。
 
-预期 Radar：`type=next_step`、`expected_output=draft`，标题和动作应为“整理选型决策用 Excel 对照表”“生成决策 Excel”或等价表达。产物需合并甲、乙、丙的四维评分、最终含税报价、预算符合情况和安全评审结果，并给出有依据的倾向性结论，供项目负责人完成最终决策；不得替负责人直接执行选型。证据至少包含 Session A 已记录 Excel 交付要求但受报价阻塞、Session B 三家最终报价均已到齐且在预算内；目标为 Session B。
+**Session C：收到乙报价**
 
-动作级判断要求：Session A 的“交付 Excel”是 Project 的后续交付要求，不是当前 QA 要求 Agent 立即生成 Excel，应作为机会证据而不是 `coverage.kind=user_requested`。Session B 主回答中的报价邮件属于 `generated_artifact`；正文内部的后续动作只能记为 `artifact_text`，回答结尾“需要我把评分和报价合到一张对照表里吗”一类条件式邀约记为 `generic_offer`。两者都不构成 `main_answer_covered`。只有主 Agent 已经实际生成决策 Excel，或在生成产物之外直接交付同一决策分析时，才应静默为 `main_answer_covered`。
+> 用户：供应商乙的最终含税报价是 48 万元。请帮我起草一句简短的报价接收确认，告诉对方材料已经收到。
 
-就绪判断要求：`Item.blockers` 是唯一权威前置条件。Session B 报价齐备后 blocker 必须清空；“权重尚未确定”等 Project `open_questions` 不能由 Analyzer 自行升级为新 blocker。若 Analyzer 已识别 Excel 决策支持机会、动作允许且未被主回答覆盖，却返回 `insufficient_evidence`，服务端必须生成基于现有事实的可编辑初稿，把权重等未确定项标为“待确认”，不得静默，也不得替项目负责人完成最终决策。
+预期主回答：只生成简短的接收确认。乙报价跨 Session 写入同一个 Item；丙报价仍缺失，Radar 安静。
 
-跨 Session 新鲜度要求：Session B 更新平台选型 Item / Project 后，任何依赖 Session A 旧版本的 `pending/snoozed` Radar 应进入 `superseded`；Session B 新 Radar 的 `source_item_version` 和 `source_project_version` 必须等于更新后的当前版本。
+**返回 Session B：收到丙报价**
 
-失败条件：Session A 在报价 blocker 未解除时推送下游准备；Session B 在 blocker 已清空且机会已识别时因权重等可选信息静默；只复述报价或重复邮件；没有形成具体 Excel 产物入口；遗漏评分、报价、预算或安全评审；把项目交付要求误判为当前动作已由用户请求；或不说明依据便替负责人武断完成最终选型。
+> 用户：供应商丙发来了最终报价，含税 49 万元。请按照之前的归档命名格式，为丙的报价单生成文件名。
 
-实测记录：2026-07-16 首次使用上述原文以全新账号重跑时，Session B 曾正确生成“整理选型决策用 Excel 对照表”。随后重复运行暴露两类相反漂移：Session A 曾抢跑生成加权模板；另一次 Session B 虽然 `blockers=[]` 且识别到 Excel 机会，却因 Project 仍有“权重尚未确定”而落为 `insufficient_evidence`。现已实现 blocker 权威门禁和无 blocker 可编辑初稿规则，Radar 后端 230 项与 Ruff 通过；保持上述 Case 原文不变，浏览器结果待重启后重新记录。
+预期主回答：只生成丙报价单文件名，可以补充命名假设，但不能直接生成或明确推荐选型表格。
+
+预期 Radar：三家最终含税报价在 Project / Item 层面收齐后，Session B 出现 `type=next_step`、`expected_output=draft` 的“汇总三家报价并生成选型表格草稿”或等价建议，主要动作为“生成选型表格草稿”。草稿汇总甲 46 万元、乙 48 万元、丙 49 万元、预算符合情况、四个评分维度和信息安全评审；未提供的具体评分数值必须标为“待确认”，不得补造或替项目负责人完成最终选型。
+
+目标 Session 要求：Radar 定向到最后一个使报价齐备的 Event 所在 Session B。Session B 同时包含甲、丙两条 Event 是正确行为；Session 只是来源与执行上下文，不要求每条报价单独创建 Session。
+
+动作级判断要求：甲、乙、丙三轮主回答分别完成文件命名或接收确认，与“生成选型表格草稿”不是同一动作；正文中的泛化邀约仍是 `generic_offer`，不构成 `main_answer_covered`。只有主 Agent 已实际生成同一选型表格草稿，或在生成产物之外直接提出同一具体动作时，Radar 才应静默。
+
+就绪判断要求：甲、乙未齐时不得生成下游选型表格；丙报价写入后，报价收集条件解除。若具体评分数值仍未提供，服务端可按无 blocker 可编辑初稿规则生成表格框架并标注待确认字段，不得补造评分，也不因可选信息缺失而直接静默。
+
+跨 Session 新鲜度要求：Session C 和返回后的 Session B 每次更新 Item / Project 都应使依赖旧版本的 `pending/snoozed` Radar 进入 `superseded`；最终 Radar 的 `source_item_version`、`source_project_version` 必须等于丙报价写入后的当前版本。
+
+失败条件：甲或乙报价进入后提前生成选型表格；丙报价未归入同一 Item；要求额外创建 Session D；最终 Radar 错误显示在 Session C；主 Agent 已完成同一动作后 Radar 重复提醒；草稿补造评分；或 Radar 点击后没有形成可编辑表格草稿及 Event 回流。
+
+实测记录：2026-07-16 使用账号 `case32plus` 按上述 Session A → Session B（甲）→ Session C（乙）→ 返回 Session B（丙）路径执行。丙报价写入后，Session B 出现高优先级 `next_step` Radar“汇总三家报价并生成选型表格草稿”，主回答只完成归档文件名，没有覆盖该动作。点击“生成选型表格草稿”后 Agent 生成包含三家报价、预算结论和四维评分待确认字段的草稿，执行结果回流 Item。该三 Session 路径通过，并被确认为当前 3.2 演示基线。
 
 ### 3.3 正例二：交付完成后发现上线保障缺口
 
@@ -341,7 +355,7 @@
 | 产品规则 | 对应 Case | 类型 / 产物 | 测试层级 |
 |---|---|---|---|
 | 单一 Item 完成后的 Project 完成守门 | 3.1 | Project 保持未完成；Radar 按主回答去重 | 真实浏览器 |
-| 决策条件齐备 | 3.2 | `next_step / draft`，生成选型决策 Excel | 真实浏览器；现场主 Case |
+| 分批报价收齐 | 3.2 | `next_step / draft`，生成选型表格草稿 | 真实浏览器；现场主 Case |
 | 上线风险控制 | 3.3 | `risk / checklist` | 真实浏览器；现场备选 |
 | 接近完成但仍缺确认 | 3.4 | `completion / checklist` | 真实浏览器 |
 | 主 Agent 或用户已覆盖 | 3.5、3.6 | 必须安静 | 真实浏览器 |

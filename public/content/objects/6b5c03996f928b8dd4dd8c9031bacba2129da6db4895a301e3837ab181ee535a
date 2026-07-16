@@ -115,7 +115,7 @@ V0 允许用户移动 Event、改为 Non Project、移动 Item、确认完成和
 | V1 | 建立持续工作节奏 | 时间扫描、停滞检测、夜间重组、多项目恢复、多 Radar 管理 |
 | V2 | 感知真实工作环境 | 外部工具变化、跨系统状态和持续监控 |
 
-当前工程已经跑通 V0 前后端、六类真实浏览器 Case、Radar 执行与 Event 回流。历史 Event 重算、Organizer Project Patch、完成层级守门、跨 Session Radar 版本失效、动作级确定性 Policy Gate、Item blocker 就绪门禁和状态感知有界轮询均已实现。主动判断评测集 3.2 的重复运行暴露了模型自行增加前置条件造成的正负漂移；服务端现以 blocker 作为唯一权威前置条件，并将无 blocker 时的可选信息缺口降级为可编辑初稿。自动化已通过，待重启后完成原 Case 浏览器复测，再继续验证 3.3—3.7。
+当前工程已经跑通 V0 前后端、六类真实浏览器 Case、Radar 执行与 Event 回流。历史 Event 重算、Organizer Project Patch、完成层级守门、跨 Session Radar 版本失效、动作级确定性 Policy Gate、Item blocker 就绪门禁和状态感知有界轮询均已实现。主动判断评测集 3.2 已固化为三 Session 分批报价版：甲、乙、丙报价分散写入同一 Item，最后一份报价回到已有 Session B 后触发选型表格草稿 Radar，并完成 Action Runner 与 Event 回流。下一步继续验证 3.3—3.7，稳定后进入 V0.2 的 Resume Brief。
 
 ## 6. 验证目标与研究依据
 
