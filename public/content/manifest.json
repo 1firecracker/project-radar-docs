@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-f635db628b8a15f941e87bc1c2c8baafba7a20318cbe80f08cf97a1f153f59fd",
-  "generatedAt": "2026-07-16T15:39:54.114Z",
+  "revision": "snapshot-10210cb1a33ec64a26c13102351931185a280cb9d7cf40023387ea23be25fb46",
+  "generatedAt": "2026-07-16T16:00:12.724Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -70,6 +70,20 @@
       "path": "03-测试与评测/主动判断评测集.md",
       "sha256": "5f736eff00bf3970ed5a2c8a95e30d439e6b6ef788373e47fdc1a92975cf832d",
       "bytes": 36369,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.10只有信息价值稳定性/第3次-最终状态.png",
+      "sha256": "df0daef2b767da835316ebabfe8f7f77cb94e5cc37c6b17937a810d753899053",
+      "bytes": 45125,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.10只有信息价值稳定性实测.md",
+      "sha256": "1e98c76400503af2d4ae73241a95d1f53cda9355e5719484d3654d5ac85c6029",
+      "bytes": 1439,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -590,6 +604,27 @@
       "bytes": 45157,
       "mediaType": "image/png",
       "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.9已完成项目稳定性/第3次/01-Session-B结构化状态仍未同步.png",
+      "sha256": "cfdd5f6b82f2a35a8109414e4d9f11b793d27f8a2af6d06731a3f955bf562dd7",
+      "bytes": 61235,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.9已完成项目稳定性/第3次/02-Session-C最终Radar安静.png",
+      "sha256": "5f6d51cde156eb5705cca2a0047892653699c9b9e0b3d55e1dc1168229bf1f5f",
+      "bytes": 48853,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.9已完成项目稳定性实测.md",
+      "sha256": "5357ac2b59a2b31e44c4135c96b6b0ee32c25ec6fee0734139e8908621c2faf9",
+      "bytes": 3177,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
     },
     {
       "path": "03-测试与评测/案例实测/案例一跨会话项目实测.md",
