@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-6e916601dd1062320f4e3aadffba4f3944156b3a697dd19dc9dd0abaa60994c2",
-  "generatedAt": "2026-07-16T13:57:45.598Z",
+  "revision": "snapshot-e9f0e392818406e622415ad352d61513a981ed2dd37f5f4073ef1abe285b89b0",
+  "generatedAt": "2026-07-16T14:07:58.153Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -266,6 +266,27 @@
       "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第四次修订-第2次/01-Session-A-Radar安静.png",
       "sha256": "94d3dd69ef17c33ee990b5353ee4aa98c7ec01147ebfb01d3afd273d769c66ce",
       "bytes": 69314,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第四次修订-第2次/02-Session-B-Radar命中.png",
+      "sha256": "df872e778eb7a0de891226542836498d55e28c71281eae49ef093e18812fd25e",
+      "bytes": 100870,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第四次修订-第2次/03-Radar执行生成核对单.png",
+      "sha256": "47c2e699b099d54a7ca64f524b8dec5a5141cc48d718b0ca6f3ce6cbd7ae0be1",
+      "bytes": 71549,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第四次修订-第2次/04-执行后Item状态正确.png",
+      "sha256": "f16ab7bf6b64f7bce42ede6a1398247f195d5c1fd6083980a0b5f57d134447f1",
+      "bytes": 64824,
       "mediaType": "image/png",
       "kind": "asset"
     },
