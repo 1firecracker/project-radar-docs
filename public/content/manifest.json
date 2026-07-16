@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-e9f0e392818406e622415ad352d61513a981ed2dd37f5f4073ef1abe285b89b0",
-  "generatedAt": "2026-07-16T14:07:58.153Z",
+  "revision": "snapshot-ee48657d66c56ef9e2e215685dc36b90306efc53c0c16ebe6d1d55044f0141e5",
+  "generatedAt": "2026-07-16T14:18:10.844Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -68,8 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "d6da72c862a5ac4f4ae2f11e0e14294f1bec358f867cee803df5b7d228cd62f8",
-      "bytes": 34451,
+      "sha256": "70f56ec3321cc2560d32a3169a827270ee28b00abc0fe4e53280327ef619e1b6",
+      "bytes": 34745,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -235,6 +235,13 @@
       "kind": "asset"
     },
     {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第五次修订-第1次/01-Session-A-Radar安静.png",
+      "sha256": "a46ea9c236cf0640b4b23505ffa9f8f7e7994c04e3b81a3eeafc7300494b0c5d",
+      "bytes": 70379,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
       "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第四次修订-第1次/01-Session-A-Radar安静.png",
       "sha256": "b1dc763ce69539acbd9b7accb8c9336caa8ce57100ed9d3820cbf594ae1b77ba",
       "bytes": 69230,
@@ -291,9 +298,16 @@
       "kind": "asset"
     },
     {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第四次修订-第3次/01-主Agent错误完成Todolist.png",
+      "sha256": "03231f847e12238438e98111f6173bacf7052f2239ff79d5ffd2b563ed782a3d",
+      "bytes": 108969,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
       "path": "03-测试与评测/案例实测/3.4收尾确认稳定性实测.md",
-      "sha256": "e20faa729fda48193ab537d7b866e19110568cf8bef7e74ad445db96d948304d",
-      "bytes": 6718,
+      "sha256": "a8c2be59ea084ea227bbea6bcab590039155a2ac9c7d290e95a56d10180fc41d",
+      "bytes": 9231,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
