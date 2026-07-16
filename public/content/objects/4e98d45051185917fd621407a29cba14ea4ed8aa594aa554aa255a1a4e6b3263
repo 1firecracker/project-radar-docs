@@ -66,7 +66,7 @@
 
 > 用户：我们正在推进一个长期的客户数据分析平台采购项目，后续包含平台选型、合同签署、部署验收三个可独立跟踪事项。当前只建立并推进“平台选型”事项。采购预算上限是含税 50 万元，本年度不能追加。三家候选平台四维评分已经完成，均按 10 分制：甲的功能 9 分、数据规模 9 分、集成方式 7 分、安全合规 9 分；乙的功能 8 分、数据规模 8 分、集成方式 9 分、安全合规 9 分；丙的功能 9 分、数据规模 8 分、集成方式 8 分、安全合规 8 分。三家信息安全评审均已通过。目前只缺最终含税报价，供应商仍在承诺期内，无需催办；报价齐备后由项目负责人完成平台选型决策（交付 Excel）。先帮我准确记录当前项目、平台选型事项和每项评分。
 
-预期：形成“客户数据分析平台采购项目”Project，并且只形成当前主要 Item“平台选型”；Project 和 Item 均保持 `in_progress`，评分、预算和“报价齐备后交付决策 Excel”被准确写入进展，尚未创建合同签署和部署验收 Item。最终报价仍缺失，Radar 安静。
+预期：形成“客户数据分析平台采购项目”Project，并且只形成当前主要 Item“平台选型”；Project 和 Item 均保持 `in_progress`，评分、预算和“报价齐备后交付决策 Excel”被准确写入进展，尚未创建合同签署和部署验收 Item。最终报价仍缺失并记录为 Item blocker，Radar 安静；即使 Analyzer 提议加权模板、占位表或其他下游准备，服务端也必须覆盖为 `dependency_check=blocked_by_current_prerequisite`。
 
 **Session B**
 
@@ -78,11 +78,13 @@
 
 动作级判断要求：Session A 的“交付 Excel”是 Project 的后续交付要求，不是当前 QA 要求 Agent 立即生成 Excel，应作为机会证据而不是 `coverage.kind=user_requested`。Session B 主回答中的报价邮件属于 `generated_artifact`；正文内部的后续动作只能记为 `artifact_text`，回答结尾“需要我把评分和报价合到一张对照表里吗”一类条件式邀约记为 `generic_offer`。两者都不构成 `main_answer_covered`。只有主 Agent 已经实际生成决策 Excel，或在生成产物之外直接交付同一决策分析时，才应静默为 `main_answer_covered`。
 
+就绪判断要求：`Item.blockers` 是唯一权威前置条件。Session B 报价齐备后 blocker 必须清空；“权重尚未确定”等 Project `open_questions` 不能由 Analyzer 自行升级为新 blocker。若 Analyzer 已识别 Excel 决策支持机会、动作允许且未被主回答覆盖，却返回 `insufficient_evidence`，服务端必须生成基于现有事实的可编辑初稿，把权重等未确定项标为“待确认”，不得静默，也不得替项目负责人完成最终决策。
+
 跨 Session 新鲜度要求：Session B 更新平台选型 Item / Project 后，任何依赖 Session A 旧版本的 `pending/snoozed` Radar 应进入 `superseded`；Session B 新 Radar 的 `source_item_version` 和 `source_project_version` 必须等于更新后的当前版本。
 
-失败条件：只复述报价或重复邮件；没有形成具体 Excel 产物入口；遗漏评分、报价、预算或安全评审；把项目交付要求误判为当前动作已由用户请求；或不说明依据便替负责人武断完成最终选型。
+失败条件：Session A 在报价 blocker 未解除时推送下游准备；Session B 在 blocker 已清空且机会已识别时因权重等可选信息静默；只复述报价或重复邮件；没有形成具体 Excel 产物入口；遗漏评分、报价、预算或安全评审；把项目交付要求误判为当前动作已由用户请求；或不说明依据便替负责人武断完成最终选型。
 
-实测记录：2026-07-16 使用上述原文以全新账号重跑。Organizer 正确形成一个 Project 和一个“平台选型”Item；Session B 的 Item / Project 版本均更新为 2。主回答只完成报价邮件，结尾条件式询问是否合并评分和报价。审计记录为 `coverage.kind=generic_offer`、`constraint_check=allowed`、`feasibility=ready`、`outcome=created`、`reason_code=actionable_gap`。页面在当前 Session 自动显示“整理选型决策用 Excel 对照表”，动作按钮为“生成决策 Excel”，本 Case 完整通过。
+实测记录：2026-07-16 首次使用上述原文以全新账号重跑时，Session B 曾正确生成“整理选型决策用 Excel 对照表”。随后重复运行暴露两类相反漂移：Session A 曾抢跑生成加权模板；另一次 Session B 虽然 `blockers=[]` 且识别到 Excel 机会，却因 Project 仍有“权重尚未确定”而落为 `insufficient_evidence`。现已实现 blocker 权威门禁和无 blocker 可编辑初稿规则，Radar 后端 230 项与 Ruff 通过；保持上述 Case 原文不变，浏览器结果待重启后重新记录。
 
 ### 3.3 正例二：交付完成后发现上线保障缺口
 

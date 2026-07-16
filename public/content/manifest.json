@@ -1,26 +1,26 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-f7dfb9e040c98c84f7ac77488c2426079fb925c4e865c3dcb6ddfec4ea486c76",
-  "generatedAt": "2026-07-16T06:35:12.244Z",
+  "revision": "snapshot-d30ba068d7429ac27ae5490d1f7678ab5b828f28be366d379f17eb7d30d4dcce",
+  "generatedAt": "2026-07-16T10:05:33.001Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
-      "sha256": "5938f9e4e6930f17903fc70fcaebd512a8d92a5f09225dbc4491fcdee6162001",
-      "bytes": 9539,
+      "sha256": "94301ea8a7aedb7990a7054796f7f7cce15cc5f313cb8e460a5055b6f17ec774",
+      "bytes": 9683,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "01-产品与规划/实施计划.md",
-      "sha256": "7dd2c85741fa017d0f91c5c7d76481ed934b3aca218a7794c7743e2384a217f1",
-      "bytes": 4006,
+      "sha256": "1e165e7a79794ddcd012fefe410233d4abbad3f72f356f695c29b598c9eb9a7e",
+      "bytes": 4445,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "01-产品与规划/零版产品需求.md",
-      "sha256": "f8ad8f906993ae4186d2b129452f1a5df850342a1b63b2b7dc43356da4aaad58",
-      "bytes": 14616,
+      "sha256": "ec018db8b41c4360b5b6c963b258c3cec7a709eb97c2055c45dcc901562d91b0",
+      "bytes": 15014,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -61,15 +61,15 @@
     },
     {
       "path": "02-架构与设计/技术设计.md",
-      "sha256": "6dc78d8cc8012f29654c18f16275c5e654bace7e4fc3f0ee2828bd1955b3ace3",
-      "bytes": 39417,
+      "sha256": "4a8de12fe9a575563ef1b48841ce3e7e4c64cf92790f83192f98821d0683eff7",
+      "bytes": 40675,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "3d760d7d3cf10b3e7763ea51921ead14ec1f50c1c055c5180c609d8c3d1d2997",
-      "bytes": 27509,
+      "sha256": "4e98d45051185917fd621407a29cba14ea4ed8aa594aa554aa255a1a4e6b3263",
+      "bytes": 28341,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -124,8 +124,8 @@
     },
     {
       "path": "03-测试与评测/测试与演示.md",
-      "sha256": "13beb086a8ca1d72652d9d9b4e5776d0e6a70503a86559a3060ca1abe00f6d65",
-      "bytes": 14925,
+      "sha256": "fd80bdea4ff39a5120e4646f97d6a61d93c7955656473cb3a268fa6675150ca5",
+      "bytes": 15157,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -138,8 +138,8 @@
     },
     {
       "path": "04-专项实施/主动建议新鲜度实施计划.md",
-      "sha256": "4bc951490fd8135882a24f46a3d91a3591a59d8d34418c86e4f55dfc90fcf04f",
-      "bytes": 5972,
+      "sha256": "24d1e332312bc1ed6d6f0797c529125ab33ae552aaa648d2f59123851564c1ce",
+      "bytes": 6954,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1202,8 +1202,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "ee572a829bf015fec65a6bc8955a9e37c311796f3a34a6b8db701f25a8c2d625",
-      "bytes": 11715,
+      "sha256": "e08be40e1a92f762e0aac185b166f00d00117cdac722cd9d008056969dfc5a3c",
+      "bytes": 11878,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }

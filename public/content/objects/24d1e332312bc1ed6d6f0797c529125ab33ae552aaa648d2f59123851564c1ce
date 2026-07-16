@@ -2,20 +2,21 @@
 
 > 文档状态：代码已完成，真实模型待复测  
 > 负责人：bwz  
-> 最近更新：2026-07-15  
+> 最近更新：2026-07-16  
 > 权威范围：Radar 旧建议失效、覆盖判断、约束判断和专项验收
 
 [返回文档总览](../README.md)
 
 ## 1. 目标与原则
 
-本专项解决三个问题：
+本专项解决四个问题：
 
 1. 其他 Session 更新了 Item / Project 后，依赖旧状态的 Radar 不能继续显示或被接受。
 2. 代用户生成的正文、引用、模板或泛化邀约，不能被误判为主 Agent 已直接覆盖同一推进动作。
 3. 用户对某个动作的限制不能被扩大到不同的准备、比较或核对动作。
+4. Analyzer 不能自行增加 Item 未记录的前置条件，造成阻塞期抢跑或阻塞解除后漏推。
 
-统一原则：不添加采购、邮件、报价等场景关键词规则；所有行为由状态版本和动作级结构字段决定。
+统一原则：不添加采购、邮件、报价等场景关键词规则；所有行为由状态版本、Item blocker 和动作级结构字段决定。
 
 ## 2. 新鲜度与状态版本
 
@@ -49,6 +50,10 @@
     "status": "allowed | blocked",
     "reason": "约束是否命中当前动作"
   },
+  "dependency_check": {
+    "status": "clear | resolves_current_blocker | blocked_by_current_prerequisite",
+    "reason": "动作与 Item blocker 的关系"
+  },
   "feasibility": "ready | insufficient_evidence | not_actionable",
   "candidate": "allowed 且 ready 时为完整 Candidate，否则为 null"
 }
@@ -60,7 +65,9 @@
 |---|---|
 | `ready + allowed`，且覆盖为 `none/generic_offer/artifact_text` | 生成 `actionable_gap` |
 | `ready + allowed`，且覆盖为 `delivered/explicit_recommendation/user_requested` | 静默 `main_answer_covered` |
-| `insufficient_evidence` | 静默 `insufficient_evidence` |
+| Item 有 blocker，动作不直接解除 blocker | 静默 `not_actionable` |
+| Item 无 blocker，机会明确但仅有可选信息未定 | 降级为可编辑初稿，生成 `actionable_gap` |
+| 没有可信机会 | 静默 `insufficient_evidence` 或 `not_actionable` |
 | 无机会、被约束阻止或不可推进 | 静默 `not_actionable` |
 
 Analyzer 对所有 `ready + allowed` 的机会都返回 Candidate，即使它认为动作已经覆盖；Policy Gate 在确认覆盖时丢弃 Candidate。这样覆盖分类与最终推送决策分离。
@@ -73,17 +80,18 @@ Analyzer 对所有 `ready + allowed` 的机会都返回 Candidate，即使它认
 - `artifact_text`：动作只出现在代用户生成、引用或模拟的内容内部，不算覆盖。
 - `generic_offer`：只是条件式或泛化邀约，不算覆盖。
 - `constraint_check` 只比较约束与当前 `opportunity`；不得把“不要代我做最终决定”扩大成“不要准备比较材料”。它与 `feasibility` 独立：动作即使为 `ready`，命中明确禁止时仍静默。
+- `dependency_check` 以 `Item.blockers` 为权威：存在 blocker 时只允许直接解除 blocker；没有 blocker 时开放问题和可选参数不能被 Analyzer 升级成新的静默理由。
 
 ## 5. 实现与验证状态
 
 主要实现：
 
 - `backend/database.py`：版本字段、事务内失效、落库竞态守门和结构化审计字段。
-- `backend/radar_service.py`：协议校验、确定性 Policy Gate、版本校验、动作语义去重和最新 QA 分析状态查询。
-- `backend/radar_post_run.py`：生产 Analyzer Prompt 与结构化输出约束。
+- `backend/radar_service.py`：协议校验、确定性 Policy Gate、Item blocker 门禁、无 blocker 可编辑初稿规则、版本校验、动作语义去重和最新 QA 分析状态查询。
+- `backend/radar_post_run.py`：生产 Analyzer Prompt、依赖判断和结构化输出约束。
 - `frontend/src/components/radarDisplayState.js`：依据最新 QA 的分析状态执行最长约 63 秒的有界轮询；建议出现或静默决策落定后停止，Re-entry 只查询一次。
 
-自动化结果：Radar 后端 227 项、前端 Radar 27 项通过，Ruff 通过，生产构建成功。覆盖场景包括跨 Session 状态更新、Analyzer 期间竞态、读取与接受防线、`artifact_text`、`generic_offer`、直接覆盖、动作级允许/阻止、已授权动作保护，以及“继续等待分析 / 静默落定立即停止”的前端时序。扩展集成套件为 273 项通过、6 个既有 Context Pipeline 用例失败；失败集中在日期记忆模板、日期顺序和 Todolist 修订语义，与本次 Radar 修改无关。
+自动化结果：Radar 后端 230 项通过，本次 Ruff 通过；前端 Radar 27 项和生产构建为上一轮通过结果。覆盖场景包括跨 Session 状态更新、Analyzer 期间竞态、读取与接受防线、`artifact_text`、`generic_offer`、直接覆盖、动作级允许/阻止、Item blocker 下游抑制、无 blocker 可编辑初稿、已授权动作保护，以及“继续等待分析 / 静默落定立即停止”的前端时序。扩展集成套件此前为 273 项通过、6 个既有 Context Pipeline 用例失败；失败集中在日期记忆模板、日期顺序和 Todolist 修订语义，与本次 Radar 修改无关。
 
 ## 6. 真实复测
 
@@ -93,4 +101,5 @@ Analyzer 对所有 `ready + allowed` 的机会都返回 Candidate，即使它认
 2. 修订版 Session A 正确建立采购 Project 与唯一当前 Item“平台选型”；Session B 补齐报价，并只要求主 Agent 起草报价汇总正文。
 3. Session B 审计为 `coverage.kind=generic_offer`、`constraint_check=allowed`、`feasibility=ready`、`outcome=created`，成功生成选型决策 Excel Radar，来源 Item / Project 版本均为 2。
 4. 旧前端因 Post-run 约 35 秒而轮询提前结束，切换 Session 后通过 Re-entry 才显示；现已完成状态感知轮询实现和自动化验证。
-5. 2026-07-16 使用全新账号完成 Excel 稳定版复测：Session B 主回答结束后保持在当前页面，自动显示“整理选型决策用 Excel 对照表”；数据库记录 `outcome=created`、`reason_code=actionable_gap`，来源 Item / Project 版本均为 2。状态感知轮询完整通过。
+5. 2026-07-16 首次全新账号复测时，Session B 曾在当前页面自动显示“整理选型决策用 Excel 对照表”，状态感知轮询通过。
+6. 后续重复运行发现结果会随 Analyzer 动作粒度漂移：Session A 可能抢跑，Session B 也可能因权重未定静默。已实现 blocker 权威门禁与可编辑初稿规则；保持 Case 原文不变，待后端重启后重新执行并覆盖本节结论。
