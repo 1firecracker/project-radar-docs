@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-b94715591e99e0f9ff5751a915033c80815475ffae61871ac9f4ee8f07456b1f",
-  "generatedAt": "2026-07-16T12:56:28.528Z",
+  "revision": "snapshot-354246de9e0d8d54a24755374e8a0bc3bf5d0f327ea2267a9cb429762eb7a51a",
+  "generatedAt": "2026-07-16T13:06:41.781Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -12,8 +12,8 @@
     },
     {
       "path": "01-产品与规划/实施计划.md",
-      "sha256": "19766cbe44d407f1313b63e1e7ba23272567f55685a94898448939f103421c06",
-      "bytes": 4491,
+      "sha256": "4bec188634c615ecf46d36e08fd4bf7b98ffbe41985129c40a07cb462b24e0ca",
+      "bytes": 4487,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -68,8 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "f66d4d929258b641e133badc6b99eb790dbcde83ec8f061e88c6afd95116009a",
-      "bytes": 31651,
+      "sha256": "928c3ba544a2c99478f9b2543b9f6175d2f7461b32e510e3d3c3f903adc421b3",
+      "bytes": 31827,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -109,11 +109,32 @@
       "kind": "asset"
     },
     {
+      "path": "03-测试与评测/案例实测/3.3回滚方案稳定性/第2轮-修订版第1次/01-Radar命中.png",
+      "sha256": "c20a54fc4d1ec92693625b1414c70de9de2d34b0c82d9252584b56d9a2fcee68",
+      "bytes": 102255,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.3回滚方案稳定性/第2轮-修订版第1次/02-执行后审批状态丢失.png",
+      "sha256": "e34d9a94893601a7547220c9e5272e7c37b58c3149f29b383d6c5190b903037d",
+      "bytes": 79417,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
       "path": "03-测试与评测/案例实测/3.3回滚方案稳定性实测.md",
-      "sha256": "c838157cbc5345856c07fb6d8f0606df8670151d99815eb0182a073c27f550bc",
-      "bytes": 2818,
+      "sha256": "60e6426c83db0bebf372a8a0a79e8c5e94ac22cd7b003aa22e164f130ea8fc26",
+      "bytes": 4419,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第1轮-旧版/01-Session-A提前触发Radar.png",
+      "sha256": "755e13986d0861e4103223d405bc58370543e97856c6e9f73b305a67accb63f0",
+      "bytes": 108455,
+      "mediaType": "image/png",
+      "kind": "asset"
     },
     {
       "path": "03-测试与评测/案例实测/案例一跨会话项目实测.md",
@@ -166,8 +187,8 @@
     },
     {
       "path": "03-测试与评测/测试与演示.md",
-      "sha256": "2104e40c27c666693270ed6dc21c8405d9646f471954a5c2a9eef95ce845ccfd",
-      "bytes": 15944,
+      "sha256": "701b8fe7aee0c1b47d79fd31515cd240644efc579d173baed87d3fecca9619b2",
+      "bytes": 15893,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1244,8 +1265,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "43bac6ba92c47c60a14383b635101f63d34a9f6b54a3defeb5c269cefd1676b4",
-      "bytes": 11955,
+      "sha256": "9eb8a37611fa77d4a6eaf36fcc8ff057ad51ecc28a0a57b9fb52e52eb90c741f",
+      "bytes": 11722,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }
