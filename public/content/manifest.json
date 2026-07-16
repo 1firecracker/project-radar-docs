@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-354246de9e0d8d54a24755374e8a0bc3bf5d0f327ea2267a9cb429762eb7a51a",
-  "generatedAt": "2026-07-16T13:06:41.781Z",
+  "revision": "snapshot-a7a715a21026dd6b48a0a761ee458ff0851d5f7df1430b40875c1c282c316614",
+  "generatedAt": "2026-07-16T13:16:53.978Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -68,8 +68,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "928c3ba544a2c99478f9b2543b9f6175d2f7461b32e510e3d3c3f903adc421b3",
-      "bytes": 31827,
+      "sha256": "10cc805baaf64d1e2f75a25e26c0e7a69c6cb6b98bfe4706dd68d38c09a245e9",
+      "bytes": 33354,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -135,6 +135,20 @@
       "bytes": 108455,
       "mediaType": "image/png",
       "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性/第2轮-修订版第1次/01-Session-A阻塞且Radar安静.png",
+      "sha256": "45c708972da8981871bf8f7baabd7b2167792db137ef24e9cd0758e4d8314030",
+      "bytes": 71384,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "03-测试与评测/案例实测/3.4收尾确认稳定性实测.md",
+      "sha256": "0afeac0e554dc95f89cce57cb96339b769d844586c0063154eabeb40ab6f413c",
+      "bytes": 1246,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
     },
     {
       "path": "03-测试与评测/案例实测/案例一跨会话项目实测.md",
