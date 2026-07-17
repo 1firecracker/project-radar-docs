@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-7868ab3fcbbb40670297815174ccf05abaf6e1608a9c673e90e20082ea1f8776",
-  "generatedAt": "2026-07-17T10:35:00.485Z",
+  "revision": "snapshot-5acc87743abfffb31a7f8de7172d72d37180031245a7902c151129b901cc4ee0",
+  "generatedAt": "2026-07-17T11:15:16.137Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -19,8 +19,8 @@
     },
     {
       "path": "01-产品与规划/恢复简报需求.md",
-      "sha256": "05b2afad732da02b9b34d184886a6d3dfa6ded7143cc7238cfdc5a91db6e4245",
-      "bytes": 4927,
+      "sha256": "2b1c029924643a7ebc1e65141efa67adfbae19d7063bbfe8dbc3bd54ad0e3577",
+      "bytes": 5701,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
