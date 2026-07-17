@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-9293301c2e3ac7d8407d93b4e024d1a0f57b1a309905fffd54def5516d606f27",
-  "generatedAt": "2026-07-17T09:13:58.684Z",
+  "revision": "snapshot-fad07a8cf38065ab79113d016990d0b00cd5a10f02e197fc497a6d352444e1f7",
+  "generatedAt": "2026-07-17T09:24:18.353Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -61,15 +61,15 @@
     },
     {
       "path": "02-架构与设计/技术设计.md",
-      "sha256": "0750374eab1f44fb99dc537ccf751e818792d69bedfc128f69387f5317e44189",
-      "bytes": 41199,
+      "sha256": "f654ef1c9c4ee1f4cedc05af1d84349824c971f05fdecf988c0bbebbfeb52667",
+      "bytes": 41280,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "1dfe26eaa50b10d405574ff8d0d8195b6caa1339a890181cd1de59f505ee9c5b",
-      "bytes": 38391,
+      "sha256": "eca50f4ffb9405ddbfb397556786d69860e676d78a653cbb052bbb65ac430cda",
+      "bytes": 38439,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
