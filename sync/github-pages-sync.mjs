@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 
+import { DEFAULT_SOURCE_DIR, readLocalConfig } from "../scripts/local-config.mjs";
 import { generateStaticSnapshot } from "../scripts/snapshot-docs.mjs";
 
 /** Execute a command, capturing both streams and rejecting non-zero exits. */
@@ -157,8 +158,15 @@ async function pushOriginMain(execute, siteDir) {
 }
 
 export async function runGitHubPagesSync(options = {}) {
-  const sourceDir = resolve(options.sourceDir ?? "/Users/baowenzhuo/project/xhxagentv3/docs/bwz");
   const siteDir = resolve(options.siteDir ?? process.cwd());
+  const localConfigPath = resolve(
+    options.localConfigPath ?? join(siteDir, ".local-admin", "config.json"),
+  );
+  const localConfig = await readLocalConfig(
+    localConfigPath,
+    options.sourceDir ?? DEFAULT_SOURCE_DIR,
+  );
+  const sourceDir = resolve(options.sourceDir ?? localConfig.sourceDir);
   const outputDir = resolve(options.outputDir ?? join(siteDir, "public", "content"));
   const lockDir = resolve(options.lockDir ?? join(siteDir, ".github-pages-sync.lock"));
   const execute = options.execute ?? runCommand;
@@ -171,7 +179,11 @@ export async function runGitHubPagesSync(options = {}) {
     }
     await verifiedCommitsAheadOfOriginMain(execute, siteDir);
     const sourceBefore = await sourceStatus(execute, sourceDir);
-    const snapshot = await generateSnapshot({ sourceDir, outputDir });
+    const snapshot = await generateSnapshot({
+      sourceDir,
+      outputDir,
+      siteName: localConfig.siteName,
+    });
     const sourceAfter = await sourceStatus(execute, sourceDir);
     if (sourceBefore !== sourceAfter) {
       throw new Error("AgentV3 changed during synchronization");

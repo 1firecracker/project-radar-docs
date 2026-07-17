@@ -45,6 +45,14 @@ test("docs ui renders Project Radar navigation and active document", () => {
   assert.match(html, /aria-current="page"/);
 });
 
+test("docs navigation uses the configured site name", () => {
+  const html = renderToStaticMarkup(
+    <Navigation manifest={manifest} activePath="产品概要.md" siteName="Radar Hub" />,
+  );
+  assert.match(html, /<strong>Radar Hub<\/strong>/);
+  assert.match(html, /aria-label="Radar Hub 文档首页"/);
+});
+
 test("docs navigation mirrors document folders and opens the active branch", () => {
   const nestedManifest: ContentManifest = {
     ...manifest,

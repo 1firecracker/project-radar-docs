@@ -121,6 +121,24 @@ test("unchanged content does not commit or push", async (t) => {
   assert.equal(fixture.commands.some((entry) => entry.command === "git" && entry.args[0] === "push"), false);
 });
 
+test("sync publishes the site name from the local config", async (t) => {
+  const fixture = await createSyncFixture(t);
+  await mkdir(join(fixture.siteDir, ".local-admin"), { recursive: true });
+  await writeFile(
+    join(fixture.siteDir, ".local-admin", "config.json"),
+    `${JSON.stringify({ sourceDir: fixture.sourceDir, siteName: "Radar Hub" })}\n`,
+  );
+
+  const result = await runGitHubPagesSync(fixture.options);
+
+  assert.equal(result.status, "pushed");
+  assert.deepEqual(
+    JSON.parse(await readFile(join(fixture.outputDir, "site-config.json"), "utf8")),
+    { schemaVersion: 1, siteName: "Radar Hub" },
+  );
+  assert.ok((await fixture.lastCommitFiles()).includes("public/content/site-config.json"));
+});
+
 test("changed content verifies, commits only public/content, and pushes", async (t) => {
   const fixture = await createSyncFixture(t);
   await fixture.writeSource("README.md", "# changed\n");

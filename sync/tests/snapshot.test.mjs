@@ -28,6 +28,10 @@ test("static snapshot is deterministic and changes only with source content", as
     "# Project Radar\n",
   );
   assert.equal((await stat(join(outputDir, "manifest.json"))).isFile(), true);
+  assert.deepEqual(
+    JSON.parse(await readFile(join(outputDir, "site-config.json"), "utf8")),
+    { schemaVersion: 1, siteName: "Project Radar" },
+  );
   assert.equal(
     await readFile(join(outputDir, "raw", "README.md"), "utf8"),
     "# Project Radar\n",
@@ -53,4 +57,16 @@ test("static snapshot is deterministic and changes only with source content", as
   });
   assert.equal(third.changed, true);
   assert.notEqual(third.manifest.revision, first.manifest.revision);
+
+  const renamed = await generateStaticSnapshot({
+    sourceDir,
+    outputDir,
+    siteName: "Radar Hub",
+    now: new Date("2026-07-10T14:00:00.000Z"),
+  });
+  assert.equal(renamed.changed, true);
+  assert.deepEqual(
+    JSON.parse(await readFile(join(outputDir, "site-config.json"), "utf8")),
+    { schemaVersion: 1, siteName: "Radar Hub" },
+  );
 });

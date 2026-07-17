@@ -11,6 +11,7 @@ import {
 import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { scanSource } from "../sync/core.mjs";
+import { DEFAULT_SITE_NAME } from "./local-config.mjs";
 
 function argument(name) {
   const index = process.argv.indexOf(name);
@@ -26,6 +27,21 @@ async function readExistingManifest(outputDir) {
   }
 }
 
+async function readExistingSiteConfig(outputDir) {
+  try {
+    return JSON.parse(await readFile(join(outputDir, "site-config.json"), "utf8"));
+  } catch (error) {
+    if (error?.code === "ENOENT") return null;
+    throw error;
+  }
+}
+
+function createSiteConfig(siteName = DEFAULT_SITE_NAME) {
+  const normalized = typeof siteName === "string" ? siteName.trim() : "";
+  if (!normalized || normalized.length > 120) throw new Error("Invalid site name");
+  return { schemaVersion: 1, siteName: normalized };
+}
+
 function snapshotRevision(files) {
   const identity = files.map(({ path, sha256, content, mediaType, kind }) => ({
     path,
@@ -38,10 +54,17 @@ function snapshotRevision(files) {
   return { identity, revision: `snapshot-${digest}` };
 }
 
-export async function generateStaticSnapshot({ sourceDir, outputDir, now = new Date() }) {
+export async function generateStaticSnapshot({
+  sourceDir,
+  outputDir,
+  siteName = DEFAULT_SITE_NAME,
+  now = new Date(),
+}) {
   const files = await scanSource(sourceDir);
+  const siteConfig = createSiteConfig(siteName);
   const { identity, revision } = snapshotRevision(files);
   const existing = await readExistingManifest(outputDir);
+  const existingSiteConfig = await readExistingSiteConfig(outputDir);
   const objectsDir = join(outputDir, "objects");
   const rawDir = join(outputDir, "raw");
   const expectedHashes = new Set(identity.map((file) => file.sha256));
@@ -55,7 +78,11 @@ export async function generateStaticSnapshot({ sourceDir, outputDir, now = new D
       break;
     }
   }
-  if (existing?.revision === revision && snapshotComplete) {
+  if (
+    existing?.revision === revision &&
+    snapshotComplete &&
+    JSON.stringify(existingSiteConfig) === JSON.stringify(siteConfig)
+  ) {
     return { changed: false, manifest: existing };
   }
 
@@ -83,6 +110,10 @@ export async function generateStaticSnapshot({ sourceDir, outputDir, now = new D
   await mkdir(dirname(manifestPath), { recursive: true });
   await writeFile(temporaryPath, `${JSON.stringify(manifest, null, 2)}\n`);
   await rename(temporaryPath, manifestPath);
+  const siteConfigPath = join(outputDir, "site-config.json");
+  const siteConfigTemporaryPath = `${siteConfigPath}.tmp`;
+  await writeFile(siteConfigTemporaryPath, `${JSON.stringify(siteConfig, null, 2)}\n`);
+  await rename(siteConfigTemporaryPath, siteConfigPath);
   return { changed: true, manifest };
 }
 

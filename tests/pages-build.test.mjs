@@ -8,12 +8,18 @@ test("Pages build contains the static app and complete content snapshot", async 
   const requiredFiles = [
     "index.html",
     "content/manifest.json",
+    "content/site-config.json",
     "content/raw/README.md",
   ];
 
   for (const path of requiredFiles) {
     assert.equal((await stat(new URL(path, artifactRoot))).isFile(), true, path);
   }
+
+  const siteConfig = JSON.parse(
+    await readFile(new URL("content/site-config.json", artifactRoot), "utf8"),
+  );
+  assert.deepEqual(siteConfig, { schemaVersion: 1, siteName: "Project Radar" });
 
   const assets = await readdir(new URL("assets/", artifactRoot));
   assert.ok(
@@ -27,7 +33,7 @@ test("Pages build contains the static app and complete content snapshot", async 
 
   const html = await readFile(new URL("index.html", artifactRoot), "utf8");
   assert.match(html, /<html lang="zh-CN">/);
-  assert.match(html, /<title>Project Radar 文档<\/title>/);
+  assert.match(html, /<title>Project Radar<\/title>/);
   assert.match(html, /\/project-radar-docs\/og\.png/);
   assert.match(html, /\/project-radar-docs\/assets\/[^"']+\.js/);
 });

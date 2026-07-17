@@ -8,17 +8,20 @@ import {
 } from "../../lib/content/navigation-tree";
 import { documentHref } from "../../lib/content/paths";
 import type { ContentManifest } from "../../lib/content/types";
+import { DEFAULT_SITE_NAME } from "../../lib/site-config";
 
 interface NavigationProps {
   manifest: ContentManifest;
   activePath: string;
   documentHrefFor?: (path: string) => string;
+  siteName?: string;
 }
 
 export function Navigation({
   manifest,
   activePath,
   documentHrefFor = documentHref,
+  siteName = DEFAULT_SITE_NAME,
 }: NavigationProps) {
   const [open, setOpen] = useState(false);
   const tree = buildNavigationTree(manifest);
@@ -72,11 +75,11 @@ export function Navigation({
           <a
             className="brand"
             href={documentHrefFor("README.md")}
-            aria-label="Project Radar 文档首页"
+            aria-label={`${siteName} 文档首页`}
           >
             <span className="radar-mark" aria-hidden="true" />
             <span>
-              <strong>Project Radar</strong>
+              <strong>{siteName}</strong>
               <small>项目文档</small>
             </span>
           </a>

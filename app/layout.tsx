@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import "./globals.css";
 
-const title = "Project Radar 文档";
+const title = "Project Radar";
 const description = "Project Radar 的产品、需求、技术设计、实施计划与决策记录。";
 
 export async function generateMetadata(): Promise<Metadata> {

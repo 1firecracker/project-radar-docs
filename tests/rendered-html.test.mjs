@@ -24,7 +24,7 @@ test("server-renders the finished Project Radar shell", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   const html = await response.text();
   assert.match(html, /<html[^>]*lang="zh-CN"/i);
-  assert.match(html, /<title>Project Radar 文档<\/title>/i);
+  assert.match(html, /<title>Project Radar<\/title>/i);
   assert.match(html, /Project Radar/);
   assert.match(html, /正在载入文档/);
   assert.match(

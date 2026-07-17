@@ -1,10 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { contentObjectUrl, isStaticSnapshot, loadContentManifest } from "../../lib/content/client";
+import {
+  contentObjectUrl,
+  isStaticSnapshot,
+  loadContentManifest,
+  loadSiteConfig,
+} from "../../lib/content/client";
 import { findManifestFile } from "../../lib/content/manifest";
 import { documentHref } from "../../lib/content/paths";
 import type { ContentManifest, ManifestFile } from "../../lib/content/types";
+import { documentPageTitle, type SiteConfig } from "../../lib/site-config";
 import { HtmlDocument } from "./HtmlDocument";
 import { MarkdownDocument } from "./MarkdownDocument";
 import { Navigation } from "./Navigation";
@@ -21,12 +27,13 @@ type SiteState =
   | {
       status: "ready";
       manifest: ContentManifest;
+      siteConfig: SiteConfig;
       file: ManifestFile;
       source: string;
     };
 
 function documentTitle(file: ManifestFile): string {
-  if (file.path === "README.md") return "Project Radar 文档总览";
+  if (file.path === "README.md") return "文档总览";
   return (file.path.split("/").at(-1) ?? file.path).replace(/\.(?:md|html?)$/i, "");
 }
 
@@ -42,10 +49,12 @@ export function DocsSite({
     async function load() {
       setState({ status: "loading" });
       try {
-        const manifest = await loadContentManifest(
-          (input, init) => fetch(input, { ...init, signal: controller.signal }),
-          basePath,
-        );
+        const request = (input: RequestInfo | URL, init?: RequestInit) =>
+          fetch(input, { ...init, signal: controller.signal });
+        const [manifest, siteConfig] = await Promise.all([
+          loadContentManifest(request, basePath),
+          loadSiteConfig(request, basePath),
+        ]);
         const file = findManifestFile(manifest, initialPath);
         if (!file || (file.kind !== "markdown" && file.kind !== "html")) {
           throw new Error("没有找到这篇文档。");
@@ -59,7 +68,7 @@ export function DocsSite({
           if (!contentResponse.ok) throw new Error("文档内容暂时不可用。");
           source = await contentResponse.text();
         }
-        setState({ status: "ready", manifest, file, source });
+        setState({ status: "ready", manifest, siteConfig, file, source });
       } catch (error) {
         if (controller.signal.aborted) return;
         setState({
@@ -71,6 +80,18 @@ export function DocsSite({
     void load();
     return () => controller.abort();
   }, [basePath, initialPath]);
+
+  useEffect(() => {
+    if (state.status !== "ready") return;
+    const previousTitle = document.title;
+    document.title = documentPageTitle(
+      state.siteConfig.siteName,
+      documentTitle(state.file),
+    );
+    return () => {
+      document.title = previousTitle;
+    };
+  }, [state]);
 
   if (state.status === "loading") {
     return (
@@ -100,10 +121,11 @@ export function DocsSite({
         manifest={state.manifest}
         activePath={state.file.path}
         documentHrefFor={documentHrefFor}
+        siteName={state.siteConfig.siteName}
       />
       <main className="docs-main">
         <header className="document-header">
-          <p>Project Radar · 文档</p>
+          <p>{state.siteConfig.siteName} · 文档</p>
           <h1>{documentTitle(state.file)}</h1>
         </header>
         {state.file.kind === "html" ? (

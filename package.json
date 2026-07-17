@@ -14,6 +14,7 @@
     "build:pages": "vite build --config vite.pages.config.ts",
     "test:pages": "node --import tsx --test tests/pages-routing.test.ts tests/pages-ui.test.tsx && npm run build:pages && node --test tests/pages-build.test.mjs",
     "snapshot:docs": "node scripts/snapshot-docs.mjs",
+    "admin": "node scripts/local-admin.mjs",
     "sync:github-pages": "node scripts/run-github-pages-sync.mjs",
     "sync:install": "node scripts/install-github-pages-launch-agent.mjs",
     "sync:uninstall": "node scripts/uninstall-github-pages-launch-agent.mjs",
