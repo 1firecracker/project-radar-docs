@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-fad07a8cf38065ab79113d016990d0b00cd5a10f02e197fc497a6d352444e1f7",
-  "generatedAt": "2026-07-17T09:24:18.353Z",
+  "revision": "snapshot-7a2dd34cde4dea5942644b583d4c996d70d64298080b8b0dca6540e5d74c266d",
+  "generatedAt": "2026-07-17T10:14:36.273Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
-      "sha256": "112dc31d0113ba5fc5aba68e527d3241ce2d747335a30797ecd444d5bdca0b8d",
-      "bytes": 10073,
+      "sha256": "93ce5bc18a46ea17c4488b06ad7ddca66501702493b19b5d9b34f02e6acbe05d",
+      "bytes": 10121,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -19,8 +19,8 @@
     },
     {
       "path": "01-产品与规划/零版产品需求.md",
-      "sha256": "9c0afd3a4a8127ab7c0563a4532ad103b0595423b66073f5e01b1446a7d99980",
-      "bytes": 15632,
+      "sha256": "f59958c03704149c706f9426d6ebd9e8bb169b8f1d778e83e704a5466c20e33c",
+      "bytes": 15638,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -33,7 +33,7 @@
     },
     {
       "path": "02-架构与设计/决策记录/采用任务边界触发.md",
-      "sha256": "5c276eedece560ba2b740c6e874f438c4f8a625033c4d1eb56807cec56ea82c9",
+      "sha256": "18e1464c4e6bde29a299a1a1e541c9ecc80bb530abef27ae5f524c4a8326c4b4",
       "bytes": 2561,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
@@ -47,7 +47,7 @@
     },
     {
       "path": "02-架构与设计/决策记录/采用持续推进智能体总模型.md",
-      "sha256": "631497b06dd188b2f565aeb0a8d7ff20c58c65fafa7a64374e09ae8a80cffb94",
+      "sha256": "2e33e68bd751531a98beb5cb842e3b9c6d26e157feeca3ae10613bf40e972414",
       "bytes": 4261,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
@@ -61,14 +61,14 @@
     },
     {
       "path": "02-架构与设计/技术设计.md",
-      "sha256": "f654ef1c9c4ee1f4cedc05af1d84349824c971f05fdecf988c0bbebbfeb52667",
+      "sha256": "9bba0c6b2d1a63fe77307c11784320ba3b3f421ddd74cfa5f65cb13aee3a36aa",
       "bytes": 41280,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "eca50f4ffb9405ddbfb397556786d69860e676d78a653cbb052bbb65ac430cda",
+      "sha256": "b7b557f0bd4371372958454cb256cc8f18bc28e1d58876045b06fd4ec650725e",
       "bytes": 38439,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
@@ -1762,8 +1762,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "456f957775bb2645948d9cb4cb61306755c0a38d25474b3cc6422af3deaad64a",
-      "bytes": 11682,
+      "sha256": "df9dd60443b499490d580134ccf891b472019426c9d8949da5e9666a984c998e",
+      "bytes": 11730,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }
