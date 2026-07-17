@@ -1,0 +1,178 @@
+# 恢复简报实施计划
+
+> **执行要求：** 当前会话内由主 Agent 逐项执行；每个行为变更先写失败测试，再写最小实现。  
+> 文档状态：执行中  
+> 负责人：bwz  
+> 最近更新：2026-07-17
+
+[返回文档总览](../README.md)
+
+**目标：** 用户隔日返回 Web 端时，读取已有 Project、Item、Event，展示可收缩的多项目一句话恢复简报，并同时提供 Project 详情和来源 Session 两个入口。
+
+**架构：** 新增只读 `Resume Brief` 服务与 API，不新增数据库表，也不调用 Organizer 或 Radar。前端新增独立恢复简报组件，复用现有 `ProjectRadarModal` 和 Session 选择逻辑完成双入口跳转。
+
+**技术栈：** FastAPI、SQLite、Python 3.11、React 18、Vite、pytest、Node.js 内置测试。
+
+## 1. 全局约束
+
+- 只展示 `open`、`in_progress`、`waiting` Project，并要求最近一次可追溯 Event 与当前时间至少跨一个自然日。
+- 每个 Project 只生成一句话摘要；状态词限定为“已完成、进行中、尚未开始、被……阻塞”，不生成“待确认”区块。
+- 当前 Session 关联 Project 优先；其余按 `in_progress`、`waiting`、`open`，同状态最近更新优先。
+- 默认展示 3 个 Project，其余折叠；Project 名称进入详情，“回到 Session”进入最近相关对话。
+- 只读访问不得创建 Event、Radar 或修改 Project / Item。
+- 当前工作区已有未提交改动，本计划只修改明确列出的文件，不创建提交，不覆盖无关差异。
+
+---
+
+## 2. 实施任务
+
+### 2.1 后端快照与摘要服务
+
+**文件：**
+
+- 新增：`backend/test_resume_brief.py`
+- 新增：`backend/resume_service.py`
+- 修改：`backend/database.py`
+
+**接口：**
+
+```python
+read_resume_brief_snapshot(user_id: int) -> dict[str, list[dict]]
+
+get_resume_brief(
+    user_id: int,
+    *,
+    current_session_id: str | None = None,
+    now: datetime | None = None,
+) -> dict
+```
+
+返回结构：
+
+```python
+{
+    "brief_version": "sha256:...",
+    "generated_at": "2026-07-17T09:00:00+08:00",
+    "projects": [{
+        "id": "project-id",
+        "title": "客户培训门户上线",
+        "status": "in_progress",
+        "summary": "课程内容和报名页测试已完成，上线通知尚未开始。",
+        "last_activity_at": "2026-07-16T10:00:00Z",
+        "source_session_id": "session-id",
+        "source_event_id": "event-id",
+        "session_ids": ["session-id"],
+    }],
+}
+```
+
+- [ ] 写失败测试：跨自然日过滤、完成/归档/无来源排除、用户隔离、状态分组摘要、当前 Session 优先和稳定版本号。
+- [ ] 运行 `pytest -q backend/test_resume_brief.py`，确认因服务或函数不存在而失败。
+- [ ] 实现单事务只读快照、上海时区自然日判断、确定性摘要和排序。
+- [ ] 再次运行同一命令，确认通过。
+
+### 2.2 只读 API
+
+**文件：**
+
+- 修改：`backend/server.py`
+- 修改：`backend/test_resume_brief.py`
+
+**接口：**
+
+```text
+GET /api/resume-brief?current_session_id=<session-id>
+```
+
+- [ ] 写失败测试：未登录返回 `401`；登录用户只能读取自己的恢复简报；查询参数传给服务。
+- [ ] 运行目标测试，确认路由缺失导致 `404`。
+- [ ] 接入 `resume_service.get_resume_brief`，保持接口只读且不吞掉认证错误。
+- [ ] 运行 `pytest -q backend/test_resume_brief.py`，确认通过。
+
+### 2.3 前端数据、排序与折叠状态
+
+**文件：**
+
+- 新增：`frontend/src/resumeApi.js`
+- 新增：`frontend/src/resumeApi.test.js`
+- 新增：`frontend/src/components/resumeBriefState.js`
+- 新增：`frontend/src/components/resumeBriefState.test.js`
+
+**接口：**
+
+```js
+fetchResumeBrief(currentSessionId)
+sortResumeProjects(projects, currentSessionId)
+getVisibleResumeProjects(projects, { expanded, limit: 3 })
+readResumeCollapsed(storage, userId, briefVersion)
+writeResumeCollapsed(storage, userId, briefVersion, collapsed)
+```
+
+- [ ] 写失败测试：URL 编码、认证 Cookie、当前 Session 优先、状态/时间排序、默认 3 条、展开全部和同版本收起状态。
+- [ ] 运行 `node --test frontend/src/resumeApi.test.js frontend/src/components/resumeBriefState.test.js`，确认模块不存在导致失败。
+- [ ] 写最小纯函数与 API 封装，再运行同一命令，确认通过。
+
+### 2.4 恢复简报组件与双入口跳转
+
+**文件：**
+
+- 新增：`frontend/src/components/ResumeBriefPanel.jsx`
+- 新增：`frontend/src/components/ResumeBriefPanel.css`
+- 修改：`frontend/src/App.jsx`
+- 修改：`frontend/src/components/ProjectRadarModal.jsx`
+- 修改：`frontend/src/components/projectRadarState.js`
+- 修改：`frontend/src/components/projectRadarState.test.js`
+
+**组件接口：**
+
+```jsx
+<ResumeBriefPanel
+  brief={resumeBrief}
+  currentSessionId={currentConversation?.id}
+  collapsed={resumeCollapsed}
+  onCollapsedChange={setResumeCollapsed}
+  onOpenProject={openProjectDetails}
+  onOpenSession={openRadarSourceConversation}
+/>
+
+<ProjectRadarModal initialProjectId={selectedProjectId} />
+```
+
+- [ ] 先扩展失败测试，证明首开弹窗会优先选中指定 Project，失效 ID 才回退到原有选择顺序。
+- [ ] 实现最多 3 条、展开全部、收起胶囊、项目标题和 Session 按钮；摘要使用两行截断，全部列表设置最大高度滚动。
+- [ ] App 登录后只读加载简报；新 Query 开始时收起；共享页面不请求、不展示。
+- [ ] 复用现有 Project 弹窗并传入初始 Project；复用现有 Session 跳转并自动滚动到对话底部。
+- [ ] 运行前端纯函数测试与 `npm --prefix frontend run build`，确认通过。
+
+### 2.5 文档和回归验证
+
+**文件：**
+
+- 修改：`docs/bwz/01-产品与规划/实施计划.md`
+- 修改：`docs/bwz/02-架构与设计/技术设计.md`
+- 修改：`docs/bwz/04-专项实施/恢复简报实施计划.md`
+
+- [ ] 在技术设计中记录 `Re-entry → Resume Brief API → Project/Session 双入口`，明确它不进入 Post-run。
+- [ ] 更新总实施计划中的 Resume Brief 状态与下一步实测要求。
+- [ ] 运行：
+
+```bash
+pytest -q backend/test_resume_brief.py backend/test_radar_api.py
+node --test \
+  frontend/src/resumeApi.test.js \
+  frontend/src/components/resumeBriefState.test.js \
+  frontend/src/components/projectRadarState.test.js \
+  frontend/src/radarApi.test.js
+npm --prefix frontend run build
+ruff check backend/resume_service.py backend/test_resume_brief.py backend/server.py backend/database.py
+```
+
+- [ ] 确认测试和构建通过后，把本文档状态改为“已完成”；不在本轮启动或重启本地服务。
+
+## 3. 完成标准
+
+- 隔日返回时能看到未完成 Project 的一句话恢复简报；同日连续工作不展示。
+- 多 Project 默认 3 条、可以展开全部，并按已确认顺序稳定排列。
+- Project 详情和来源 Session 两条路径都可达，返回后不丢失原对话位置。
+- 简报读取不会修改 Event、Item、Project 或生成 Radar。
+- 后端目标回归、前端纯函数测试、生产构建和 Ruff 全部通过。
