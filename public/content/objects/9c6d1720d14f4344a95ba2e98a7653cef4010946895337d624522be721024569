@@ -117,7 +117,7 @@ V0 允许用户移动 Event、改为 Non Project、移动 Item、确认完成和
 | V1 | 建立持续工作节奏 | 时间扫描、停滞检测、夜间重组、多项目恢复、多 Radar 管理 |
 | V2 | 感知真实工作环境 | 外部工具变化、跨系统状态和持续监控 |
 
-当前工程已经跑通 V0 前后端、六类真实浏览器 Case、Radar 执行与 Event 回流。历史 Event 重算、Organizer Project Patch、完成层级守门、跨 Session Radar 版本失效、动作级确定性 Policy Gate、Item blocker 就绪门禁和状态感知有界轮询均已实现。主动判断评测集 3.2 已固化为三 Session 分批报价版：甲、乙、丙报价分散写入同一 Item，最后一份报价回到已有 Session B 后触发选型表格草稿 Radar，并完成 Action Runner 与 Event 回流。旧版 3.3 因一个项目状态被拆成多个 completed Item 而未形成有效提醒，现已改为同一个“完成上线回滚方案”Item 跨 Session 逐步解除 blocker；下一步先重新验证 3.3，再继续 3.4—3.7，稳定后进入 V0.2 的 Resume Brief。
+当前工程已经跑通 V0 前后端、六类真实浏览器 Case、Radar 执行与 Event 回流。历史 Event 重算、Organizer Project Patch、完成层级守门、跨 Session Radar 版本失效、动作级确定性 Policy Gate、Item blocker 就绪门禁和状态感知有界轮询均已实现。主动判断评测集 3.2 已固化为三 Session 分批报价版：甲、乙、丙报价分散写入同一 Item，最后一份报价回到已有 Session B 后触发选型表格草稿 Radar，并完成 Action Runner 与 Event 回流。旧版 3.3 因一个项目状态被拆成多个 completed Item 而未形成有效提醒，现已改为同一个“完成上线回滚方案”Item 跨 Session 逐步解除 blocker；下一步先重新验证 3.3，再继续 3.4—3.7，同时完成 V0.2 Resume Brief 的浏览器复测。
 
 ## 6. 验证目标与研究依据
 

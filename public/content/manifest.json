@@ -1,26 +1,26 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-0571b37d607290f338f493f424d65f02c93f4ee16484abf262c7ed91bff4e41d",
-  "generatedAt": "2026-07-17T11:56:14.614Z",
+  "revision": "snapshot-0d37050c929e1501b99c9da6f6cb6b47134612f2b2bde28c9c00a0c8a4aaccbb",
+  "generatedAt": "2026-07-17T12:06:33.751Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
-      "sha256": "6f264a23510516905cf7a3c64083b2ad37f92f2a5cd420647eaab6a1e7c5daa2",
-      "bytes": 10175,
+      "sha256": "9c6d1720d14f4344a95ba2e98a7653cef4010946895337d624522be721024569",
+      "bytes": 10187,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "01-产品与规划/实施计划.md",
-      "sha256": "4bec188634c615ecf46d36e08fd4bf7b98ffbe41985129c40a07cb462b24e0ca",
-      "bytes": 4487,
+      "sha256": "acde8d6335902a1270829a462a1328c6cb208ca94632746b85df281303e83187",
+      "bytes": 4691,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
     {
       "path": "01-产品与规划/恢复简报需求.md",
-      "sha256": "810635b7ef51bdfc40f4dbc3cf1300e9e5123477ad38160f9d14ed587777a00e",
-      "bytes": 5891,
+      "sha256": "4229eadc6a9559641aa6710ec92be53fcc644cf9d2aeb41821f587d36a5aacea",
+      "bytes": 5894,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -68,8 +68,8 @@
     },
     {
       "path": "02-架构与设计/技术设计.md",
-      "sha256": "efe255ea41cf4bca71774e977c728a17a65715f677e8167950c6500d02fc94cc",
-      "bytes": 44505,
+      "sha256": "fc4b27d9f5ee453e0cfd9d1a6d030dedd4245e39dbaa5ae433763dc87f393267",
+      "bytes": 44493,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -719,8 +719,8 @@
     },
     {
       "path": "04-专项实施/恢复简报实施计划.md",
-      "sha256": "c3db49d44e781b975844af2e094c673ec26aa2722339d2486ae62b437b2b70ff",
-      "bytes": 7132,
+      "sha256": "850a566242087fc9504cba66218ee8906de6e4a014df9e3aac7a9e562ac1559f",
+      "bytes": 6973,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1776,8 +1776,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "3de0b2ff5336d334ab5aa4ea667b92e22731b375bc814442d23040a3f0ccb740",
-      "bytes": 11873,
+      "sha256": "02e8f98930583fa1f3f6e8bee6d4a75ac1cda4b6ea5c75440e4e16ff5bfdc056",
+      "bytes": 11798,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }
