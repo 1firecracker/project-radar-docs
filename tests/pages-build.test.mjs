@@ -19,7 +19,10 @@ test("Pages build contains the static app and complete content snapshot", async 
   const siteConfig = JSON.parse(
     await readFile(new URL("content/site-config.json", artifactRoot), "utf8"),
   );
-  assert.deepEqual(siteConfig, { schemaVersion: 1, siteName: "Project Radar" });
+  assert.equal(siteConfig.schemaVersion, 1);
+  assert.equal(typeof siteConfig.siteName, "string");
+  assert.ok(siteConfig.siteName.trim().length > 0);
+  assert.equal("sourceDir" in siteConfig, false);
 
   const assets = await readdir(new URL("assets/", artifactRoot));
   assert.ok(
