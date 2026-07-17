@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-7a2dd34cde4dea5942644b583d4c996d70d64298080b8b0dca6540e5d74c266d",
-  "generatedAt": "2026-07-17T10:14:36.273Z",
+  "revision": "snapshot-7868ab3fcbbb40670297815174ccf05abaf6e1608a9c673e90e20082ea1f8776",
+  "generatedAt": "2026-07-17T10:35:00.485Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
-      "sha256": "93ce5bc18a46ea17c4488b06ad7ddca66501702493b19b5d9b34f02e6acbe05d",
-      "bytes": 10121,
+      "sha256": "6f264a23510516905cf7a3c64083b2ad37f92f2a5cd420647eaab6a1e7c5daa2",
+      "bytes": 10175,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -14,6 +14,13 @@
       "path": "01-产品与规划/实施计划.md",
       "sha256": "4bec188634c615ecf46d36e08fd4bf7b98ffbe41985129c40a07cb462b24e0ca",
       "bytes": 4487,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "01-产品与规划/恢复简报需求.md",
+      "sha256": "05b2afad732da02b9b34d184886a6d3dfa6ded7143cc7238cfdc5a91db6e4245",
+      "bytes": 4927,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1762,8 +1769,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "df9dd60443b499490d580134ccf891b472019426c9d8949da5e9666a984c998e",
-      "bytes": 11730,
+      "sha256": "3de0b2ff5336d334ab5aa4ea667b92e22731b375bc814442d23040a3f0ccb740",
+      "bytes": 11873,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }
