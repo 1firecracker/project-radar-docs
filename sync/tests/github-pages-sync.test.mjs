@@ -21,7 +21,7 @@ async function outputGit(cwd, ...args) {
   return stdout.trim();
 }
 
-async function createSyncFixture(t) {
+async function createSyncFixture(t, { sourceGit = true } = {}) {
   const root = await mkdtemp(join(tmpdir(), "radar-pages-sync-"));
   const sourceDir = join(root, "source");
   const siteDir = join(root, "site");
@@ -31,10 +31,12 @@ async function createSyncFixture(t) {
   await mkdir(sourceDir, { recursive: true });
   await mkdir(siteDir, { recursive: true });
 
-  await git(sourceDir, "init", "-b", "main");
-  await git(sourceDir, "config", "user.email", "test@example.com");
-  await git(sourceDir, "config", "user.name", "Sync Test");
-  await git(sourceDir, "commit", "--allow-empty", "-m", "initial source");
+  if (sourceGit) {
+    await git(sourceDir, "init", "-b", "main");
+    await git(sourceDir, "config", "user.email", "test@example.com");
+    await git(sourceDir, "config", "user.name", "Sync Test");
+    await git(sourceDir, "commit", "--allow-empty", "-m", "initial source");
+  }
 
   await git(siteDir, "init", "-b", "main");
   await git(siteDir, "config", "user.email", "test@example.com");
@@ -119,6 +121,17 @@ test("unchanged content does not commit or push", async (t) => {
   assert.equal(result.status, "unchanged");
   assert.equal(await fixture.siteCommitCount(), before);
   assert.equal(fixture.commands.some((entry) => entry.command === "git" && entry.args[0] === "push"), false);
+});
+
+test("sync accepts a source folder outside a Git repository", async (t) => {
+  const fixture = await createSyncFixture(t, { sourceGit: false });
+  const result = await runGitHubPagesSync(fixture.options);
+
+  assert.equal(result.status, "unchanged");
+  assert.equal(
+    fixture.commands.some((entry) => entry.command === "git" && entry.args[0] === "push"),
+    false,
+  );
 });
 
 test("sync publishes the site name from the local config", async (t) => {

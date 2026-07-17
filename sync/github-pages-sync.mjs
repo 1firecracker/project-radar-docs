@@ -76,8 +76,18 @@ async function gitOutput(execute, siteDir, args) {
 }
 
 async function sourceStatus(execute, sourceDir) {
-  const result = await execute("git", ["status", "--porcelain=v1", "--untracked-files=all"], { cwd: sourceDir });
-  return result.stdout;
+  try {
+    const result = await execute(
+      "git",
+      ["status", "--porcelain=v1", "--untracked-files=all"],
+      { cwd: sourceDir },
+    );
+    return result.stdout;
+  } catch (error) {
+    const detail = `${error?.stderr ?? ""} ${error?.message ?? ""}`;
+    if (/not a git repository|outside a repository/i.test(detail)) return "";
+    throw error;
+  }
 }
 
 async function generatedSnapshotDirty(execute, siteDir) {
