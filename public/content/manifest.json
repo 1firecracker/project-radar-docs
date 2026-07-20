@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-b958ef07d3fba7f960e62ea231e91eff7c96c7dc189863757a8a9a249bf974d5",
-  "generatedAt": "2026-07-20T06:50:31.216Z",
+  "revision": "snapshot-d8767f364a2c820003ea69f7e7c1054afbf842cd3146488a711d35b9f61d5c8f",
+  "generatedAt": "2026-07-20T07:00:49.124Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -54,8 +54,8 @@
     },
     {
       "path": "02-架构与设计/决策记录/采用持续推进智能体总模型.md",
-      "sha256": "2e33e68bd751531a98beb5cb842e3b9c6d26e157feeca3ae10613bf40e972414",
-      "bytes": 4261,
+      "sha256": "011efb1af8c925f0185f599282d473288ea97a33621f0426b2eccca33e828db2",
+      "bytes": 4300,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -726,8 +726,8 @@
     },
     {
       "path": "04-专项实施/恢复简报实施计划.md",
-      "sha256": "99cea802268903f6bfc754450666fba2340b5a8703bc75dcb950f90af037f73c",
-      "bytes": 7526,
+      "sha256": "3d708db1c872133b50f00619fdd505bcbebc4b8138ade1e5f89a107fc6e9d14a",
+      "bytes": 7532,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1839,8 +1839,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "a0d28f9ec8e6ba3626394a8731c6542b59bd76efd7dc57dc336eb3ccacd6baf6",
-      "bytes": 11853,
+      "sha256": "2fe81ab58d9aea85a5fffdc0c7bc09269f44b7a3089118e5593653b0874b1f92",
+      "bytes": 12225,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }
