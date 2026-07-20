@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-487d17ecf31e703120bf8dd48a6aa04aa208476ed8699f7707f7bd2010249904",
-  "generatedAt": "2026-07-20T04:49:37.855Z",
+  "revision": "snapshot-7ab0e47e1429ef9dd94e3db20f9c30f2c5adce56fc49801ff6bc5b55bc7f25a9",
+  "generatedAt": "2026-07-20T04:59:50.922Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -82,8 +82,8 @@
     },
     {
       "path": "03-测试与评测/恢复简报三项目演示计划.md",
-      "sha256": "94f988fbacc3895e9f80ebc84c6d8aab446103cb91e410b92a34d721897ba4fe",
-      "bytes": 1931,
+      "sha256": "58404ccca812f525bde5cf3ec89b2aeb5018a8e9c321a90a05c0fff582d4b69d",
+      "bytes": 3191,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1624,6 +1624,34 @@
       "path": "05-资源/图片/主动判断正例一单事项复测/10-SessionB品牌素材验收正确完成.jpg",
       "sha256": "053901e90f3f81bbaa09c879328b214ffa735e950ad66f1bf02f088bae60f1ee",
       "bytes": 58349,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/恢复简报三项目实测/01-三项目恢复简报总览.jpg",
+      "sha256": "d55cec34b53471301599cd8d91f4e8b73b209aea143103cef31903050217dea1",
+      "bytes": 54717,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/恢复简报三项目实测/02-项目详情-季度经营复盘汇报.jpg",
+      "sha256": "d748326b3c44f62ab76b74e80b2959785f6b492a8cef3f8fda91f83325384c11",
+      "bytes": 67523,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/恢复简报三项目实测/03-项目详情-经营数据看板交付.jpg",
+      "sha256": "fd0b59a15a220cb7cc51ee6f7cdc57502e8a339ea1ac326d71da2b84a9b14152",
+      "bytes": 66930,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/恢复简报三项目实测/04-项目详情-客户门户改版上线.jpg",
+      "sha256": "54f0b9a88dc293872b747f18f8c93f81f869432700a3aa7fa92098a4d3384579",
+      "bytes": 67036,
       "mediaType": "image/jpeg",
       "kind": "asset"
     },
