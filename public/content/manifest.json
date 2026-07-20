@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-068a912858d99204a121e7e4a140fb618e228c90451ad025e5d8150f3d0cbf34",
-  "generatedAt": "2026-07-20T11:32:29.928Z",
+  "revision": "snapshot-e3a0a8384622c1ef2e619ccfeca7863a42b9ca3f79692fc85f422144f3e99002",
+  "generatedAt": "2026-07-20T11:42:44.738Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -75,8 +75,8 @@
     },
     {
       "path": "03-测试与评测/主动判断评测集.md",
-      "sha256": "b7b557f0bd4371372958454cb256cc8f18bc28e1d58876045b06fd4ec650725e",
-      "bytes": 38439,
+      "sha256": "30f9ef95ac8031fc270c70a8a3db11cf7919a20c46ed8f8a6794b5933901f2d1",
+      "bytes": 41729,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -691,8 +691,8 @@
     },
     {
       "path": "03-测试与评测/测试与演示.md",
-      "sha256": "15871ee1b75f946073ab755cf3eebd840191fbacbecbcd31dce6808aaeba29ae",
-      "bytes": 15976,
+      "sha256": "22f059fd14aed36fd5e4a9c6d964560f6dde4bafb84989760d36e411ccf9a3e2",
+      "bytes": 16642,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1838,6 +1838,13 @@
       "kind": "asset"
     },
     {
+      "path": "05-资源/表格/客户数据分析平台采购_选型对比表_20260720.xlsx",
+      "sha256": "3a3ec93831a079c82feb30c52083cf84dab0403cabc325a05827f198c460eee8",
+      "bytes": 5893,
+      "mediaType": "application/octet-stream",
+      "kind": "asset"
+    },
+    {
       "path": "05-资源/视频/Progress-Agent加强版完整演示-含鼠标.mp4",
       "sha256": "acfd9c893b4b3507cfea379b324d92c68416ff33296cc7761ea02ef5b0688449",
       "bytes": 1908221,
@@ -1888,8 +1895,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "2fe81ab58d9aea85a5fffdc0c7bc09269f44b7a3089118e5593653b0874b1f92",
-      "bytes": 12225,
+      "sha256": "d7180bc29a72dbf8980ae31bf1cdf16cc2aba401b0dee7f9e3dd2cb14b32344c",
+      "bytes": 12450,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }

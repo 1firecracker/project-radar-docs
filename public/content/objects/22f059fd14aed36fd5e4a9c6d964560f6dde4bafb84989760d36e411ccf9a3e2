@@ -2,7 +2,7 @@
 
 > 文档状态：维护中  
 > 负责人：bwz  
-> 最近更新：2026-07-16  
+> 最近更新：2026-07-20  
 > 权威范围：V0 测试策略、验收场景、演示数据与演示脚本
 
 [返回文档总览](../README.md)
@@ -49,6 +49,8 @@ V0 需要证明：
 同日升级 Radar 决策审计：生产 Analyzer 输出 `opportunity / coverage / constraint_check / feasibility / candidate`，服务端确定性生成最终 `outcome / reason_code`；数据库按来源 Event 保存动作、覆盖来源、约束、可执行性和最终结果。旧 Session B 没有这些结构化字段，不能事后推断；后端重启后必须用新的 QA 验证。
 
 2026-07-16 将 3.2 重构为三 Session 分批报价演示版，并完成视频实测。Session A 建立采购背景；Session B 录入甲报价；Session C 录入乙报价；随后返回 Session B 录入丙报价，不创建 Session D。甲、乙阶段 Radar 安静，丙报价使三家报价在 Item 层面收齐后，Session B 出现“汇总三家报价并生成选型表格草稿”。主 Agent 只完成报价文件名，没有覆盖该动作；点击后生成包含三家报价、预算判断和四维评分待确认字段的可编辑草稿。该版本同时验证跨 Session 累积、既有 Session 回写、目标 Session 定向、可编辑初稿与 Action Runner 回流，恢复为现场主 Case。
+
+2026-07-20 完成 3.2 加强版产品演示重录：只使用 Session A、B，先分别记录甲、乙报价，再回到 Session A 用两轮补齐功能评分、数据规模、集成方式、安全合规评分和安全评审结论，最后录入丙报价。Radar 点击后生成字段完整的 Excel，只有“综合评价”和“决策建议”保留为空。该录像用于展示端到端产品形态；由于本次主 Agent 末尾也具体询问了是否生成选型表，严格去重结论仍以 2026-07-16 的三 Session 基线为准。视频见[Progress Agent 加强版完整演示](../05-资源/视频/Progress-Agent加强版完整演示-含鼠标.mp4)。
 
 2026-07-16 首次执行旧版 3.3 未通过。改成单 Item 三 Session 后，Radar 的静默与触发时机已经正确；增加项目级未知字段约束后，Action Runner 也不再补造技术信息。但执行层丢失 Session B 已确认的“业务审批通过”，将其重新列为待确认；对应 Radar `context_snapshot` 未携带该跨 Session 事实。3.3 因此归类为产品问题，不再通过重复审批信息优化 Case，也不在本轮修改代码或重启服务。
 
