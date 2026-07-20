@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-101e5bd8d60ab22474edcbf3ea9b05a12d8e65e088340f679e0f8ebd57ecfcf9",
-  "generatedAt": "2026-07-17T12:36:51.821Z",
+  "revision": "snapshot-b59fe68713a58b74938936b53c67a02bb34cb47046764ec2c4878502805b94bf",
+  "generatedAt": "2026-07-20T03:39:19.549Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -1622,22 +1622,22 @@
     },
     {
       "path": "05-资源/图片/恢复简报实测/01-登录后恢复简报.jpg",
-      "sha256": "97f6cefc407bd26c88eea8c65d8c482f0d3dc00edc270f59db232b357ff7125a",
-      "bytes": 41397,
+      "sha256": "ba717f827554b034c113623617294a08439e1658862181828d9ffad93106be2d",
+      "bytes": 35319,
       "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
       "path": "05-资源/图片/恢复简报实测/02-项目详情.jpg",
-      "sha256": "9cd85e8d5912e0d20db9351baa9d2d222a23d78463897b2a5c2e84d130dda41a",
-      "bytes": 69476,
+      "sha256": "576dd543e080135802e034e89831c7766f9ded799028837fe7f916f8f1d30dce",
+      "bytes": 62683,
       "mediaType": "image/jpeg",
       "kind": "asset"
     },
     {
       "path": "05-资源/图片/恢复简报实测/03-回到来源会话.jpg",
-      "sha256": "f2d48aebd48a4755c239fc85bad943d9b8c0a049aa2fe41c8b62a12b5be9f0fe",
-      "bytes": 73830,
+      "sha256": "4964f3a1561976836d17dc60794beefbf774a02b3b3e22d05aacd8d6c04ed929",
+      "bytes": 61847,
       "mediaType": "image/jpeg",
       "kind": "asset"
     },
