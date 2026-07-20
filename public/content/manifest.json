@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-b1fd978effb36acc4af8e33dc13c2fe4f01763d727a5f1c9ec961fe50b096e35",
-  "generatedAt": "2026-07-20T10:52:14.131Z",
+  "revision": "snapshot-068a912858d99204a121e7e4a140fb618e228c90451ad025e5d8150f3d0cbf34",
+  "generatedAt": "2026-07-20T11:32:29.928Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -1835,6 +1835,13 @@
       "sha256": "6f20f09e7bce313f1d8c164f25e8367301613c9808d88b2f5c351c5952e51296",
       "bytes": 28586,
       "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/视频/Progress-Agent加强版完整演示-含鼠标.mp4",
+      "sha256": "acfd9c893b4b3507cfea379b324d92c68416ff33296cc7761ea02ef5b0688449",
+      "bytes": 1908221,
+      "mediaType": "application/octet-stream",
       "kind": "asset"
     },
     {
