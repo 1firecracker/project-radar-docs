@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-4a24634160dd94f44b62c72aeb1d6d2ae482239f457676e6ed5cf168bb7b70dd",
-  "generatedAt": "2026-07-20T08:41:28.391Z",
+  "revision": "snapshot-e31085c1d693bb619b677f819cb7710f6faa69f3e60923c5ac252753581ae731",
+  "generatedAt": "2026-07-20T09:41:45.115Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -1856,6 +1856,20 @@
       "sha256": "f42a78e49c47e384c4ccf839e5cdfb1b458a192734dd2f203135980d2e34bd12",
       "bytes": 279170,
       "mediaType": "application/octet-stream",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/视频/点击圆环.svg",
+      "sha256": "899544ec695b6531ccf9e0bcd62b9fcf59debb1c6ec3a53aac1a0ce68c436566",
+      "bytes": 251,
+      "mediaType": "image/svg+xml",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/视频/鼠标指针.svg",
+      "sha256": "24088ec99af72b467eed4cbb3b4091c141537dbf6231de25c826072777165feb",
+      "bytes": 226,
+      "mediaType": "image/svg+xml",
       "kind": "asset"
     },
     {
