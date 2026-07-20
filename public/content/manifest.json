@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-e3a0a8384622c1ef2e619ccfeca7863a42b9ca3f79692fc85f422144f3e99002",
-  "generatedAt": "2026-07-20T11:42:44.738Z",
+  "revision": "snapshot-40eaa8e56c12e50a520c2f0a41eb4942a3f8093e78147a8ecee1a38d7da6412f",
+  "generatedAt": "2026-07-20T12:42:59.610Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -1838,6 +1838,13 @@
       "kind": "asset"
     },
     {
+      "path": "05-资源/表格/客户数据分析平台采购_选型对比表_20260720-精简演示.xlsx",
+      "sha256": "e875b849fb174bab84f03a4a8043704b2840bb0395b20180e63d3421287a4584",
+      "bytes": 5929,
+      "mediaType": "application/octet-stream",
+      "kind": "asset"
+    },
+    {
       "path": "05-资源/表格/客户数据分析平台采购_选型对比表_20260720.xlsx",
       "sha256": "3a3ec93831a079c82feb30c52083cf84dab0403cabc325a05827f198c460eee8",
       "bytes": 5893,
@@ -1862,6 +1869,13 @@
       "path": "05-资源/视频/Progress-Agent核心Demo.mp4",
       "sha256": "fea7d18711c1abd6243da35b84cc71b3596cc6e42b19afc37bfbed2077f5802b",
       "bytes": 1090016,
+      "mediaType": "application/octet-stream",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/视频/Progress-Agent精简版完整演示-含鼠标.mp4",
+      "sha256": "831637b6dbb0e2b0a483c135ce43b5ae703f8f14d3a82ea84d945469dfadfc86",
+      "bytes": 1846646,
       "mediaType": "application/octet-stream",
       "kind": "asset"
     },
