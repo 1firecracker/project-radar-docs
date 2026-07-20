@@ -215,4 +215,4 @@ V0 不实现：
 - Session End 生成 Radar、多 Radar 信息流和完整偏好学习。
 - 外部系统监控、浏览器推送和对话进行中的实时插话。
 
-V0.1 已完成历史 Event 重算、Item 进度汇总、Organizer Project 语义状态、完成层级守门、跨 Session Radar 状态版本失效，以及动作级覆盖与约束协议；当前先完成真实浏览器复测，再继续提高 Radar 候选动作与证据质量。V0.2 再增加只读 Resume Brief。V1 增加 Session End、时间扫描、停滞检测、夜间重组、合并拆分和多项目恢复；V2 再考虑外部系统变化和持续监控。
+V0.1 已完成历史 Event 重算、Item 进度汇总、Organizer Project 语义状态、完成层级守门、跨 Session Radar 状态版本失效，以及动作级覆盖与约束协议；当前继续完成 Radar 真实 Case 收尾。V0.2 已增加只读 Resume Brief，Web 展示名为 Recent Work，并完成浏览器验收。V1 增加 Session End、时间扫描、停滞检测、夜间重组、合并拆分和多项目恢复；V2 再考虑外部系统变化和持续监控。
