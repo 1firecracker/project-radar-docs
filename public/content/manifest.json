@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-d8767f364a2c820003ea69f7e7c1054afbf842cd3146488a711d35b9f61d5c8f",
-  "generatedAt": "2026-07-20T07:00:49.124Z",
+  "revision": "snapshot-ec610690cd4db15e618fcde849e57c903c409018c12e3ceff67a097de691fd88",
+  "generatedAt": "2026-07-20T08:31:12.658Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -1835,6 +1835,27 @@
       "sha256": "6f20f09e7bce313f1d8c164f25e8367301613c9808d88b2f5c351c5952e51296",
       "bytes": 28586,
       "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/视频/Progress-Agent核心Demo.mp4",
+      "sha256": "fb49ab5f3f5e1e62aec11a8be0e2a42e7c4f213cebcbe5f05bbcb372143e5126",
+      "bytes": 965237,
+      "mediaType": "application/octet-stream",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/视频/Radar跨Session推进演示.mp4",
+      "sha256": "1a277518d5d5b4027d64c5a84af02c57a2b896a62254219f10d159d7c3b3b88e",
+      "bytes": 634061,
+      "mediaType": "application/octet-stream",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/视频/Recent-Work演示.mp4",
+      "sha256": "f42a78e49c47e384c4ccf839e5cdfb1b458a192734dd2f203135980d2e34bd12",
+      "bytes": 279170,
+      "mediaType": "application/octet-stream",
       "kind": "asset"
     },
     {
