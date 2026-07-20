@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-4da93cf2dc181a04ee4e06ceb934af6eafc8909c4bf733ea2846ee68213622fe",
-  "generatedAt": "2026-07-20T05:50:04.909Z",
+  "revision": "snapshot-eeb7b67a271801b922db4b321eb7c0fe6ceaaaf660f157b6d3e4b34d173253a6",
+  "generatedAt": "2026-07-20T06:00:17.164Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -1652,6 +1652,13 @@
       "path": "05-资源/图片/恢复简报三项目实测/04-项目详情-客户门户改版上线.jpg",
       "sha256": "54f0b9a88dc293872b747f18f8c93f81f869432700a3aa7fa92098a4d3384579",
       "bytes": 67036,
+      "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/恢复简报三项目实测/05-Recent-Work新界面.jpg",
+      "sha256": "4b83ada98304af4ce24e155c0bd1c3a7b16f3fd12ec62710de92694f1166ab06",
+      "bytes": 70999,
       "mediaType": "image/jpeg",
       "kind": "asset"
     },
