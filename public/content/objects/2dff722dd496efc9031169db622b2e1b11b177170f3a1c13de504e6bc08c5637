@@ -303,7 +303,8 @@ sequenceDiagram
 
 - 默认展示 3 个 Project；当前 Session 关联项目优先，再按 `in_progress`、`waiting`、`open` 和最近活动时间排序。
 - 项目名称和“查看项目”共用现有 Project Radar 详情弹窗；来源 Session 入口复用已有会话选择逻辑。
-- 简报收起后仍保留一个轻量入口；用户发送新 Query 时自动收起，不改变状态。
+- Web 展示名为 `Recent Work`，内部服务与接口仍使用 Resume Brief，避免把产品文案耦合到数据模型。
+- “收起”后仍保留轻量入口；“× 关闭”通过 `sessionStorage` 在本次浏览器访问中隐藏整个组件；用户发送新 Query 时自动收起。这些操作都不改变持久状态。
 
 #### 2.6.3 接口与实现位置
 
