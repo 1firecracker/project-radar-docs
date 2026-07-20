@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-b59fe68713a58b74938936b53c67a02bb34cb47046764ec2c4878502805b94bf",
-  "generatedAt": "2026-07-20T03:39:19.549Z",
+  "revision": "snapshot-487d17ecf31e703120bf8dd48a6aa04aa208476ed8699f7707f7bd2010249904",
+  "generatedAt": "2026-07-20T04:49:37.855Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -77,6 +77,13 @@
       "path": "03-测试与评测/主动判断评测集.md",
       "sha256": "b7b557f0bd4371372958454cb256cc8f18bc28e1d58876045b06fd4ec650725e",
       "bytes": 38439,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "03-测试与评测/恢复简报三项目演示计划.md",
+      "sha256": "94f988fbacc3895e9f80ebc84c6d8aab446103cb91e410b92a34d721897ba4fe",
+      "bytes": 1931,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
