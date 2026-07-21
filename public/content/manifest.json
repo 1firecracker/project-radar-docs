@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-e778d520edac4132c5cb877da6d9601c37a1b66ba6fbd5795679f4fcca033654",
-  "generatedAt": "2026-07-21T03:13:42.618Z",
+  "revision": "snapshot-52bac25f95d29641866a635262e536ae393e03a1dd4b26f06b1cdb263d8cc860",
+  "generatedAt": "2026-07-21T11:34:16.676Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -1848,6 +1848,13 @@
       "path": "05-资源/表格/客户数据分析平台采购_选型对比表_20260720.xlsx",
       "sha256": "3a3ec93831a079c82feb30c52083cf84dab0403cabc325a05827f198c460eee8",
       "bytes": 5893,
+      "mediaType": "application/octet-stream",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/视频/Progress-Agent产品Demo-三部分完整版.mp4",
+      "sha256": "04dd69b1fdfce6af68e353e611c0543953aaacf7af30a2a3abfc8779ddc65129",
+      "bytes": 1549721,
       "mediaType": "application/octet-stream",
       "kind": "asset"
     },
