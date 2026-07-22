@@ -1,0 +1,160 @@
+# Progress Agent 整理与状态更新设计
+
+> 文档状态：维护中  
+> 负责人：bwz  
+> 最近更新：2026-07-22  
+> 权威范围：Post-run 触发、Organizer 归属与状态补丁、交互续跑的 QA 边界
+
+[返回技术设计总览](./README.md) · [返回文档总览](../../README.md)
+
+## 1. 异步主流程
+
+主 Agent 正常写入 `end_stream` 后产生 Post-run 触发，调用 `schedule_post_run()` 安排 Organizer 与可选 Radar 判断：
+
+```mermaid
+sequenceDiagram
+  participant Main as 主 Agent
+  participant Trigger as Post-run Trigger
+  participant Organizer as Organizer
+  participant State as Project / Item Store
+  participant Radar as Radar Store
+  participant UI as 前端
+
+  Main->>UI: end_stream
+  Main-->>Trigger: 完整 QA 元数据
+  Trigger-->>Organizer: 异步调度
+  Organizer->>State: 创建 processing Event
+  Organizer->>Organizer: 读取 QA + Project + Item + Event
+  Organizer-->>State: Event 归属 + Item Patch + Project Patch
+  State-->>Radar: 状态成功后提交 Item / Project 版本与完整上下文
+  Radar-->>Radar: Analyzer 提取机会、覆盖、约束与可执行性
+  Radar-->>Radar: Policy Gate 确定性决定推送或静默
+  UI-->>Radar: 有限轮询 / Re-entry 查询
+  Radar-->>UI: 0 或 1 条待处理 Radar
+```
+
+调度条件：
+
+- Agent 正常结束，最终状态为 `idle`。
+- 本轮不是用户终止、执行异常或 `waiting_user_input`。
+- 当前用户已登录，QA 的消息与 Session 可以定位。
+- 重复任务可以到达服务层，但同一 `source_run_id` 通过唯一约束收敛为一个 Event。
+
+处理顺序：
+
+1. 立即写入 `processing` Event 壳记录，保证 QA 不因模型失败而丢失。
+2. 加载本轮完整 QA、当前 Session 最近 Event、用户活跃 Project 及其 Item 状态。
+3. 使用一次严格结构输出完成 Event 摘要与完成层级、归属决策、一个主要 Item 补丁，以及受影响 Project 的语义状态补丁。
+4. 服务端校验状态转换，确定性计算 Item 统计与 blocker 风险，再在事务中写入 Event、Item、Project 和版本。
+5. 状态成功后，Radar Analyzer 才读取最新版本并输出候选动作、覆盖来源、动作级约束、可执行性和 Candidate；Policy Gate 根据这些字段确定性决定是否保存。
+6. 整理失败时把 Event 标记为 `classification_failed`，不更新状态，也不生成 Radar。
+
+Radar Action Run 也执行步骤 1 至 4，使 Agent 产出成为新的 Event 并更新状态；`case.is_radar_action_run` 只抑制步骤 5，防止递归生成 Radar。
+
+## 2. 创建与归属规则
+
+- 优先追加到当前 Session 最近关联且目标一致的 Item。
+- 新的单一可完成目标创建独立 Item。
+- 只有明确包含多个可分事项的长期目标才创建 Project；V0 同一 QA 只创建或更新一个当前主要 Item，其他 Item 随后续 QA 增量形成。
+- 后续版本可以把一个 QA 拆成多个 Event 或状态补丁以推进多个 Item，但不属于当前 Organizer 输出协议。
+- 一次性问答进入 Non Project 分类。
+- 无法可靠决定时进入待分类，不强行写入 Project / Item。
+- 夜间把独立 Item 重组为 Project、合并和拆分留到 V1。
+
+## 3. Organizer 输入、输出与职责
+
+Organizer 的输入是“本轮发生了什么 + 之前已经记录了什么”：
+
+- 本轮用户消息与主 Agent 最终回答。
+- QA 的 Session、消息、Run 与完成时间。
+- 最近相关 Event。
+- 用户已有的候选 Project、Project 下的 Item 与独立 Item。
+- 可选的 Memory / Todo 摘要，只作为归属与状态判断辅助证据。
+
+V0 每轮输出一条 Event 和一个归属决策，最多创建或更新一个主要 Item。若该 Item 属于 Project，且本轮改变了项目事实，必须同时输出 `project_patch`：
+
+```json
+{
+  "event": {
+    "summary": "四项品牌素材全部验收通过",
+    "event_type": "completion_confirmed",
+    "completion_scope": "item"
+  },
+  "assignment": {
+    "kind": "existing_item",
+    "reason": "本轮满足品牌素材验收的完成标准，但没有完成整个官网项目",
+    "item_id": "item-id",
+    "item_patch": {
+      "status": "completed",
+      "next_action": null,
+      "blockers": []
+    },
+    "project_patch": {
+      "status": "in_progress",
+      "current_stage": "素材验收完成，待进入前端制作"
+    }
+  }
+}
+```
+
+`completion_scope` 取值为：
+
+- `none`：普通进展、决策、阻塞或参考信息。
+- `item`：完成或重新打开的证据只作用于当前 Item。
+- `project`：当前 QA 明确覆盖整个 Project 的完成或重新打开。
+
+职责边界：
+
+| 模块 | 负责 | 不负责 |
+|---|---|---|
+| Organizer | 理解 QA、创建 Event、判断归属、更新一个 Item、维护 Project 的 `status` 与 `current_stage` | 生成 Radar、执行动作、直接写数据库 |
+| 服务端 | 校验状态机、统计 Item 进度、汇总 blocker、合并补丁、并发与持久化 | 根据 Item 数量语义推断 Project 已完成 |
+| Radar | 读取最终状态，判断是否存在未提出且可执行的推进项，或当前回答是否遗漏已记录关键条件 | 修正 Event / Item / Project 基础状态，凭空新增流程或产物 |
+
+Organizer 没有提交 `project_patch.status` 时，服务端保持 Project 原状态；不得自行把 Project 推进为 `completion_candidate`。必要 Item 重新打开属于安全例外，服务端可以强制把已完成或待确认 Project 退回 `in_progress`。
+
+## 4. 交互续跑仍属于同一轮 QA
+
+Post-run 的产品单位是“一个真实用户输入最终得到一个完整回答”，不是一次底层 Agent Run。`todolist`、`ask_user` 等工具造成的 `waiting_user_input` 只是该 QA 的中间暂停；用户确认、自动确认或补充回答后的 Resume 仍属于原 QA。
+
+V0 必须满足以下规则：
+
+1. 每个正常完成的真实用户 QA 最终且仅生成一条 Activity Event。
+2. 首次 Run 进入 `waiting_user_input` 时不执行 Post-run，因为回答尚不完整。
+3. Resume 最终进入 `idle` 时，使用原始真实用户消息与最终 Assistant 消息执行 Post-run。
+4. `todolist_feedback`、`resume_answer` 等合成输入只负责恢复执行，不能成为 Event 的用户问题。
+5. 同一 QA 的首次 Run 与所有 Resume 共享稳定的 `source_run_id`，数据库唯一约束负责幂等。
+6. 用户终止、执行异常或始终没有最终 Assistant 回答时不生成成功 Event；原始 QA 身份保留到可恢复终态或明确终止。
+
+持久状态在 `runtime_control.pending_post_run_qa` 中保存：
+
+```ts
+type PendingPostRunQA = {
+  user_message_id: string; // 原始真实用户输入的 Message Record id。
+  source_run_id: string; // 整条 QA 交互链共用的幂等 id，Resume 不重新生成。
+  started_at: string; // 真实用户 QA 开始时间，用于排查与超时治理。
+};
+```
+
+真实用户输入开始时创建该状态；进入等待时随 Conversation State 持久化；最终回答形成并成功构造 Post-run 元数据后清除。新建的正常 QA 不得继承上一轮已经终止或已经提交的 pending 状态。
+
+```mermaid
+sequenceDiagram
+  participant User as 用户
+  participant Agent as 主 Agent
+  participant State as Conversation State
+  participant PostRun as Post-run Sidecar
+
+  User->>Agent: 原始用户输入
+  Agent->>State: 保存 pending_post_run_qa
+  Agent->>Agent: 调用 todolist / ask_user
+  Agent->>State: waiting_user_input，暂不整理
+  User->>Agent: 确认或补充信息
+  Agent->>Agent: Resume 并形成最终回答
+  Agent->>PostRun: 原始用户消息 + 最终 Assistant 消息 + 稳定 source_run_id
+  PostRun->>State: 创建或幂等复用一条 Event
+  Agent->>State: 清除 pending_post_run_qa
+```
+
+该规则同时覆盖手工确认、Todolist 倒计时自动确认和多次 `ask_user` Resume。不能只对某一种工具做特殊判断，否则其他交互工具仍会漏掉 Post-run。
+

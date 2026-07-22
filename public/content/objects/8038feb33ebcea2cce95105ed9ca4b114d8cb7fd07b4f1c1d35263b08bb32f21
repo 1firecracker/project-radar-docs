@@ -1,0 +1,77 @@
+# Progress Agent 接口、可靠性与版本设计
+
+> 文档状态：维护中  
+> 负责人：bwz  
+> 最近更新：2026-07-22  
+> 权威范围：内部接口、纠正接口、Radar 执行接口、并发权限、工程接入和版本边界
+
+[返回技术设计总览](./README.md) · [返回文档总览](../../README.md)
+
+## 1. 内部调度与读取接口
+
+- `schedule_post_run()`：在 `end_stream` 后创建 Event、整理状态并按需生成 Radar；不暴露给前端。
+- `GET /api/radar/overview`：返回 Project、独立 Item、Non Project 和待分类计数与摘要。
+- `GET /api/radar/items/{id}/events`：返回 Item 近期 Event 及来源 Session。
+- `GET /api/radar/items?session_id=<id>&status=pending`：查询当前 Session 可展示的 Radar，默认保持原列表响应。
+- `GET /api/radar/items?session_id=<id>&status=pending&include_analysis_status=true`：同时返回 `items`、最新真实 QA 的 `analysis_pending` 和 `analysis_settled`；状态仅用于控制前端有界轮询，不触发后台分析。
+- `GET /api/resume-brief?current_session_id=<id>`：只读返回跨自然日仍未完成的 Project 一句话摘要和 Project / 来源 Session 双入口所需的标识；不创建 Event、不运行 Organizer 或 Radar。
+
+## 2. 纠正与状态接口
+
+- `PATCH /api/radar/events/{id}/assignment`：把 Event 移到其他 Item、改为 Non Project 或待分类。
+- `PATCH /api/radar/tracked-items/{id}`：V0 只允许修改 `project_id`、`status` 和必要/可选标记。
+- 不提供手工创建、删除、合并和批量整理接口。
+
+所有纠正操作必须验证当前用户权限，并在事务中更新关联状态和版本。
+
+## 3. Radar 执行接口
+
+- `POST /api/radar/items/{id}/accept`：条件更新 `pending → accepted`，返回 `radar_item_id`、目标 Session 和短消息，不直接启动 Agent。
+- 前端携带 `radar_item_id` 调用现有 `POST /api/query`。
+- `POST /api/radar/items/{id}/feedback`：`useful / not_useful` 只允许首次条件写入 `radar_items`；`snooze / ignore` 只更新 Radar 生命周期状态。
+
+`/api/query` 验证 Radar 所属用户、状态和目标 Session 后，把 Radar 更新为 `running`，写入 `execution_run_id`，并把 Context Bundle 作为隐藏 `functional_instruction` 注入现有 AgentV3 管线。
+
+Radar 查询会把已经到达 `snoozed_until` 的建议恢复为 `pending`，过滤超过 `expires_at` 的建议，并把关联 Item / Project 已完成或归档的旧建议转为 `ignored`。普通真实 `/api/query` 成功占用 Conversation 时，会在同一数据库事务中把目标 Session 的 `pending/snoozed` Radar 转为 `superseded`；Radar Action Run 与 Resume 不执行该淘汰。
+
+## 4. 并发、失败与权限
+
+- Project 和 Item 使用 `version` 条件更新；冲突时重新读取最新状态并重试一次。
+- `completion_scope=item` 时拒绝任何把 Project 写成 `completed` 的补丁；Project 完成必须同时满足项目级确认与必要 Item / blocker 守门。
+- Event 壳记录先于模型整理写入，确保模型异常时 QA 仍进入待分类。
+- 项目事实变化但 Organizer 缺少必要 `project_patch`，或完成层级与请求状态冲突时，结构校验失败；不得使用陈旧 Project 状态继续生成 Radar。
+- 只有状态事务成功后才能保存 Radar Candidate。
+- 每个已进入 Radar 判断的来源 Event 最终写入一条 `radar_decisions` 审计记录；重复判断按 Event 幂等更新，不保存原始提示词、完整模型输出或异常密钥。
+- `silent` 只代表产品判断不提醒；`invalid`、`failed` 和 `stale` 分别代表非法输出、系统失败和来源过期，排障时不得把它们解释为“模型认为没必要”。
+- 接受 Radar 使用条件更新，只有 `pending` 可以进入 `accepted`。
+- Radar 只允许一次 `accepted → running` 条件领取；终态更新同时要求当前仍为 `running`，V0 不允许失败后重新进入同一执行链。
+- Worker 正常 `idle` 结束时 `running → done`；异常、用户终止或意外等待输入时进入 `failed`。
+- 所有 Overview、Event、Item 和 Radar API 使用 `require_auth`，并按当前用户过滤。
+- 前端提交的 Project、Item、Event、Session 和状态不能直接视为可信结果。
+- 交互续跑的 Post-run 以 `pending_post_run_qa.source_run_id` 幂等；重复 Resume、网络重试或重复调度只能得到同一条 Event。
+- `waiting_user_input` 不创建半成品 Event；最终 `idle` 才消费 pending QA。若用户明确终止，则清除 pending QA 且不生成成功 Event。
+- 回归测试必须覆盖直接完成、Todolist 手工确认、Todolist 自动确认、ask_user 单次与多次 Resume、重复 Resume、终止和异常边界。
+
+## 5. 后端接入
+
+- `backend/database.py`：当前仍创建六类表；按已确认目标需要把一次性评价并入 `radar_items`，收敛为五类表，并继续提供带版本的事务读写与 Radar 决策审计查询。
+- 新增 `backend/radar_service.py`：封装 Organizer、状态补丁、Overview 和 Radar 策略。
+- 新增 `backend/radar_post_run.py`：封装严格 JSON 模型适配、后台调度和 Organizer → Radar 编排。
+- 新增 `backend/radar_execution.py`：封装领取校验、服务端 Context Bundle 和执行终态。
+- `backend/server.py`：注册 API，并在主 Agent 完成后调度整理。
+- `agents/agentv3/core/context_pipeline.py`：接收隐藏 Radar Context Bundle。
+
+## 6. V0 与后续版本
+
+V0 真实实现：每个 QA 的 Event、自动创建与归属、Project / Item 持久状态、待分类、居中双栏弹窗、纠正操作、Post-run Radar、真实 AgentV3 执行和反馈闭环。
+
+允许演示兜底：模型整理失败时使用预置 Project / Item / Event 和一条高质量 Radar，但不得把兜底描述成自动整理成功。
+
+V0.1 已完成全量 Event 重算、Item / Project 统计汇总、Organizer 驱动的 Project 语义状态、完成层级守门、Radar 决策审计、跨 Session 状态版本失效和动作级覆盖协议；下一步通过真实模型复测继续提高候选动作与证据质量。V0.2 只读 Resume Brief 已完成实现与浏览器验收：跨自然日读取状态、生成项目一句话摘要、默认展示 3 个项目，提供 Project 详情与来源 Session 双入口，并以 Recent Work 名称支持收起和本次访问关闭。V1 再实现 Session End、时间扫描、停滞检测、夜间重组、Item 合并拆分、跨 Project 重新归类和多项目恢复；V2 再接入外部系统变化。
+
+## 7. 当前实现状态
+
+V0 当前在 `codex/bwz` 维护，包含数据迁移、用户隔离、Post-run、Overview / 纠正接口、双栏弹窗、Radar 状态感知有界轮询、接受执行、隐藏 Context Bundle、终态回写和防递归。
+
+2026-07-15 已完成状态守门、Radar 状态依赖与动作级判断协议：`activity_events` 持久化 `completion_scope`，项目内 Item 更新必须携带 Organizer 的 `project_patch.status/current_stage`，服务端不再自动生成 Project `completion_candidate`，也不再用 Item 统计覆盖 `current_stage`；必要 Item 退化时仍保留安全降级。`radar_items` 记录来源 Item / Project 版本，所有持久状态写入在事务中淘汰旧的未接受建议，落库、读取和接受路径均复核版本。生产 Analyzer 输出 `opportunity / coverage / constraint_check / dependency_check / feasibility / candidate`，Policy Gate 确定性生成最终原因；`radar_decisions` 保存这些判断依据及生成、静默、失效、非法输出或系统失败结果。服务端以 `Item.blockers` 为权威红绿灯，并在无 blocker、机会明确但模型声称证据不足时生成带待确认项的可编辑初稿。2026-07-16 的 3.2 三 Session 实测进一步验证：同一 Item 可以接收 Session B 的甲、Session C 的乙，再返回 Session B 接收丙；最终 Radar 定向最后触发状态变化的 Session B，不要求为每个 Event 新建 Session。Radar 后端 230 项、Ruff 和该浏览器路径均已通过。隐藏 Context Bundle 仍作为 `source="runtime"`、`hidden=true` 的审计记录保存在会话状态中，不进入公开 timeline 或普通 QA；Post-run 暂时为每个符合条件的 QA 创建一个命名 daemon thread，后续可替换为有容量限制的共享执行器。2026-07-17 已接入 Resume Brief V0.2 的只读快照、自然日门槛、摘要排序、折叠卡片和 Project / Session 双入口；不改变 Post-run、Organizer 或 Radar 写入链路。2026-07-20 已完成三项目浏览器验收，并将 Web 展示名统一为 Recent Work；“收起”保留轻量入口，“× 关闭”使用 `sessionStorage` 仅隐藏当前浏览器访问，不写入业务状态。
+

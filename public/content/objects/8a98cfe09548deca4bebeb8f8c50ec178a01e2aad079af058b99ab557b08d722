@@ -151,7 +151,7 @@ writeRecentWorkDismissed(storage, userId, dismissed)
 **文件：**
 
 - 修改：`docs/bwz/01-产品与规划/实施计划.md`
-- 修改：`docs/bwz/02-架构与设计/技术设计.md`
+- 修改：`docs/bwz/02-架构与设计/技术设计/恢复与界面.md`
 - 修改：`docs/bwz/04-专项实施/恢复简报实施计划.md`
 
 - [x] 在技术设计中记录 `Re-entry → Resume Brief API → Project/Session 双入口`，明确它不进入 Post-run。

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-2235fcb0f8c46ae6ef1ae012296db621d87f00d6ae5dc84b57b196a822be581c",
-  "generatedAt": "2026-07-22T09:08:21.036Z",
+  "revision": "snapshot-cf84788f7a7ba69445d0b691c5812bed8eca6596c219d0d45a830017dc1f0458",
+  "generatedAt": "2026-07-22T09:41:31.616Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -33,8 +33,8 @@
     },
     {
       "path": "01-产品与规划/项目汇报.md",
-      "sha256": "d9ed9576c30358ccf621afd77c511443bdbd5548238194dceb003990adbe10f0",
-      "bytes": 6263,
+      "sha256": "ea7ee226e8225f58e3c8516060ecc6c4fd4932351367fabfc0e33900dc92f82f",
+      "bytes": 6300,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -74,9 +74,44 @@
       "kind": "markdown"
     },
     {
-      "path": "02-架构与设计/技术设计.md",
-      "sha256": "99b090d0e9b9b1ac013f1d1866ba1eec5b1f66e68dbc24fd7aa2ee1e89a505f6",
-      "bytes": 46121,
+      "path": "02-架构与设计/技术设计/README.md",
+      "sha256": "21cc614481c920183cea58950b8e19c1f2f4410202fcda4a0b59da720ea3c655",
+      "bytes": 5535,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "02-架构与设计/技术设计/主动判断与执行.md",
+      "sha256": "c27573a3cf9396e0b51313205344d387fd52a4975ffc3ecc4263b657489c29c0",
+      "bytes": 5700,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "02-架构与设计/技术设计/恢复与界面.md",
+      "sha256": "bfcb6787595824488df3661fd11517a92edadafe693f67aeef643d9d8e44b7a9",
+      "bytes": 5097,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "02-架构与设计/技术设计/接口可靠性与版本.md",
+      "sha256": "8038feb33ebcea2cce95105ed9ca4b114d8cb7fd07b4f1c1d35263b08bb32f21",
+      "bytes": 8800,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "02-架构与设计/技术设计/整理与状态更新.md",
+      "sha256": "c1d9768c0e7a09484cdbfdac4ae83ec0199ae1bd45517902c093a7a015c6fcb0",
+      "bytes": 7987,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "02-架构与设计/技术设计/状态模型与存储.md",
+      "sha256": "d44f62c7428d350561931a9f8894bd353cc503eabd51bea4483cbf1bb5ad586b",
+      "bytes": 15771,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -740,8 +775,8 @@
     },
     {
       "path": "04-专项实施/恢复简报实施计划.md",
-      "sha256": "3d708db1c872133b50f00619fdd505bcbebc4b8138ade1e5f89a107fc6e9d14a",
-      "bytes": 7532,
+      "sha256": "8a98cfe09548deca4bebeb8f8c50ec178a01e2aad079af058b99ab557b08d722",
+      "bytes": 7548,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1944,8 +1979,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "5697089529391c4ef3ec983a09089da73d30ce2eae3fbb24b146a506c63b382d",
-      "bytes": 13381,
+      "sha256": "cd05d9926562b09e97b2cf453299ca2719e6fe3fde1e234b99129b2739210b8c",
+      "bytes": 13445,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }
