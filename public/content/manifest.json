@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-f88cc2e56fb9f0888f8cbf17781037abcc4abc49dd13860fe98421273f1aa08d",
-  "generatedAt": "2026-07-22T07:07:30.382Z",
+  "revision": "snapshot-b3cac967104f825c420f9270be6ff77a114a208b160d882c36ebac9379d50d3b",
+  "generatedAt": "2026-07-22T07:27:47.889Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -33,8 +33,8 @@
     },
     {
       "path": "01-产品与规划/项目进展汇报.md",
-      "sha256": "33c48bc9c401f84e6835f7ba73cd6b57e75e2462ca1a608a0fd808af138d5379",
-      "bytes": 8078,
+      "sha256": "310d5a2bf35ab2bb3523e1acaea1d96d409a9c22ebd9a209c365b588163f6c54",
+      "bytes": 8069,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1470,6 +1470,13 @@
       "path": "05-资源/图片/Project-Radar工作架构-HTML导出.png",
       "sha256": "345fa2a361cf9afa7307534810ad85dad6291cb1aebce327fbe7f52afc9d8489",
       "bytes": 395603,
+      "mediaType": "image/png",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/progress-agent-architecture.png",
+      "sha256": "760a7e78e6925247c556c4383b58c67fc86f6477b64dc4252a816aaa28fe2b62",
+      "bytes": 277208,
       "mediaType": "image/png",
       "kind": "asset"
     },
