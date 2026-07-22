@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-9bb317a36cb7a5307e2367b7cf93bcb89413ad8a92a5473f14fde00eb2a890f7",
-  "generatedAt": "2026-07-22T06:26:56.690Z",
+  "revision": "snapshot-f48922bc6d2903f7725d8c87a8c61cc577bae9799a46dbb94f810a0a35153747",
+  "generatedAt": "2026-07-22T06:57:17.228Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -33,8 +33,8 @@
     },
     {
       "path": "01-产品与规划/项目进展汇报.md",
-      "sha256": "750d69eff755be06be43409c6871f255d49eb582f1695bfbbac456e9458d40c9",
-      "bytes": 10076,
+      "sha256": "a905b0eec6e4b1b1f613e664cd1ebe4dddf568b67725b3a001f4af3b976add70",
+      "bytes": 9276,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
