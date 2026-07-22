@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-a760d77938db39c7a33111accdef5d6a20b5c9db4c875df395080247149c6f83",
-  "generatedAt": "2026-07-21T12:15:47.343Z",
+  "revision": "snapshot-91fd0da9d0780d3881836efafe7d38da4fc3b6db3bed28b5dcb7bc4d665e06b2",
+  "generatedAt": "2026-07-22T05:46:42.484Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -77,6 +77,13 @@
       "path": "03-测试与评测/主动判断评测集.md",
       "sha256": "30f9ef95ac8031fc270c70a8a3db11cf7919a20c46ed8f8a6794b5933901f2d1",
       "bytes": 41729,
+      "mediaType": "text/markdown; charset=utf-8",
+      "kind": "markdown"
+    },
+    {
+      "path": "03-测试与评测/产品演示讲述稿.md",
+      "sha256": "614bb48592f532070b4a82379e1d9f91db70087dd44d046b30ec8e9f2776703a",
+      "bytes": 6789,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -691,8 +698,8 @@
     },
     {
       "path": "03-测试与评测/测试与演示.md",
-      "sha256": "22f059fd14aed36fd5e4a9c6d964560f6dde4bafb84989760d36e411ccf9a3e2",
-      "bytes": 16642,
+      "sha256": "eecc7b1f5ef7013c5e429bed2d26cf07862c670faed3b663b8938f773fd6477c",
+      "bytes": 16923,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1916,8 +1923,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "d7180bc29a72dbf8980ae31bf1cdf16cc2aba401b0dee7f9e3dd2cb14b32344c",
-      "bytes": 12450,
+      "sha256": "b8ac197f74c78aca7c3a6464fa777f4cae0678bc656b1d704206befbba4b8721",
+      "bytes": 13034,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     }
