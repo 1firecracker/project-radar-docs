@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-f48922bc6d2903f7725d8c87a8c61cc577bae9799a46dbb94f810a0a35153747",
-  "generatedAt": "2026-07-22T06:57:17.228Z",
+  "revision": "snapshot-f88cc2e56fb9f0888f8cbf17781037abcc4abc49dd13860fe98421273f1aa08d",
+  "generatedAt": "2026-07-22T07:07:30.382Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -33,8 +33,8 @@
     },
     {
       "path": "01-产品与规划/项目进展汇报.md",
-      "sha256": "a905b0eec6e4b1b1f613e664cd1ebe4dddf568b67725b3a001f4af3b976add70",
-      "bytes": 9276,
+      "sha256": "33c48bc9c401f84e6835f7ba73cd6b57e75e2462ca1a608a0fd808af138d5379",
+      "bytes": 8078,
       "mediaType": "text/markdown; charset=utf-8",
       "kind": "markdown"
     },
@@ -1464,6 +1464,13 @@
       "sha256": "439319f445e8a602df43c6c6f6b77ad40cfc246c9cad335ced184cfae3f73e5f",
       "bytes": 83690,
       "mediaType": "image/jpeg",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/图片/Project-Radar工作架构-HTML导出.png",
+      "sha256": "345fa2a361cf9afa7307534810ad85dad6291cb1aebce327fbe7f52afc9d8489",
+      "bytes": 395603,
+      "mediaType": "image/png",
       "kind": "asset"
     },
     {

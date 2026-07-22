@@ -20,51 +20,9 @@ Progress Agent 已从概念设计进入**可展示 V0 和价值验证阶段**。
 
 Progress Agent 不替代主 Agent。主 Agent 负责当前 QA；Progress Agent 在任务边界和返回时机介入，使用 Project、Item、Event 构成的持久状态，把分散对话转化为可继续推进的工作。
 
-```mermaid
-flowchart TB
-  subgraph trigger["触发时机"]
-    qa["完整 QA 结束\nPost-run"]
-    back["用户间隔后返回\nRe-entry"]
-    future["定时 / 外部变化\nV1+"]
-  end
+![Project Radar V0 三层工作架构](../05-资源/图片/Project-Radar工作架构-HTML导出.png)
 
-  subgraph capability["核心能力"]
-    organizer["Organizer\n提取 Event、归属并更新状态"]
-    recent["Resume Brief\nWeb：Recent Work"]
-    radar["Radar + Policy Gate\n发现成熟机会并控制打扰"]
-    runner["Action Runner\n用户授权后执行"]
-  end
-
-  subgraph state["共享状态底座"]
-    event["Activity Event\n完整 QA 的可追溯记录"]
-    item["Tracked Item\n可以判断是否完成的事项"]
-    project["Project\n多个相关事项的长期目标"]
-    suggestion["Radar Item / Feedback"]
-    event --> item --> project
-  end
-
-  subgraph ui["用户看到的产品形态"]
-    recentui["Recent Work\n恢复最近工作"]
-    overview["项目总览\n查看与纠正"]
-    radarui["Radar 卡片\n查看依据与确认"]
-    result["Agent 产物\n状态继续回流"]
-  end
-
-  qa --> organizer --> event
-  back --> recent
-  item --> recent
-  project --> recent
-  recent --> recentui
-  item --> overview
-  project --> overview
-  item --> radar
-  project --> radar
-  radar -->|"价值不足或条件未成熟"| quiet["保持安静"]
-  radar -->|"判断通过"| suggestion --> radarui
-  radarui -->|"用户确认"| runner --> result --> event
-  future -.-> organizer
-  future -.-> radar
-```
+*由既有的 [HTML 架构图](../05-资源/架构图工具/project-radar-architecture.html) 确定性导出。*
 
 这张图表达四个核心边界：
 
