@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-b0cfcce0973a3c596b3283c867f57d1630e102aec79978dd366251a6dfa9505b",
-  "generatedAt": "2026-07-23T06:42:24.609Z",
+  "revision": "snapshot-1a9761d3b9e2c138525d01e6eca7d08cdc15a9d8261e46aca4a051200b405716",
+  "generatedAt": "2026-07-23T06:52:41.022Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -1922,6 +1922,13 @@
       "kind": "asset"
     },
     {
+      "path": "05-资源/视频/Progress-Agent产品Demo-四部分完整版.mp4",
+      "sha256": "82f63a3393e18334fd19f6b0ee6209a8b9b7d544bbcd02016584dd9a62e996f8",
+      "bytes": 2574161,
+      "mediaType": "application/octet-stream",
+      "kind": "asset"
+    },
+    {
       "path": "05-资源/视频/Progress-Agent加强版完整演示-含鼠标.mp4",
       "sha256": "acfd9c893b4b3507cfea379b324d92c68416ff33296cc7761ea02ef5b0688449",
       "bytes": 1908221,
@@ -1937,8 +1944,8 @@
     },
     {
       "path": "05-资源/视频/Progress-Agent条件遗漏演示-Part4.mp4",
-      "sha256": "9e974060d6d98bd782a61e8062586d60f71e7f513de087973e586235b829bb48",
-      "bytes": 1100632,
+      "sha256": "e463d2ebd02faac17d3718c535d1d7750382a83e745a9b499ba47be7ec85b295",
+      "bytes": 408130,
       "mediaType": "application/octet-stream",
       "kind": "asset"
     },
@@ -1946,6 +1953,27 @@
       "path": "05-资源/视频/Progress-Agent核心Demo.mp4",
       "sha256": "fea7d18711c1abd6243da35b84cc71b3596cc6e42b19afc37bfbed2077f5802b",
       "bytes": 1090016,
+      "mediaType": "application/octet-stream",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/视频/Progress-Agent演示-Part1-Recent-Work.mp4",
+      "sha256": "17d82282d51d9d81f02036ca5ac1f2b4ec711633841603d80d1ec7e54b4c3788",
+      "bytes": 621689,
+      "mediaType": "application/octet-stream",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/视频/Progress-Agent演示-Part2-Radar主动提醒.mp4",
+      "sha256": "e460776f8e64bab3cac94f7bc181141b15e42f0eed11462bf55e742319c45d50",
+      "bytes": 683021,
+      "mediaType": "application/octet-stream",
+      "kind": "asset"
+    },
+    {
+      "path": "05-资源/视频/Progress-Agent演示-Part3-Radar实际推进.mp4",
+      "sha256": "f1d56b97009f35c570556cd151d6f80e65e29b5141a30f70f6e3d05ae5abcbfb",
+      "bytes": 878968,
       "mediaType": "application/octet-stream",
       "kind": "asset"
     },
