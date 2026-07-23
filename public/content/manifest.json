@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "revision": "snapshot-1a9761d3b9e2c138525d01e6eca7d08cdc15a9d8261e46aca4a051200b405716",
-  "generatedAt": "2026-07-23T06:52:41.022Z",
+  "revision": "snapshot-92d596a11fbde3ae17b1f7df5d84a2e71abdd5c42deec5d447be2c97ceb99eff",
+  "generatedAt": "2026-07-23T07:22:57.812Z",
   "files": [
     {
       "path": "01-产品与规划/产品概要.md",
@@ -1923,8 +1923,8 @@
     },
     {
       "path": "05-资源/视频/Progress-Agent产品Demo-四部分完整版.mp4",
-      "sha256": "82f63a3393e18334fd19f6b0ee6209a8b9b7d544bbcd02016584dd9a62e996f8",
-      "bytes": 2574161,
+      "sha256": "a0fdaf571347a16199e82d27f00c1f0e0bd5cc4ad279e5b3abe7d8577730f458",
+      "bytes": 1988070,
       "mediaType": "application/octet-stream",
       "kind": "asset"
     },
@@ -1944,8 +1944,8 @@
     },
     {
       "path": "05-资源/视频/Progress-Agent条件遗漏演示-Part4.mp4",
-      "sha256": "e463d2ebd02faac17d3718c535d1d7750382a83e745a9b499ba47be7ec85b295",
-      "bytes": 408130,
+      "sha256": "3ead78ea49e960a6c79575ae5a5cf8a58985720b8c317659c5818e8023e4ce58",
+      "bytes": 394630,
       "mediaType": "application/octet-stream",
       "kind": "asset"
     },
@@ -1958,22 +1958,22 @@
     },
     {
       "path": "05-资源/视频/Progress-Agent演示-Part1-Recent-Work.mp4",
-      "sha256": "17d82282d51d9d81f02036ca5ac1f2b4ec711633841603d80d1ec7e54b4c3788",
-      "bytes": 621689,
+      "sha256": "0f4b2502aea14153003dcf23acb58d8364dd3dc399c758f0cdbcc08468f767a4",
+      "bytes": 490165,
       "mediaType": "application/octet-stream",
       "kind": "asset"
     },
     {
       "path": "05-资源/视频/Progress-Agent演示-Part2-Radar主动提醒.mp4",
-      "sha256": "e460776f8e64bab3cac94f7bc181141b15e42f0eed11462bf55e742319c45d50",
-      "bytes": 683021,
+      "sha256": "f6b0b393d75eca9d521445cc11e6bb234eed9c4faa8244e4ed509a5da4d34c9e",
+      "bytes": 408905,
       "mediaType": "application/octet-stream",
       "kind": "asset"
     },
     {
       "path": "05-资源/视频/Progress-Agent演示-Part3-Radar实际推进.mp4",
-      "sha256": "f1d56b97009f35c570556cd151d6f80e65e29b5141a30f70f6e3d05ae5abcbfb",
-      "bytes": 878968,
+      "sha256": "9ff75a3f415e6577a45ec7e2b16faf373d79d9d994b8f2e4a1e734406f287c1e",
+      "bytes": 713203,
       "mediaType": "application/octet-stream",
       "kind": "asset"
     },
